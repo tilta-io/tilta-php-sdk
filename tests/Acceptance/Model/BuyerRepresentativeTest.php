@@ -1,0 +1,59 @@
+<?php
+/*
+ * Copyright (c) Tilta Fintech GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+declare(strict_types=1);
+
+namespace Tilta\Sdk\Tests\Acceptance\Model\Response\Buyer;
+
+use DateTime;
+use PHPUnit\Framework\TestCase;
+use Tilta\Sdk\Exception\Validation\InvalidFieldValueException;
+use Tilta\Sdk\Model\Address;
+use Tilta\Sdk\Model\BuyerRepresentative;
+
+class BuyerRepresentativeTest extends TestCase
+{
+    public function testFromAndToArray(): void
+    {
+        $inputData = [
+            'salutation' => 'MR',
+            'first_name' => 'first name',
+            'last_name' => 'last name',
+            'birth_date' => 1686761444,
+            'email' => 'abcdef@egagaifg.de',
+            'phone' => '0113456789',
+            'address' => [],
+        ];
+        $model = new BuyerRepresentative($inputData);
+
+        $this->assertEquals('MR', $model->getSalutation());
+        $this->assertEquals('first name', $model->getFirstname());
+        $this->assertEquals('last name', $model->getLastname());
+        $this->assertInstanceOf(DateTime::class, $model->getBirthDate());
+        $this->assertEquals('abcdef@egagaifg.de', $model->getEmail());
+        $this->assertEquals('0113456789', $model->getPhone());
+        $this->assertInstanceOf(Address::class, $model->getAddress());
+
+        // unset address to skip validation
+        $model->setAddress($this->createMock(Address::class));
+
+        $outputData = $model->toArray();
+
+        // sort array to make sure they are in the same order
+        ksort($inputData);
+        ksort($outputData);
+
+        $this->assertEquals($inputData, $outputData);
+    }
+
+    public function testInvalidSalutation(): void
+    {
+        $this->expectException(InvalidFieldValueException::class);
+        (new BuyerRepresentative())->setSalutation('invalid value')->toArray();
+    }
+}

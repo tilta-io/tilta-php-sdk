@@ -109,3 +109,29 @@ $requestModel = new \Tilta\Sdk\Model\Request\Buyer\GetBuyerAuthTokenRequestModel
 $responseModel = $tokenRequestService->execute($requestModel);
 $accessToken = $responseModel->getBuyerAuthToken();
 ```
+#### GetBuyerDetailsRequest
+
+| 	                 | 	                                                                 |
+|-------------------|-------------------------------------------------------------------|
+| Api documentation | [Link](https://docs.tilta.io/reference/get_v1-buyers-external-id) |
+| Request service   | `\Tilta\Sdk\Service\Request\Buyer\GetBuyerDetailsRequest`         |
+| Request model     | `\Tilta\Sdk\Model\Request\Buyer\GetBuyerDetailsRequestModel`      |
+| Response model    | `\Tilta\Sdk\Model\Buyer`                                          |
+
+Use this service to fetch a buyer from the gateway by its external-id (of the merchant)
+
+__Usage__
+
+```php
+/** @var \Tilta\Sdk\HttpClient\TiltaClient $client */
+/** @var boolean $isSandbox */
+$tokenRequestService = new \Tilta\Sdk\Service\Request\Buyer\GetBuyerDetailsRequest($client, $isSandbox);
+
+$requestModel = new \Tilta\Sdk\Model\Request\Buyer\GetBuyerDetailsRequestModel('EXTERNAL-MERCHANT-ID');
+    
+/** @var \Tilta\Sdk\Model\Buyer */
+$responseModel = $tokenRequestService->execute($requestModel);
+$externalId = $responseModel->getExternalId();
+$legalName = $responseModel->getLegalName();
+[...]
+```
