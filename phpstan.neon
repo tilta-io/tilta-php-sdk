@@ -1,0 +1,12 @@
+parameters:
+    level: 9
+    paths:
+        - src
+        - tests
+    reportUnmatchedIgnoredErrors: false
+    tipsOfTheDay: false
+    bootstrapFiles:
+        - ./vendor/autoload.php
+
+    ignoreErrors:
+        - '#type specified in iterable type array.#'

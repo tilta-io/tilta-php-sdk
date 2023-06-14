@@ -1,0 +1,15 @@
+<phpunit>
+    <testsuites>
+        <testsuite name="acceptance">
+            <directory>tests/Acceptance</directory>
+        </testsuite>
+        <testsuite name="functional">
+            <directory>tests/Functional/Util</directory>
+            <directory>tests/Functional/Service</directory>
+        </testsuite>
+    </testsuites>
+
+    <php>
+        <env name="TILTA_API_TOKEN" value="-- INSERT YOUR TILTA API TOKEN HERE --" force="true" />
+    </php>
+</phpunit>
