@@ -33,7 +33,6 @@ return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->sets([
         SetList::CODE_QUALITY,
         SetList::TYPE_DECLARATION,
-        SetList::PSR_4,
         SetList::CODING_STYLE,
         SetList::DEAD_CODE,
         LevelSetList::UP_TO_PHP_74,

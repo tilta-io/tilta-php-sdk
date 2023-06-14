@@ -1,0 +1,40 @@
+name: PHP Jobs
+
+on: [ push, pull_request ]
+
+jobs:
+    build:
+        name: PHP ${{ matrix.php-version }} Test
+        runs-on: ubuntu-20.04
+        strategy:
+            matrix:
+                php-version: [ '7.4', '8.0', '8.1', '8.2' ]
+
+        steps:
+            -   uses: actions/checkout@v2
+
+            -   name: Setup PHP Version ${{ matrix.php-version }}
+                uses: shivammathur/setup-php@v2
+                with:
+                    php-version: ${{ matrix.php-version }}
+
+            -   name: Validate composer.json and composer.lock
+                run: composer validate
+
+            -   name: Install dependencies
+                run: composer install --prefer-dist --no-progress --no-suggest
+
+            -   name: Check PHP formatting style
+                run: composer lint
+
+            -   name: Static code analysis
+                run: composer phpstan
+
+            -   name: Run unit test
+                run: composer phpunit
+                env:
+                    TILTA_API_TOKEN: ${{ secrets.TILTA_API_TOKEN }}
+
+
+
+
