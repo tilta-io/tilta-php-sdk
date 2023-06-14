@@ -84,3 +84,28 @@ This documentation should not explain the whole usage of each request. It should
 each request, and the main usage.
 
 Please have a look into the corresponding documentation of each API Request.
+
+#### GetBuyerAuthTokenRequest
+
+| 	                 | 	                                                                     |
+|-------------------|-----------------------------------------------------------------------|
+| Api documentation | [Link](https://docs.tilta.io/reference/get_v1-auth-buyer-external-id) |
+| Request service   | `\Tilta\Sdk\Service\Request\Buyer\GetBuyerAuthTokenRequest`           |
+| Request model     | `\Tilta\Sdk\Model\Request\Buyer\GetBuyerAuthTokenRequestModel`        |
+| Response model    | `\Tilta\Sdk\Model\Response\Buyer\GetBuyerAuthTokenResponseModel`      |
+
+Use this service to generate JWT token for the buyer, so he can use the buyer-onboarding requests.
+
+__Usage__
+
+```php
+/** @var \Tilta\Sdk\HttpClient\TiltaClient $client */
+/** @var boolean $isSandbox */
+$tokenRequestService = new \Tilta\Sdk\Service\Request\Buyer\GetBuyerAuthTokenRequest($client, $isSandbox);
+
+$requestModel = new \Tilta\Sdk\Model\Request\Buyer\GetBuyerAuthTokenRequestModel('EXTERNAL-MERCHANT-ID');
+    
+/** @var \Tilta\Sdk\Model\Response\Buyer\GetBuyerAuthTokenResponseModel */
+$responseModel = $tokenRequestService->execute($requestModel);
+$accessToken = $responseModel->getBuyerAuthToken();
+```
