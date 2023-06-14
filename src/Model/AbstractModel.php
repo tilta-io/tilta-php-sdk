@@ -82,7 +82,7 @@ abstract class AbstractModel
         }
 
         $errorCollection = new InvalidFieldValueCollectionException();
-        foreach ($this->getObjectVars() as $field => $value) {
+        foreach ($this->getObjectVars(false) as $field => $value) {
             try {
                 $this->validateFieldValue($field, $value);
             } catch (InvalidFieldValueException $invalidFieldValueException) {
@@ -133,7 +133,7 @@ abstract class AbstractModel
         }, $this->getObjectVars());
     }
 
-    private function getObjectVars(): array
+    private function getObjectVars(bool $snakeCase = true): array
     {
         $vars = get_object_vars($this);
 
@@ -149,6 +149,16 @@ abstract class AbstractModel
         unset($vars['readOnly']);
         unset($vars['validateOnSet']);
         unset($vars['_modelHasBeenValidated']);
+
+        if ($snakeCase) {
+            foreach ($vars as $key => $value) {
+                $newKey = strtolower((string) preg_replace('/(?<!^)[A-Z]/', '_$0', $key));
+                if ($newKey !== $key) {
+                    $vars[$newKey] = $value;
+                    unset($vars[$key]);
+                }
+            }
+        }
 
         return $vars;
     }
