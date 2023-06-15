@@ -10,10 +10,9 @@ declare(strict_types=1);
 
 namespace Tilta\Sdk\Model\Request;
 
-interface EntityRequestModelInterface extends RequestModelInterface
+interface RequestModelInterface
 {
-    /**
-     * @internal
-     */
-    public function getExternalId(): string;
+    public function toArray(): array;
+
+    public function validateFields(): void;
 }

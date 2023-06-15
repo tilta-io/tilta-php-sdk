@@ -13,7 +13,7 @@ namespace Tilta\Sdk\Model\Request;
 use BadMethodCallException;
 use Tilta\Sdk\Model\AbstractModel;
 
-abstract class AbstractRequestModel extends AbstractModel
+abstract class AbstractRequestModel extends AbstractModel implements RequestModelInterface
 {
     public function __construct()
     {

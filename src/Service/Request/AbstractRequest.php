@@ -19,11 +19,11 @@ use Tilta\Sdk\Exception\TiltaException;
 use Tilta\Sdk\Exception\Validation\InvalidFieldValueCollectionException;
 use Tilta\Sdk\HttpClient\TiltaClient;
 use Tilta\Sdk\Model\AbstractModel;
-use Tilta\Sdk\Model\Request\AbstractRequestModel;
 use Tilta\Sdk\Model\Request\EntityRequestModelInterface;
+use Tilta\Sdk\Model\Request\RequestModelInterface;
 
 /**
- * @template T_RequestModel of AbstractRequestModel
+ * @template T_RequestModel of RequestModelInterface
  * @template T_ResponseModel of AbstractModel|bool
  */
 abstract class AbstractRequest
@@ -48,6 +48,10 @@ abstract class AbstractRequest
      */
     public function execute($requestModel)
     {
+        if (!$requestModel instanceof RequestModelInterface) {
+            throw new InvalidArgumentException(sprintf('Provided request model have to be an instance of %s or %s', RequestModelInterface::class, self::class));
+        }
+
         try {
             if (!$this->client instanceof TiltaClient) {
                 throw new InvalidArgumentException(sprintf('please set a `%s` instance to the request-service. Use the parameter in the constructor or use the function `setClient` to set the client-instance.', TiltaClient::class));
