@@ -109,6 +109,7 @@ $requestModel = new \Tilta\Sdk\Model\Request\Buyer\GetBuyerAuthTokenRequestModel
 $responseModel = $tokenRequestService->execute($requestModel);
 $accessToken = $responseModel->getBuyerAuthToken();
 ```
+
 #### GetBuyerDetailsRequest
 
 | 	                 | 	                                                                 |
@@ -133,5 +134,40 @@ $requestModel = new \Tilta\Sdk\Model\Request\Buyer\GetBuyerDetailsRequestModel('
 $responseModel = $tokenRequestService->execute($requestModel);
 $externalId = $responseModel->getExternalId();
 $legalName = $responseModel->getLegalName();
+[...]
+```
+
+#### GetBuyerListRequest
+
+| 	                 | 	                                                            |
+|-------------------|--------------------------------------------------------------|
+| Api documentation | [Link](https://docs.tilta.io/reference/get_v1-buyers)        |
+| Request service   | `\Tilta\Sdk\Service\Request\Buyer\GetBuyerListRequest`       |
+| Request model     | `\Tilta\Sdk\Model\Request\Buyer\GetBuyersListRequestModel`   |
+| Response model    | `\Tilta\Sdk\Model\Response\Buyer\GetBuyersListResponseModel` |
+
+Use this service to get all buyers. Use `limit` & `offset` to navigate through the pages. 
+
+__Usage__
+
+```php
+/** @var \Tilta\Sdk\HttpClient\TiltaClient $client */
+/** @var boolean $isSandbox */
+$tokenRequestService = new \Tilta\Sdk\Service\Request\Buyer\GetBuyerListRequest($client, $isSandbox);
+
+$requestModel = (new \Tilta\Sdk\Model\Request\Buyer\GetBuyersListRequestModel())
+    // optional parameters
+    ->setLimit(10)
+    ->setOffset(0);
+    
+/** @var \Tilta\Sdk\Model\Response\Buyer\GetBuyersListResponseModel */
+$responseModel = $tokenRequestService->execute($requestModel);
+$limit = $responseModel->getLimit();
+$limit = $responseModel->getOffset();
+$limit = $responseModel->getTotal();
+/** @var \Tilta\Sdk\Model\Buyer[] $items */
+$items = $responseModel->getItems();
+$legalNameOfCompany1 = $items[0]->getLegalName();
+$legalNameOfCompany2 = $items[1]->getLegalName();
 [...]
 ```
