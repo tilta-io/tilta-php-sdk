@@ -11,18 +11,14 @@ declare(strict_types=1);
 namespace Tilta\Sdk\Model\Response\Buyer;
 
 use Tilta\Sdk\Model\Response\AbstractResponseModel;
-use Tilta\Sdk\Util\ResponseHelper;
 
 class GetBuyerAuthTokenResponseModel extends AbstractResponseModel
 {
     protected string $buyerAuthToken;
 
-    public function fromArray(array $data): self
-    {
-        $this->buyerAuthToken = ResponseHelper::getStringNN($data, 'token');
-
-        return $this;
-    }
+    protected static array $_additionalFieldMapping = [
+        'buyerAuthToken' => 'token',
+    ];
 
     public function getBuyerAuthToken(): string
     {

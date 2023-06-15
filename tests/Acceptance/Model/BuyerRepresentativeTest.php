@@ -32,8 +32,8 @@ class BuyerRepresentativeTest extends TestCase
         $model = new BuyerRepresentative($inputData);
 
         $this->assertEquals('MR', $model->getSalutation());
-        $this->assertEquals('first name', $model->getFirstname());
-        $this->assertEquals('last name', $model->getLastname());
+        $this->assertEquals('first name', $model->getFirstName());
+        $this->assertEquals('last name', $model->getLastName());
         $this->assertInstanceOf(DateTime::class, $model->getBirthDate());
         $this->assertEquals('abcdef@egagaifg.de', $model->getEmail());
         $this->assertEquals('0113456789', $model->getPhone());

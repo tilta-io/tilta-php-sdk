@@ -56,28 +56,10 @@ class Buyer extends AbstractModel
 
     protected array $customData = [];
 
-    public function fromArray(array $data): AbstractModel
+    protected function prepareModelData(array $data): array
     {
-        $this->externalId = ResponseHelper::getStringNN($data, 'external_id');
-        $this->tradingName = ResponseHelper::getString($data, 'trading_name');
-        $this->legalName = ResponseHelper::getString($data, 'legal_name');
-        $this->legalForm = ResponseHelper::getString($data, 'legal_form');
-        $this->registeredAt = ResponseHelper::getDateTimeNN($data, 'registered_at', 'U');
-        $this->incorporatedAt = ResponseHelper::getDateTime($data, 'incorporated_at', 'U');
-        $this->representatives = ResponseHelper::getArray($data, 'representatives', BuyerRepresentative::class) ?? [];
-        $this->businessAddress = ResponseHelper::getObjectNN($data, 'business_address', Address::class);
-        $this->customData = ResponseHelper::getArray($data, 'custom_data') ?? [];
-
-        return $this;
-    }
-
-    protected function _toArray(): array
-    {
-        $data = parent::_toArray();
-
-        $data['registered_at'] = $data['registered_at'] instanceof DateTime ? $data['registered_at']->getTimestamp() : null;
-        $data['incorporated_at'] = $data['incorporated_at'] instanceof DateTime ? $data['incorporated_at']->getTimestamp() : null;
-
-        return $data;
+        return [
+            'representatives' => static fn (string $key): array => ResponseHelper::getArray($data, $key, BuyerRepresentative::class) ?? [],
+        ];
     }
 }

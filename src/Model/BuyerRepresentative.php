@@ -12,15 +12,14 @@ namespace Tilta\Sdk\Model;
 
 use DateTime;
 use Tilta\Sdk\Exception\Validation\InvalidFieldValueException;
-use Tilta\Sdk\Util\ResponseHelper;
 
 /**
  * @method string|null getSalutation()
  * @method self setSalutation(?string $salutation)
- * @method string|null getFirstname()
- * @method self setFirstname(?string $firstname)
- * @method string|null getLastname()
- * @method self setLastname(?string $lastname)
+ * @method string|null getFirstName()
+ * @method self setFirstName(?string $firstName)
+ * @method string|null getLastName()
+ * @method self setLastName(?string $lastName)
  * @method DateTime|null getBirthDate()
  * @method self setBirthDate(?DateTime $birthDate)
  * @method string|null getEmail()
@@ -34,9 +33,9 @@ class BuyerRepresentative extends AbstractModel
 {
     protected ?string $salutation = null;
 
-    protected ?string $firstname = null;
+    protected ?string $firstName = null;
 
-    protected ?string $lastname = null;
+    protected ?string $lastName = null;
 
     protected ?DateTime $birthDate = null;
 
@@ -45,32 +44,6 @@ class BuyerRepresentative extends AbstractModel
     protected ?string $phone = null;
 
     protected ?Address $address = null;
-
-    public function fromArray(array $data): self
-    {
-        $this->salutation = ResponseHelper::getString($data, 'salutation');
-        $this->firstname = ResponseHelper::getString($data, 'first_name');
-        $this->lastname = ResponseHelper::getString($data, 'last_name');
-        $this->birthDate = ResponseHelper::getDate($data, 'birth_date', 'U');
-        $this->email = ResponseHelper::getString($data, 'email');
-        $this->phone = ResponseHelper::getString($data, 'phone');
-        $this->address = ResponseHelper::getObject($data, 'address', Address::class);
-
-        return $this;
-    }
-
-    public function toArray(): array
-    {
-        $data = parent::toArray();
-
-        $data['birth_date'] = $data['birth_date'] instanceof DateTime ? $data['birth_date']->getTimestamp() : null;
-
-        $data['first_name'] = $data['firstname'];
-        $data['last_name'] = $data['lastname'];
-        unset($data['firstname'], $data['lastname']);
-
-        return $data;
-    }
 
     protected function getFieldValidations(): array
     {

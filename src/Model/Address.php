@@ -11,7 +11,6 @@ declare(strict_types=1);
 namespace Tilta\Sdk\Model;
 
 use Tilta\Sdk\Exception\Validation\InvalidFieldValueException;
-use Tilta\Sdk\Util\ResponseHelper;
 use Tilta\Sdk\Util\Validation;
 
 /**
@@ -42,28 +41,9 @@ class Address extends AbstractModel
 
     protected ?string $additional = null;
 
-    public function fromArray(array $data): AbstractModel
-    {
-        $this->street = ResponseHelper::getString($data, 'street');
-        $this->houseNumber = ResponseHelper::getString($data, 'house');
-        $this->postcode = ResponseHelper::getStringNN($data, 'postcode');
-        $this->city = ResponseHelper::getStringNN($data, 'city');
-        $this->country = ResponseHelper::getStringNN($data, 'country');
-        $this->additional = ResponseHelper::getString($data, 'additional');
-
-        return $this;
-    }
-
-    public function toArray(): array
-    {
-        $data = parent::toArray();
-
-        // map value to api field
-        $data['house'] = $data['house_number'];
-        unset($data['house_number']);
-
-        return $data;
-    }
+    protected static array $_additionalFieldMapping = [
+        'houseNumber' => 'house',
+    ];
 
     protected function getFieldValidations(): array
     {
