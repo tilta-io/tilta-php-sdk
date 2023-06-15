@@ -6,6 +6,7 @@
         <testsuite name="functional">
             <directory>tests/Functional/Util</directory>
             <directory>tests/Functional/Service</directory>
+            <directory>tests/Functional/Model</directory>
         </testsuite>
     </testsuites>
 

@@ -112,6 +112,11 @@ class ResponseHelper
      */
     public static function getObject(array $data, string $key, string $class, bool $readOnly = true, bool $createEmptyObjectOnNull = false)
     {
+        if ($class === DateTime::class) {
+            /** @phpstan-ignore-next-line */
+            return self::getDate($data, $key, 'U'); // U = default of gateway response
+        }
+
         if (!is_subclass_of($class, AbstractModel::class)) {
             throw new InvalidArgumentException('argument `$class` needs to be a subclass of ' . AbstractModel::class);
         }
