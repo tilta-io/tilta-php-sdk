@@ -59,7 +59,7 @@ abstract class AbstractModel
             return $this->get($field);
         }
 
-        throw new BadMethodCallException('Method `' . $name . '` does not exists on `' . self::class . '`');
+        throw new BadMethodCallException('Method `' . $name . '` does not exists on `' . static::class . '`');
     }
 
     /**
