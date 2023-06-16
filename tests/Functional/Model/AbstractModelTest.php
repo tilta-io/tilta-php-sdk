@@ -8,10 +8,11 @@
 
 declare(strict_types=1);
 
-namespace Tilta\Sdk\Tests\Acceptance\Model;
+namespace Tilta\Sdk\Tests\Functional\Model;
 
 use Tilta\Sdk\Exception\Validation\InvalidFieldValueException;
 use Tilta\Sdk\Model\AbstractModel;
+use Tilta\Sdk\Tests\Acceptance\Model\AbstractModelTestCase;
 use Tilta\Sdk\Tests\Functional\Mock\Model\ArrayTestModel;
 use Tilta\Sdk\Tests\Functional\Mock\Model\ArrayTestModelChild;
 use Tilta\Sdk\Tests\Functional\Mock\Model\ArrayTestModelFieldMapping;
