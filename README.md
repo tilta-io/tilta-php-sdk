@@ -171,3 +171,39 @@ $legalNameOfCompany1 = $items[0]->getLegalName();
 $legalNameOfCompany2 = $items[1]->getLegalName();
 [...]
 ```
+
+#### CreateBuyerRequest
+
+| 	                 | 	                                                      |
+|-------------------|--------------------------------------------------------|
+| Api documentation | [Link](https://docs.tilta.io/reference/post_v1-buyers) |
+| Request service   | `\Tilta\Sdk\Service\Request\Buyer\CreateBuyerRequest`  |
+| Request model     | `\Tilta\Sdk\Model\Buyer`                               |
+| Response model    | `true`                                                 |
+
+Use this service to create a new buyer.
+
+__Usage__
+
+```php
+/** @var \Tilta\Sdk\HttpClient\TiltaClient $client */
+/** @var boolean $isSandbox */
+$requestService = new \Tilta\Sdk\Service\Request\Buyer\CreateBuyerRequest($client, $isSandbox);
+
+$requestModel = (new \Tilta\Sdk\Model\Buyer())
+    ->setExternalId('EXTERNAL_MERCHANT_ID')
+    ->setTradingName('Trading name')
+    ->setLegalForm('GMBH')
+    ->setLegalName('Legal name')
+    ->setRegisteredAt((new DateTime())->setDate(2000, 2, 12))
+    ->setIncorporatedAt((new DateTime())->setDate(2002, 5, 30))
+    ->setRepresentatives(new \Tilta\Sdk\Model\BuyerRepresentative())
+    ->setBusinessAddress(new \Tilta\Sdk\Model\Address())
+    ->setCustomData([
+        'custom-key' => 'custom-value1',
+        'custom-key2' => 'custom-value2'
+    ]);
+    
+/** @var boolean $response */
+$response = $requestService->execute($requestModel); // true if successfully
+```
