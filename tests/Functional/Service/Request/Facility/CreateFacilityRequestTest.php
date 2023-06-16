@@ -13,8 +13,11 @@ namespace Tilta\Sdk\Tests\Functional\Service\Request\Facility;
 use PHPUnit\Framework\TestCase;
 use Tilta\Sdk\Model\Request\Buyer\CreateBuyerRequestModel;
 use Tilta\Sdk\Model\Request\Facility\CreateFacilityRequestModel;
+use Tilta\Sdk\Model\Request\Facility\GetFacilityRequestModel;
+use Tilta\Sdk\Model\Response\Facility\GetFacilityResponseModel;
 use Tilta\Sdk\Service\Request\Buyer\CreateBuyerRequest;
 use Tilta\Sdk\Service\Request\Facility\CreateFacilityRequest;
+use Tilta\Sdk\Service\Request\Facility\GetFacilityRequest;
 use Tilta\Sdk\Tests\Helper\BuyerHelper;
 use Tilta\Sdk\Tests\Helper\TiltaClientHelper;
 
@@ -24,11 +27,14 @@ class CreateFacilityRequestTest extends TestCase
 
     private CreateFacilityRequest $createFacilityService;
 
+    private GetFacilityRequest $getFacilityService;
+
     protected function setUp(): void
     {
         $client = TiltaClientHelper::getClient();
         $this->createBuyerRequestService = new CreateBuyerRequest($client);
         $this->createFacilityService = new CreateFacilityRequest($client);
+        $this->getFacilityService = new GetFacilityRequest($client);
     }
 
     public function testCreateFacility(): void
@@ -40,5 +46,11 @@ class CreateFacilityRequestTest extends TestCase
 
         $response = $this->createFacilityService->execute(new CreateFacilityRequestModel($buyer->getExternalId()));
         $this->assertTrue($response);
+
+        $facilityResponse = $this->getFacilityService->execute(new GetFacilityRequestModel($buyer->getExternalId()));
+        $this->assertInstanceOf(GetFacilityResponseModel::class, $facilityResponse);
+        $this->assertEquals($buyer->getExternalId(), $facilityResponse->getBuyerExternalId());
+        $this->assertNotNull($facilityResponse->getStatus());
+        $this->assertGreaterThan(0, $facilityResponse->getTotalAmount());
     }
 }
