@@ -12,6 +12,7 @@ namespace Tilta\Sdk\Model;
 
 use DateTime;
 use Tilta\Sdk\Util\ResponseHelper;
+use Tilta\Sdk\Util\Validation;
 
 /**
  * @method string getExternalId()
@@ -43,23 +44,35 @@ class Buyer extends AbstractModel
 
     protected ?string $legalForm = null;
 
-    protected DateTime $registeredAt;
+    protected ?DateTime $registeredAt = null;
 
     protected ?DateTime $incorporatedAt = null;
 
     /**
-     * @var BuyerRepresentative[]
+     * @var BuyerRepresentative[]|null
      */
-    protected array $representatives = [];
+    protected ?array $representatives = [];
 
-    protected Address $businessAddress;
+    protected ?Address $businessAddress = null;
 
-    protected array $customData = [];
+    protected ?array $customData = [];
 
     protected function prepareModelData(array $data): array
     {
         return [
             'representatives' => static fn (string $key): array => ResponseHelper::getArray($data, $key, BuyerRepresentative::class) ?? [],
+        ];
+    }
+
+    protected function getFieldValidations(): array
+    {
+        return [
+            'representatives' => BuyerRepresentative::class . '[]',
+            // we added these validations, so we can remove the validation for UpdateBuyerRequest.
+            // we are using IS_REQUIRED-flag for this, so we do not need to redefine the types again (defined as typed property)
+            'customData' => Validation::IS_REQUIRED,
+            'businessAddress' => Validation::IS_REQUIRED,
+            'registeredAt' => Validation::IS_REQUIRED,
         ];
     }
 }

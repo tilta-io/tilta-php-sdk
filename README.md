@@ -146,7 +146,7 @@ $legalName = $responseModel->getLegalName();
 | Request model     | `\Tilta\Sdk\Model\Request\Buyer\GetBuyersListRequestModel`   |
 | Response model    | `\Tilta\Sdk\Model\Response\Buyer\GetBuyersListResponseModel` |
 
-Use this service to get all buyers. Use `limit` & `offset` to navigate through the pages. 
+Use this service to get all buyers. Use `limit` & `offset` to navigate through the pages.
 
 __Usage__
 
@@ -199,6 +199,40 @@ $requestModel = (new \Tilta\Sdk\Model\Buyer())
     ->setIncorporatedAt((new DateTime())->setDate(2002, 5, 30))
     ->setRepresentatives(new \Tilta\Sdk\Model\BuyerRepresentative())
     ->setBusinessAddress(new \Tilta\Sdk\Model\Address())
+    ->setCustomData([
+        'custom-key' => 'custom-value1',
+        'custom-key2' => 'custom-value2'
+    ]);
+    
+/** @var boolean $response */
+$response = $requestService->execute($requestModel); // true if successfully
+```
+
+#### UpdateBuyerRequest
+
+| 	                 | 	                                                                  |
+|-------------------|--------------------------------------------------------------------|
+| Api documentation | [Link](https://docs.tilta.io/reference/post_v1-buyers-external-id) |
+| Request service   | `\Tilta\Sdk\Service\Request\Buyer\UpdateBuyerRequest`              |
+| Request model     | `\Tilta\Sdk\Model\Request\Buyer\UpdateBuyerRequestModel`           |
+| Response model    | `true`                                                             |
+
+Use this service to update buyers data.
+
+You must not provide all buyers data, just these data, which you want to update. If you data of a sub-object (
+e.g. `representatives` or `businessAddress`), you have to provide all data, to prevent validation issues. This behaviour
+may change in the future.
+
+__Usage__
+
+```php
+/** @var \Tilta\Sdk\HttpClient\TiltaClient $client */
+/** @var boolean $isSandbox */
+$requestService = new \Tilta\Sdk\Service\Request\Buyer\UpdateBuyerRequest($client, $isSandbox);
+
+$requestModel = (new \Tilta\Sdk\Model\Request\Buyer\UpdateBuyerRequestModel('EXTERNAL_MERCHANT_ID'))
+    // same methods as in the \Tilta\Sdk\Model\Buyer model. You must provide all data, just these data, which should be updated.
+    ->setTradingName('Trading name')
     ->setCustomData([
         'custom-key' => 'custom-value1',
         'custom-key2' => 'custom-value2'

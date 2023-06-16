@@ -22,8 +22,18 @@ class BuyerHelper
      * @param class-string<T> $class
      * @return T
      */
-    public static function createValidBuyer(string $externalId, string $class)
+    public static function createValidBuyer(string $externalId, string $class): Buyer
     {
+        /** @phpstan-ignore-next-line */
+        return self::fillUpBuyerObject(new $class(), $externalId);
+    }
+
+    public static function fillUpBuyerObject(Buyer $buyer, string $externalId = null): Buyer
+    {
+        if ($externalId !== null) {
+            $buyer->setExternalId($externalId);
+        }
+
         $address = (new Address())
             ->setStreet('Teststreet')
             ->setHouseNumber('123')
@@ -32,11 +42,7 @@ class BuyerHelper
             ->setCountry('DE')
             ->setAdditional('room 200');
 
-        $buyer = (new $class());
-
-        /** @phpstan-ignore-next-line */
         return $buyer
-            ->setExternalId($externalId)
             ->setTradingName(sprintf('My Trading Name (Unit-Test %s) ', $externalId))
             ->setLegalName(sprintf('My Legal Name (Unit-Test %s) ', $externalId))
             ->setLegalForm('GMBH')
