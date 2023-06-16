@@ -8,13 +8,13 @@
 
 declare(strict_types=1);
 
-namespace Tilta\Sdk\Model\Request\Buyer;
+namespace Tilta\Sdk\Model\Request\Facility;
 
 use Tilta\Sdk\Model\Request\AbstractBuyerRequestModel;
 
-class GetBuyerDetailsRequestModel extends AbstractBuyerRequestModel
+class CreateFacilityRequestModel extends AbstractBuyerRequestModel
 {
-    protected function _toArray(): array
+    public function toArray(): array
     {
         return [];
     }

@@ -241,3 +241,27 @@ $requestModel = (new \Tilta\Sdk\Model\Request\Buyer\UpdateBuyerRequestModel('EXT
 /** @var boolean $response */
 $response = $requestService->execute($requestModel); // true if successfully
 ```
+
+#### UpdateBuyerRequest
+
+| 	                 | 	                                                                           |
+|-------------------|-----------------------------------------------------------------------------|
+| Api documentation | [Link](https://docs.tilta.io/reference/post_v1-buyers-external-id-facility) |
+| Request service   | `\Tilta\Sdk\Service\Request\Facility\CreateFacilityRequest`                 |
+| Request model     | `\Tilta\Sdk\Model\Request\Facility\CreateFacilityRequestModel`              |
+| Response model    | `true`                                                                      |
+
+Use this service to create a new facility for a buyer.
+
+__Usage__
+
+```php
+/** @var \Tilta\Sdk\HttpClient\TiltaClient $client */
+/** @var boolean $isSandbox */
+$requestService = new \Tilta\Sdk\Service\Request\Facility\CreateFacilityRequest($client, $isSandbox);
+
+$requestModel = (new \Tilta\Sdk\Model\Request\Facility\CreateFacilityRequestModel('EXTERNAL_MERCHANT_ID'));
+    
+/** @var boolean $response */
+$response = $requestService->execute($requestModel); // true if successfully
+```

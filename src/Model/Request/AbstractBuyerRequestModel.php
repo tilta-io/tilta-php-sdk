@@ -10,7 +10,7 @@ declare(strict_types=1);
 
 namespace Tilta\Sdk\Model\Request;
 
-class AbstractBuyerRequestModel extends AbstractRequestModel
+class AbstractBuyerRequestModel extends AbstractRequestModel implements EntityRequestModelInterface
 {
     protected string $externalBuyerId;
 
@@ -23,5 +23,13 @@ class AbstractBuyerRequestModel extends AbstractRequestModel
     public function getExternalBuyerId(): string
     {
         return $this->externalBuyerId;
+    }
+
+    /**
+     * @internal
+     */
+    public function getExternalId(): string
+    {
+        return $this->getExternalBuyerId();
     }
 }

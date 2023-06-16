@@ -63,4 +63,9 @@ class BuyerHelper
                 'source' => 'phpunit',
             ]);
     }
+
+    public static function createUniqueExternalId(string $testName): string
+    {
+        return 'unit-testing_' . $testName . '_' . round(microtime(true));
+    }
 }
