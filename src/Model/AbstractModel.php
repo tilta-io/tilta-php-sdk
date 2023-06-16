@@ -15,6 +15,7 @@ use DateTime;
 use ReflectionClass;
 use ReflectionNamedType;
 use ReflectionProperty;
+use ReflectionType;
 use Tilta\Sdk\Exception\TiltaException;
 use Tilta\Sdk\Exception\Validation\InvalidFieldException;
 use Tilta\Sdk\Exception\Validation\InvalidFieldValueCollectionException;
@@ -285,6 +286,17 @@ abstract class AbstractModel
                 $this->validateFieldValue($name, $value);
             } else {
                 $this->_modelHasBeenValidated = false;
+            }
+
+            // special case: if the property does not allow null, but the validation definition allows null, we will unset the property.
+            $validations = $this->getFieldValidations();
+            if (isset($validations[$name]) && $validations[$name] === Validation::IS_NOT_REQUIRED && $value === null) {
+                $propertyType = (new ReflectionProperty($this, $name))->getType();
+                if ($propertyType instanceof ReflectionType && !$propertyType->allowsNull()) {
+                    unset($this->{$name});
+
+                    return $this;
+                }
             }
 
             $this->{$name} = $value;

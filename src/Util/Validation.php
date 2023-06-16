@@ -71,6 +71,16 @@ class Validation
     public const TYPE_ARRAY_OPTIONAL = '?' . self::TYPE_ARRAY_REQUIRED;
 
     /**
+     * @var string
+     */
+    public const IS_REQUIRED = '_is_required';
+
+    /**
+     * @var string
+     */
+    public const IS_NOT_REQUIRED = '_is_not_required';
+
+    /**
      * @param mixed $value
      * @param string|callable|null $customDefinedType
      * @throws InvalidFieldException
@@ -122,7 +132,7 @@ class Validation
         $reflectionTypeName = $reflectionType->getName();
 
         if ($value === null) {
-            if (!$reflectionType->allowsNull()) {
+            if ((!$reflectionType->allowsNull() && $customDefinedType !== self::IS_NOT_REQUIRED) || $customDefinedType === self::IS_REQUIRED) {
                 throw new InvalidFieldValueException(
                     sprintf('The property %s::%s does not accept a null-value.', get_class($model), $property)
                 );
@@ -134,7 +144,7 @@ class Validation
         if ($reflectionTypeName === 'array') {
             self::validateSimpleValue('array', $value);
 
-            if (is_array($value) && $customDefinedType !== null) {
+            if (is_array($value) && $customDefinedType !== null && preg_match('/\[]$/', $customDefinedType)) {
                 $customDefinedType = (string) preg_replace('/\[]$/', '', $customDefinedType);
                 foreach ($value as $_value) {
                     self::validateSimpleValue($customDefinedType, $_value);
@@ -151,6 +161,12 @@ class Validation
      */
     private static function validateByCustomDefinition($value, string $customDefinedType): void
     {
+        if (in_array($customDefinedType, [self::IS_REQUIRED, self::IS_NOT_REQUIRED], true)) {
+            // these types are only relevant for fields, which got processed by reflection validation.
+            // the model can define custom validation for fields with one of these "types" to override the "is (not) null" validation
+            return;
+        }
+
         if (preg_match('/(\??)(.*)\[]/', $customDefinedType, $matches)) {
             self::validateSimpleValue($matches[1] . 'array', $value);
             if (is_array($value)) {

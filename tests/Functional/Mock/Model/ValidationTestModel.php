@@ -34,6 +34,9 @@ use Tilta\Sdk\Model\Request\AbstractRequestModel;
  *
  * @method self setValidateNullableArray(array|null $list)
  * @method array|null getValidateNullableArray()
+ *
+ * @method self setValidateOverrideNullableFieldValidation($value)
+ * @method string|null getValidateOverrideNullableFieldValidation()
  */
 class ValidationTestModel extends AbstractRequestModel
 {
