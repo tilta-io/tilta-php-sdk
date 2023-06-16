@@ -22,7 +22,7 @@ class BuyerHelper
      * @param class-string<T> $class
      * @return T
      */
-    public static function createValidBuyer(string $externalId, string $class): Buyer
+    public static function createValidBuyer(string $externalId, string $class = Buyer::class): Buyer
     {
         /** @phpstan-ignore-next-line */
         return self::fillUpBuyerObject(new $class(), $externalId);
