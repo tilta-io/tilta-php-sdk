@@ -10,7 +10,11 @@ declare(strict_types=1);
 
 namespace Tilta\Sdk\Service\Request\Facility;
 
+use Exception;
+use Tilta\Sdk\Exception\GatewayException\Facility\DuplicateFacilityException;
+use Tilta\Sdk\Exception\GatewayException\NotFoundException;
 use Tilta\Sdk\Exception\GatewayException\NotFoundException\BuyerNotFoundException;
+use Tilta\Sdk\Exception\GatewayException\UnexpectedServerResponse;
 use Tilta\Sdk\HttpClient\TiltaClient;
 use Tilta\Sdk\Model\Request\Facility\CreateFacilityRequestModel;
 use Tilta\Sdk\Service\Request\AbstractRequest;
@@ -30,13 +34,19 @@ class CreateFacilityRequest extends AbstractRequest
         return true;
     }
 
+    protected function processFailed($requestModel, Exception $exception): void
+    {
+        if ($exception instanceof UnexpectedServerResponse && $exception->getHttpCode() === 409) {
+            throw new DuplicateFacilityException($exception->getHttpCode(), $exception->getResponseData(), $exception->getRequestData());
+        }
+
+        if ($exception instanceof NotFoundException && $exception->getMessage() === 'No Buyer found') {
+            throw new BuyerNotFoundException($requestModel->getExternalBuyerId(), $exception->getHttpCode(), $exception->getResponseData(), $exception->getRequestData());
+        }
+    }
+
     protected function getMethod($requestModel): string
     {
         return TiltaClient::METHOD_POST;
-    }
-
-    protected function getNotFoundExceptionClass(): ?string
-    {
-        return BuyerNotFoundException::class;
     }
 }

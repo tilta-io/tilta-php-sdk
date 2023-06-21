@@ -10,7 +10,10 @@ declare(strict_types=1);
 
 namespace Tilta\Sdk\Tests\Functional\Service\Request\Facility;
 
-use PHPUnit\Framework\TestCase;
+use Tilta\Sdk\Exception\GatewayException\Facility\DuplicateFacilityException;
+use Tilta\Sdk\Exception\GatewayException\NotFoundException;
+use Tilta\Sdk\Exception\GatewayException\NotFoundException\BuyerNotFoundException;
+use Tilta\Sdk\Exception\GatewayException\UnexpectedServerResponse;
 use Tilta\Sdk\Model\Request\Buyer\CreateBuyerRequestModel;
 use Tilta\Sdk\Model\Request\Facility\CreateFacilityRequestModel;
 use Tilta\Sdk\Model\Request\Facility\GetFacilityRequestModel;
@@ -18,10 +21,11 @@ use Tilta\Sdk\Model\Response\Facility\GetFacilityResponseModel;
 use Tilta\Sdk\Service\Request\Buyer\CreateBuyerRequest;
 use Tilta\Sdk\Service\Request\Facility\CreateFacilityRequest;
 use Tilta\Sdk\Service\Request\Facility\GetFacilityRequest;
+use Tilta\Sdk\Tests\Functional\Service\Request\AbstractRequestTestCase;
 use Tilta\Sdk\Tests\Helper\BuyerHelper;
 use Tilta\Sdk\Tests\Helper\TiltaClientHelper;
 
-class CreateFacilityRequestTest extends TestCase
+class CreateFacilityRequestTest extends AbstractRequestTestCase
 {
     private CreateBuyerRequest $createBuyerRequestService;
 
@@ -53,5 +57,24 @@ class CreateFacilityRequestTest extends TestCase
         $this->assertNotNull($facilityResponse->getStatus());
         $this->assertNotNull($facilityResponse->getPendingOrdersAmount());
         $this->assertGreaterThan(0, $facilityResponse->getTotalAmount());
+    }
+
+    public function testCreateFacilityDuplicate(): void
+    {
+        $client = $this->createMockedTiltaClientException(new UnexpectedServerResponse(409));
+
+        $this->expectException(DuplicateFacilityException::class);
+        (new CreateFacilityRequest($client))->execute(new CreateFacilityRequestModel('test'));
+    }
+
+    public function testCreateFacilityBuyerNotFound(): void
+    {
+        $client = $this->createMockedTiltaClientException(new NotFoundException('test', 404, [
+            // TODO TILSDK-9
+            'message' => 'No Buyer found',
+        ]));
+
+        $this->expectException(BuyerNotFoundException::class);
+        (new CreateFacilityRequest($client))->execute(new CreateFacilityRequestModel('test'));
     }
 }

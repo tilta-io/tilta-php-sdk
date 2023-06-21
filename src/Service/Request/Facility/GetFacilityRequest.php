@@ -10,6 +10,9 @@ declare(strict_types=1);
 
 namespace Tilta\Sdk\Service\Request\Facility;
 
+use Exception;
+use Tilta\Sdk\Exception\GatewayException\Facility\NoActiveFacilityFoundException;
+use Tilta\Sdk\Exception\GatewayException\NotFoundException;
 use Tilta\Sdk\Exception\GatewayException\NotFoundException\BuyerNotFoundException;
 use Tilta\Sdk\Exception\InvalidResponseException;
 use Tilta\Sdk\Model\Request\Facility\GetFacilityRequestModel;
@@ -35,8 +38,14 @@ class GetFacilityRequest extends AbstractRequest
         return new GetFacilityResponseModel($responseData);
     }
 
-    protected function getNotFoundExceptionClass(): ?string
+    protected function processFailed($requestModel, Exception $exception): void
     {
-        return BuyerNotFoundException::class;
+        if ($exception instanceof NotFoundException) {
+            if ($exception->getMessage() === 'No Buyer active Facility found') {
+                throw new NoActiveFacilityFoundException($requestModel->getExternalBuyerId(), $exception->getHttpCode(), $exception->getResponseData(), $exception->getRequestData());
+            } elseif ($exception->getMessage() === 'No Buyer found') {
+                throw new BuyerNotFoundException($requestModel->getExternalBuyerId(), $exception->getHttpCode(), $exception->getResponseData(), $exception->getRequestData());
+            }
+        }
     }
 }
