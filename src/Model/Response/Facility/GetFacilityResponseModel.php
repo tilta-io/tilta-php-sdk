@@ -16,7 +16,7 @@ use Tilta\Sdk\Model\Response\AbstractResponseModel;
 /**
  * @method string getBuyerExternalId()
  * @method string getStatus()
- * @method int getPendingOrderAmount()
+ * @method int getPendingOrdersAmount()
  * @method DateTime getExpiresAt()
  * @method string getCurrency()
  * @method int getTotalAmount()
@@ -27,7 +27,7 @@ class GetFacilityResponseModel extends AbstractResponseModel
 {
     protected string $buyerExternalId;
 
-    protected int $pendingOrderAmount;
+    protected int $pendingOrdersAmount;
 
     protected string $status;
 

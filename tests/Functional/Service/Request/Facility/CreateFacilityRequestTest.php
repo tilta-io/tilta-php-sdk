@@ -51,6 +51,7 @@ class CreateFacilityRequestTest extends TestCase
         $this->assertInstanceOf(GetFacilityResponseModel::class, $facilityResponse);
         $this->assertEquals($buyer->getExternalId(), $facilityResponse->getBuyerExternalId());
         $this->assertNotNull($facilityResponse->getStatus());
+        $this->assertNotNull($facilityResponse->getPendingOrdersAmount());
         $this->assertGreaterThan(0, $facilityResponse->getTotalAmount());
     }
 }

@@ -20,7 +20,7 @@ class GetFacilityResponseModelTest extends AbstractModelTestCase
     {
         $inputData = [
             'buyer_external_id' => 'buyer-external-id',
-            'pending_order_amount' => 123456,
+            'pending_orders_amount' => 123456,
             'status' => 'PENDING',
             'expires_at' => 1686925869,
             'currency' => 'EUR',
@@ -32,7 +32,7 @@ class GetFacilityResponseModelTest extends AbstractModelTestCase
         $model->fromArray($inputData);
 
         $this->assertEquals('buyer-external-id', $model->getBuyerExternalId());
-        $this->assertEquals(123456, $model->getPendingOrderAmount());
+        $this->assertEquals(123456, $model->getPendingOrdersAmount());
         $this->assertEquals('PENDING', $model->getStatus());
         $this->assertInstanceOf(DateTime::class, $model->getExpiresAt());
         $this->assertEquals(1686925869, $model->getExpiresAt()->getTimestamp());
