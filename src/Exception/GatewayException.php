@@ -16,10 +16,13 @@ class GatewayException extends TiltaException
 
     private array $requestData;
 
+    private int $httpCode;
+
     public function __construct(string $defaultMessage, int $httpCode, array $responseData = [], array $requestData = [])
     {
         $this->responseData = $responseData;
         $this->requestData = $requestData;
+        $this->httpCode = $httpCode;
 
         if (isset($responseData['code'], $responseData['error'])) {
             parent::__construct($responseData['error'], $responseData['code']);
@@ -36,5 +39,10 @@ class GatewayException extends TiltaException
     public function getRequestData(): array
     {
         return $this->requestData;
+    }
+
+    public function getHttpCode(): int
+    {
+        return $this->httpCode;
     }
 }

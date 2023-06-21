@@ -16,7 +16,7 @@ class NotFoundException extends GatewayException
 {
     protected string $externalId;
 
-    public function __construct(string $externalId, int $httpCode, array $responseData = [], array $requestData = [])
+    public function __construct(string $externalId, int $httpCode = 404, array $responseData = [], array $requestData = [])
     {
         parent::__construct(
             $this->generateMessage($externalId),

@@ -10,13 +10,14 @@ declare(strict_types=1);
 
 namespace Tilta\Sdk\Tests\Functional\Service\Request\Buyer;
 
-use PHPUnit\Framework\TestCase;
+use Tilta\Sdk\Exception\GatewayException\NotFoundException;
 use Tilta\Sdk\Exception\GatewayException\NotFoundException\BuyerNotFoundException;
 use Tilta\Sdk\Model\Request\Buyer\GetBuyerDetailsRequestModel;
 use Tilta\Sdk\Service\Request\Buyer\GetBuyerDetailsRequest;
+use Tilta\Sdk\Tests\Functional\Service\Request\AbstractRequestTestCase;
 use Tilta\Sdk\Tests\Helper\TiltaClientHelper;
 
-class GetBuyerDetailsRequestTest extends TestCase
+class GetBuyerDetailsRequestTest extends AbstractRequestTestCase
 {
     public GetBuyerDetailsRequest $requestService;
 
@@ -36,10 +37,11 @@ class GetBuyerDetailsRequestTest extends TestCase
         $this->assertNotNull($response->getExternalId());
     }
 
-    public function testNotFound(): void
+    public function testGetBuyerNotFound(): void
     {
-        $this->expectException(BuyerNotFoundException::class);
+        $client = $this->createMockedTiltaClientException(new NotFoundException('test'));
 
-        $this->requestService->execute(new GetBuyerDetailsRequestModel('test-123-invalid-id'));
+        $this->expectException(BuyerNotFoundException::class);
+        (new GetBuyerDetailsRequest($client))->execute(new GetBuyerDetailsRequestModel('test'));
     }
 }

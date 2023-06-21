@@ -10,17 +10,19 @@ declare(strict_types=1);
 
 namespace Tilta\Sdk\Tests\Functional\Service\Request\Buyer;
 
-use PHPUnit\Framework\TestCase;
+use Tilta\Sdk\Exception\GatewayException\NotFoundException;
+use Tilta\Sdk\Exception\GatewayException\NotFoundException\BuyerNotFoundException;
 use Tilta\Sdk\Model\Request\Buyer\CreateBuyerRequestModel;
 use Tilta\Sdk\Model\Request\Buyer\GetBuyerDetailsRequestModel;
 use Tilta\Sdk\Model\Request\Buyer\UpdateBuyerRequestModel;
 use Tilta\Sdk\Service\Request\Buyer\CreateBuyerRequest;
 use Tilta\Sdk\Service\Request\Buyer\GetBuyerDetailsRequest;
 use Tilta\Sdk\Service\Request\Buyer\UpdateBuyerRequest;
+use Tilta\Sdk\Tests\Functional\Service\Request\AbstractRequestTestCase;
 use Tilta\Sdk\Tests\Helper\BuyerHelper;
 use Tilta\Sdk\Tests\Helper\TiltaClientHelper;
 
-class UpdateBuyerRequestTest extends TestCase
+class UpdateBuyerRequestTest extends AbstractRequestTestCase
 {
     public CreateBuyerRequest $createRequestService;
 
@@ -54,5 +56,13 @@ class UpdateBuyerRequestTest extends TestCase
 
         // compare input buyer with output. Both buyers should contain exactly the same data.
         $this->assertEquals('updated trading_name', $buyer->getTradingName());
+    }
+
+    public function testUpdateBuyerNotFound(): void
+    {
+        $client = $this->createMockedTiltaClientException(new NotFoundException('test'));
+
+        $this->expectException(BuyerNotFoundException::class);
+        (new UpdateBuyerRequest($client))->execute(new UpdateBuyerRequestModel('test'));
     }
 }
