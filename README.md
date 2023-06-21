@@ -242,7 +242,7 @@ $requestModel = (new \Tilta\Sdk\Model\Request\Buyer\UpdateBuyerRequestModel('EXT
 $response = $requestService->execute($requestModel); // true if successfully
 ```
 
-#### UpdateBuyerRequest
+#### CreateFacilityRequest
 
 | 	                 | 	                                                                           |
 |-------------------|-----------------------------------------------------------------------------|
@@ -265,6 +265,40 @@ $requestModel = (new \Tilta\Sdk\Model\Request\Facility\CreateFacilityRequestMode
 /** @var boolean $response */
 $response = $requestService->execute($requestModel); // true if successfully
 ```
+
+#### GetFacilityRequest
+
+| 	                 | 	                                                                          |
+|-------------------|----------------------------------------------------------------------------|
+| Api documentation | [Link](https://docs.tilta.io/reference/get_v1-buyers-external-id-facility) |
+| Request service   | `\Tilta\Sdk\Service\Request\Facility\GetFacilityRequest`                   |
+| Request model     | `\Tilta\Sdk\Model\Request\Facility\GetFacilityRequestModel`                |
+| Response model    | `\Tilta\Sdk\Model\Response\Facility\GetFacilityResponseModel`              |
+
+Use this service to get the active facility for a buyer.
+
+__Usage__
+
+```php
+/** @var \Tilta\Sdk\HttpClient\TiltaClient $client */
+/** @var boolean $isSandbox */
+$requestService = new \Tilta\Sdk\Service\Request\Facility\GetFacilityRequest($client, $isSandbox);
+
+$requestModel = (new \Tilta\Sdk\Model\Request\Facility\GetFacilityRequestModel('EXTERNAL_MERCHANT_ID'));
+    
+/** @var \Tilta\Sdk\Model\Response\Facility\GetFacilityResponseModel $response */
+$response = $requestService->execute($requestModel);
+$response->getBuyerExternalId();
+$response->getAvailableAmount();
+[...]
+```
+
+__Expected exceptions thrown by service__
+
+| 	                                                                               | 	                                             |
+|---------------------------------------------------------------------------------|-----------------------------------------------|
+| `\Tilta\Sdk\Exception\GatewayException\Facility\NoActiveFacilityFoundException` | if the buyer does not have an active facility |
+| `Tilta\Sdk\Exception\GatewayException\NotFoundException\BuyerNotFoundException` | if the buyer does not exist.                  |
 
 ### Additional features
 
