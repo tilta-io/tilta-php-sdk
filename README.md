@@ -265,3 +265,34 @@ $requestModel = (new \Tilta\Sdk\Model\Request\Facility\CreateFacilityRequestMode
 /** @var boolean $response */
 $response = $requestService->execute($requestModel); // true if successfully
 ```
+
+### Additional features
+
+#### Logging
+
+you can enable logging all API Requests. (maybe we will log other things in the future, too).
+
+You just have to give us an instance of `\Psr\Log\LoggerInterface`. This could be a logger of the
+popular [monolog/monolog](https://github.com/Seldaek/monolog) package.
+
+Please note, you can only pass a logger of the mentioned interface. If you have a custom logger, you have to implement
+the interface. Do not forget to install the package [psr/log](https://github.com/php-fig/log).
+
+**Please note:** you should not set a debug-logger in production, because this will log all requests (successful and
+failed). If you only set a ERROR-Handler it will only log all failed requests.
+
+Example:
+
+```php
+$logFile = ;
+$logger = new \Monolog\Logger('name-for-the-logger');
+
+$handlerDebug = new \Monolog\Handler\StreamHandler('/path/to/your/log-file.error.log', LogLevel::DEBUG);
+$logger->pushHandler($handlerDebug);
+$handlerError = new \Monolog\Handler\StreamHandler('/path/to/your/log-file.debug.log', LogLevel::ERROR);
+$logger->pushHandler($handlerError);
+
+\Tilta\Sdk\Util\Logging::setPsr3Logger($logger);
+// call this if you want to log the request-headers too 
+\Tilta\Sdk\Util\Logging::setLogHeaders(true);
+```

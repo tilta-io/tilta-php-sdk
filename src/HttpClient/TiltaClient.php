@@ -10,11 +10,13 @@ declare(strict_types=1);
 
 namespace Tilta\Sdk\HttpClient;
 
+use Exception;
 use Tilta\Sdk\Exception\GatewayException\InvalidRequestException;
 use Tilta\Sdk\Exception\GatewayException\NotFoundException;
 use Tilta\Sdk\Exception\GatewayException\UnexpectedServerResponse;
 use Tilta\Sdk\Exception\GatewayException\UserNotAuthorizedException;
 use Tilta\Sdk\Exception\TiltaException;
+use Tilta\Sdk\Util\Logging;
 
 class TiltaClient
 {
@@ -83,8 +85,9 @@ class TiltaClient
      */
     public function request(string $url, array $data = [], string $method = self::METHOD_GET, bool $addAuthorisationHeader = true): array
     {
+        $url = $this->apiBaseUrl . trim($url, '/');
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $this->apiBaseUrl . trim($url, '/'));
+        curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
         $requestHeaders = [
             'Content-Type: application/json; charset=UTF-8',
@@ -118,13 +121,16 @@ class TiltaClient
         curl_setopt($ch, CURLOPT_SSLVERSION, CURL_SSLVERSION_TLSv1_2);
 
         $response = curl_exec($ch);
+
+        // log request
+        $curlInfo = curl_getinfo($ch);
+        $this->logRequestResponse($url, $method, $requestHeaders, $data, $response, $curlInfo);
+
         if (is_string($response)) {
             $response = json_decode($response, true);
         }
 
         $response = is_array($response) ? $response : [];
-
-        $curlInfo = curl_getinfo($ch);
 
         // close connection
         curl_close($ch);
@@ -154,5 +160,45 @@ class TiltaClient
     public function isSandbox(): bool
     {
         return $this->sandbox;
+    }
+
+    /**
+     * @param mixed $response
+     */
+    private function logRequestResponse(string $url, string $method, array $requestHeaders, array $data, $response, array $curlInfo): void
+    {
+        try {
+            if (is_string($response)) {
+                if (strpos($response, '{') === 0) {
+                    $response = json_decode($response, true, 512, JSON_INVALID_UTF8_IGNORE | JSON_OBJECT_AS_ARRAY);
+                }
+            } elseif (is_object($response)) {
+                // response should never be an object - just to be safe.
+                $response = method_exists($response, '__toString') ? (string) $response : get_class($response);
+            }
+
+            $logContext = [
+                'request' => [
+                    'url' => $url,
+                    'method' => $method,
+                    'data' => $data,
+                ],
+                'response' => [
+                    'status' => $curlInfo['http_code'],
+                    'data' => $response,
+                ],
+            ];
+            if (Logging::isLogHeaders()) {
+                $logContext['request']['headers'] = $requestHeaders;
+            }
+
+            if ($curlInfo['http_code'] < 200 || $curlInfo['http_code'] > 299) {
+                Logging::error('API Request', $logContext);
+            } else {
+                Logging::debug('API Request', $logContext);
+            }
+        } catch (Exception $exception) {
+            // do nothing - just to make sure that logging does not break the response
+        }
     }
 }

@@ -11,6 +11,7 @@
     </testsuites>
 
     <php>
+        <!--<env name="LOG_FILE" value="var/log/tilta-sdk-unit-tests.log" force="true" />-->
         <!--<env name="TILTA_API_TOKEN" value="// INSERT YOUR TILTA API TOKEN HERE \\" force="true" />-->
     </php>
 </phpunit>
