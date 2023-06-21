@@ -14,36 +14,39 @@ use Tilta\Sdk\Exception\GatewayException;
 
 class NotFoundException extends GatewayException
 {
-    protected string $externalId;
+    protected ?string $externalId;
 
-    public function __construct(string $externalId, int $httpCode = 404, array $responseData = [], array $requestData = [])
+    protected static ?string $entityName = null;
+
+    public function __construct(string $externalId = null, int $httpCode = 404, array $responseData = [], array $requestData = [])
     {
-        parent::__construct(
-            $this->generateMessage($externalId),
-            $httpCode,
-            $responseData,
-            $requestData
-        );
-        $this->setExternalId($externalId);
+        $this->externalId = $externalId;
+        parent::__construct($httpCode, $responseData, $requestData);
     }
 
-    final public function getExternalId(): string
+    final public function getExternalId(): ?string
     {
         return $this->externalId;
-    }
-
-    public function getTiltaCode(): string
-    {
-        return 'NOT_FOUND';
     }
 
     final public function setExternalId(string $externalId): void
     {
         $this->externalId = $externalId;
+        $this->message = $this->getErrorMessage();
     }
 
-    protected function generateMessage(string $externalId): string
+    protected function getErrorMessage(): string
     {
-        return sprintf('The entity with the external_id `%s` does not exist.', $externalId);
+        $message = parent::getErrorMessage();
+
+        if ($message === '' && $this->externalId !== null) {
+            if (static::$entityName !== null) {
+                return sprintf('%s with external_id `%s` does not exist.', static::$entityName, $this->externalId);
+            }
+
+            return sprintf('The entity with the external_id `%s` does not exist.', $this->externalId);
+        }
+
+        return $message;
     }
 }

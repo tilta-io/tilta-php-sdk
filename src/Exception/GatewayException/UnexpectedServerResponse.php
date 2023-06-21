@@ -14,18 +14,7 @@ use Tilta\Sdk\Exception\GatewayException;
 
 class UnexpectedServerResponse extends GatewayException
 {
-    public function __construct(int $httpCode, array $responseData = [], array $requestData = [])
-    {
-        parent::__construct(
-            $responseData['message'] ?? 'Unknown gateway response',
-            $httpCode,
-            $responseData,
-            $requestData
-        );
-    }
+    protected static ?string $defaultErrorMessage = 'Unknown gateway response';
 
-    public function getTiltaCode(): string
-    {
-        return 'UNKNOWN_GATEWAY_EXCEPTION';
-    }
+    protected static string $defaultErrorCode = 'UNKNOWN_GATEWAY_EXCEPTION';
 }

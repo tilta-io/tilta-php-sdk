@@ -14,18 +14,7 @@ use Tilta\Sdk\Exception\GatewayException;
 
 class UserNotAuthorizedException extends GatewayException
 {
-    public function __construct(int $httpCode, array $responseData = [], array $requestData = [])
-    {
-        parent::__construct(
-            'The user is not authorized to perform this action.',
-            $httpCode,
-            $responseData,
-            $requestData
-        );
-    }
+    protected static ?string $defaultErrorMessage = 'The user is not authorized to perform this request.';
 
-    public function getTiltaCode(): string
-    {
-        return 'NOT_AUTHORIZED';
-    }
+    protected static string $defaultErrorCode = 'NOT_AUTHORIZED';
 }

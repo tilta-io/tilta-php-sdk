@@ -12,10 +12,8 @@ namespace Tilta\Sdk\Exception\GatewayException;
 
 abstract class EntityNotFoundException extends NotFoundException
 {
-    protected ?string $entityName = null;
-
-    protected function generateMessage(string $externalId): string
+    final public function __construct(string $externalId, int $httpCode = 404, array $responseData = [], array $requestData = [])
     {
-        return sprintf('%s with external_id `%s` does not exist.', $this->entityName ?? 'The entity', $externalId);
+        parent::__construct($externalId, $httpCode, $responseData, $requestData);
     }
 }

@@ -14,7 +14,7 @@ use Tilta\Sdk\Exception\GatewayException\EntityNotFoundException;
 
 class BuyerNotFoundException extends EntityNotFoundException
 {
-    protected ?string $entityName = 'buyer';
+    protected static ?string $entityName = 'buyer';
 
     public function getTiltaCode(): string
     {

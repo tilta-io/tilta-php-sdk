@@ -145,7 +145,7 @@ class TiltaClient
             case 204:
                 return $response;
             case 400:
-                throw new InvalidRequestException('Invalid request', $curlInfo['http_code'], $response, $data);
+                throw new InvalidRequestException($curlInfo['http_code'], $response, $data);
             case 401:
                 throw new UserNotAuthorizedException($curlInfo['http_code'], $response, $data);
             case 404:

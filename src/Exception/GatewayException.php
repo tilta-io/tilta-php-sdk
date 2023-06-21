@@ -12,23 +12,23 @@ namespace Tilta\Sdk\Exception;
 
 class GatewayException extends TiltaException
 {
+    protected static string $defaultErrorCode = '';
+
+    protected static ?string $defaultErrorMessage = null;
+
     private array $responseData;
 
     private array $requestData;
 
     private int $httpCode;
 
-    public function __construct(string $defaultMessage, int $httpCode, array $responseData = [], array $requestData = [])
+    public function __construct(int $httpCode, array $responseData = [], array $requestData = [])
     {
         $this->responseData = $responseData;
         $this->requestData = $requestData;
         $this->httpCode = $httpCode;
 
-        if (isset($responseData['code'], $responseData['error'])) {
-            parent::__construct($responseData['error'], $responseData['code']);
-        } else {
-            parent::__construct($defaultMessage, (string) $httpCode);
-        }
+        parent::__construct($this->getErrorMessage(), self::$defaultErrorCode);
     }
 
     public function getResponseData(): array
@@ -44,5 +44,15 @@ class GatewayException extends TiltaException
     public function getHttpCode(): int
     {
         return $this->httpCode;
+    }
+
+    public function getTiltaCode(): string
+    {
+        return $this->requestData['code'] ?? $this->tiltaCode;
+    }
+
+    protected function getErrorMessage(): string
+    {
+        return $this->responseData['message'] ?? static::$defaultErrorMessage ?? '';
     }
 }
