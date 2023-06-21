@@ -113,8 +113,11 @@ class TiltaClient
                 break;
         }
 
-        if ($data !== []) {
+        if ($data !== [] && $method !== self::METHOD_GET) {
             curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+        } elseif ($method === self::METHOD_POST) {
+            // The gateway always needs a body (also if no data got send), if the content-type is application/json.
+            curl_setopt($ch, CURLOPT_POSTFIELDS, '{}');
         }
 
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
