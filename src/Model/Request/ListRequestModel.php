@@ -12,9 +12,9 @@ namespace Tilta\Sdk\Model\Request;
 
 /**
  * @method int|null getLimit()
- * @method self setLimit(?int $limit)
+ * @method $this setLimit(?int $limit)
  * @method int|null getOffset()
- * @method self setOffset(?int $offset)
+ * @method $this setOffset(?int $offset)
  */
 class ListRequestModel extends AbstractRequestModel
 {

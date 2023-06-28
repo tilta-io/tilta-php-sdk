@@ -15,16 +15,16 @@ use Tilta\Sdk\Util\Validation;
 
 /**
  * @method string|null getStreet()
- * @method self setStreet(string $street)
+ * @method $this setStreet(string $street)
  * @method string|null getHouseNumber()
- * @method self setHouseNumber(string $houseNumber)
+ * @method $this setHouseNumber(string $houseNumber)
  * @method string getPostcode()
- * @method self setPostcode(string $postcode)
+ * @method $this setPostcode(string $postcode)
  * @method string getCity()
- * @method self setCity(string $city)
+ * @method $this setCity(string $city)
  * @method string getCountry()
- * @method self setCountry(string $country)
- * @method self setAdditional(string $additional)
+ * @method $this setCountry(string $country)
+ * @method $this setAdditional(string $additional)
  * @method string|null getAdditional()
  */
 class Address extends AbstractModel

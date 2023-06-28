@@ -18,13 +18,13 @@ use Tilta\Sdk\Model\Request\EntityRequestModelInterface;
 
 /**
  * @method DateTime|null getRegisteredAt()
- * @method self setRegisteredAt(?DateTime $registeredAt)
+ * @method $this setRegisteredAt(?DateTime $registeredAt)
  * @method BuyerRepresentative[]|null getRepresentatives()
- * @method self setRepresentatives(?BuyerRepresentative[] $representatives)
+ * @method $this setRepresentatives(?BuyerRepresentative[] $representatives)
  * @method Address|null getBusinessAddress()
- * @method self setBusinessAddress(?Address $businessAddress)
+ * @method $this setBusinessAddress(?Address $businessAddress)
  * @method array|null getCustomData()
- * @method self setCustomData(?array $customData)
+ * @method $this setCustomData(?array $customData)
  */
 class UpdateBuyerRequestModel extends Buyer implements EntityRequestModelInterface
 {

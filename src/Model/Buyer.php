@@ -16,23 +16,23 @@ use Tilta\Sdk\Util\Validation;
 
 /**
  * @method string getExternalId()
- * @method self setExternalId(string $externalId)
+ * @method $this setExternalId(string $externalId)
  * @method string|null getTradingName()
- * @method self setTradingName(?string $tradingName)
+ * @method $this setTradingName(?string $tradingName)
  * @method string|null getLegalName()
- * @method self setLegalName(?string $legalName)
+ * @method $this setLegalName(?string $legalName)
  * @method string|null getLegalForm()
- * @method self setLegalForm(?string $legalForm)
+ * @method $this setLegalForm(?string $legalForm)
  * @method DateTime getRegisteredAt()
- * @method self setRegisteredAt(DateTime $registeredAt)
+ * @method $this setRegisteredAt(DateTime $registeredAt)
  * @method DateTime|null getIncorporatedAt()
- * @method self setIncorporatedAt(?DateTime $incorporatedAt)
+ * @method $this setIncorporatedAt(?DateTime $incorporatedAt)
  * @method BuyerRepresentative[] getRepresentatives()
- * @method self setRepresentatives(BuyerRepresentative[] $representatives)
+ * @method $this setRepresentatives(BuyerRepresentative[] $representatives)
  * @method Address getBusinessAddress()
- * @method self setBusinessAddress(Address $businessAddress)
+ * @method $this setBusinessAddress(Address $businessAddress)
  * @method array getCustomData()
- * @method self setCustomData(array $customData)
+ * @method $this setCustomData(array $customData)
  */
 class Buyer extends AbstractModel
 {

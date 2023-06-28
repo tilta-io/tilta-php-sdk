@@ -15,19 +15,19 @@ use Tilta\Sdk\Exception\Validation\InvalidFieldValueException;
 
 /**
  * @method string|null getSalutation()
- * @method self setSalutation(?string $salutation)
+ * @method $this setSalutation(?string $salutation)
  * @method string|null getFirstName()
- * @method self setFirstName(?string $firstName)
+ * @method $this setFirstName(?string $firstName)
  * @method string|null getLastName()
- * @method self setLastName(?string $lastName)
+ * @method $this setLastName(?string $lastName)
  * @method DateTime|null getBirthDate()
- * @method self setBirthDate(?DateTime $birthDate)
+ * @method $this setBirthDate(?DateTime $birthDate)
  * @method string|null getEmail()
- * @method self setEmail(?string $email)
+ * @method $this setEmail(?string $email)
  * @method string|null getPhone()
- * @method self setPhone(string|null $phone)
+ * @method $this setPhone(string|null $phone)
  * @method Address|null getAddress()
- * @method self setAddress(?Address $address)
+ * @method $this setAddress(?Address $address)
  */
 class BuyerRepresentative extends AbstractModel
 {
