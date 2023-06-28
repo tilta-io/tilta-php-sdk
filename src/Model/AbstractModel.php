@@ -84,7 +84,9 @@ abstract class AbstractModel
             $isNullable = $refType->allowsNull();
             $type = $refType->getName();
             if (!is_callable($customMappings[$propertyName] ?? null)) {
-                if (class_exists($type)) {
+                if (isset($customMappings[$propertyName])) {
+                    $value = $customMappings[$propertyName];
+                } elseif (class_exists($type)) {
                     $value = $isNullable ? ResponseHelper::getObject($data, $dataKey, $type) : ResponseHelper::getObjectNN($data, $dataKey, $type);
                 } else {
                     switch ($type) {
