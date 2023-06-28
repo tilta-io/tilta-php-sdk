@@ -24,7 +24,7 @@ function enableLogging(): void
     $logFile = $_ENV['LOG_FILE'];
 
     $logger = new Logger('phpunit-request-logger');
-    $handler = new StreamHandler($logFile, LogLevel::ERROR);
+    $handler = new StreamHandler($logFile, LogLevel::DEBUG);
     $logger->pushHandler($handler);
 
     if ($handler->getUrl() && file_exists($handler->getUrl())) {
@@ -35,7 +35,7 @@ function enableLogging(): void
     Logging::setPsr3Logger($logger);
     Logging::setLogHeaders(true);
 
-    fwrite(STDERR, 'TILTA: Logging of API Requests is enabled.' . "\n");
+    fwrite(STDERR, sprintf('TILTA: Logging of API Requests is enabled. LogFile: %s' . "\n", $handler->getUrl()));
 }
 
 enableLogging();
