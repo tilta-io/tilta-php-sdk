@@ -87,7 +87,6 @@ class TiltaClient
     {
         $url = $this->apiBaseUrl . trim($url, '/');
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
         $requestHeaders = [
             'Content-Type: application/json; charset=UTF-8',
@@ -118,8 +117,11 @@ class TiltaClient
         } elseif ($method === self::METHOD_POST) {
             // The gateway always needs a body (also if no data got send), if the content-type is application/json.
             curl_setopt($ch, CURLOPT_POSTFIELDS, '{}');
+        } elseif ($data !== [] && $method === self::METHOD_GET) {
+            $url .= '?' . http_build_query($data);
         }
 
+        curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_SSLVERSION, CURL_SSLVERSION_TLSv1_2);
 
