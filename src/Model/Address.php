@@ -48,7 +48,7 @@ class Address extends AbstractModel
     protected function getFieldValidations(): array
     {
         $validations = parent::getFieldValidations();
-        $validations['country'] = static function ($that, $value): string {
+        $validations['country'] = static function ($value): string {
             if (strlen((string) $value) !== 2) {
                 throw new InvalidFieldValueException('country should be a two-letter uppercase string. (country in ISO-alpha-2)');
             }

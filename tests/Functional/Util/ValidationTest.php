@@ -53,21 +53,20 @@ class ValidationTest extends TestCase
             null
         );
 
-        $this->assertTrue(true); // just an empty test
+        static::assertTrue(true); // just an empty test
     }
 
     public function testCallbackRequired(): void
     {
-        $that = $this;
-        $callback = static function (...$arguments) use ($that): string {
-            $that->assertCount(2, $arguments);
-            $that->assertInstanceOf(ValidationTestModel::class, $arguments[0]);
-            $that->assertNull($arguments[1]);
+        $callback = static function (...$arguments): string {
+            static::assertCount(1, $arguments);
+            // should be the value to validate
+            static::assertNull($arguments[0]);
 
             return 'string';
         };
 
-        $this->expectException(InvalidFieldValueException::class);
+        static::expectException(InvalidFieldValueException::class);
         Validation::validatePropertyValue(
             new ValidationTestModel(),
             'callbackValidationField',
@@ -78,11 +77,10 @@ class ValidationTest extends TestCase
 
     public function testCallbackNotRequired(): void
     {
-        $that = $this;
-        $callback = static function (...$arguments) use ($that): string {
-            $that->assertCount(2, $arguments);
-            $that->assertInstanceOf(ValidationTestModel::class, $arguments[0]);
-            $that->assertNull($arguments[1]);
+        $callback = static function (...$arguments): string {
+            static::assertCount(1, $arguments);
+            // should be the value to validate
+            static::assertNull($arguments[0]);
 
             return Validation::TYPE_STRING_OPTIONAL;
         };
@@ -94,7 +92,7 @@ class ValidationTest extends TestCase
             $callback
         );
 
-        $this->assertTrue(true);
+        static::assertTrue(true);
     }
 
     public function testInvalidTypes(): void
@@ -151,7 +149,7 @@ class ValidationTest extends TestCase
             stdClass::class . '[]'
         );
 
-        $this->assertTrue(true);
+        static::assertTrue(true);
     }
 
     public function testArrayOfTypesInvalid(): void
@@ -194,7 +192,7 @@ class ValidationTest extends TestCase
             '?' . stdClass::class . '[]'
         );
 
-        $this->assertTrue(true);
+        static::assertTrue(true);
     }
 
     public function testArrayNullableWithInvalidTypes(): void

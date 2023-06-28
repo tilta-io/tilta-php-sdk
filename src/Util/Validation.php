@@ -89,7 +89,7 @@ class Validation
     public static function validatePropertyValue(AbstractModel $model, string $propertyName, $value, $customDefinedType = null): void
     {
         if (is_callable($customDefinedType)) {
-            $customDefinedType = $customDefinedType($model, $value);
+            $customDefinedType = $customDefinedType($value);
         }
 
         if ($customDefinedType !== null && !is_string($customDefinedType)) {

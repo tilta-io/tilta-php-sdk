@@ -49,7 +49,7 @@ class BuyerRepresentative extends AbstractModel
     {
         $validation = parent::getFieldValidations();
 
-        $validation['salutation'] = static function ($that, $value) use ($validation) {
+        $validation['salutation'] = static function ($value) use ($validation) {
             $allowedValues = ['MR', 'MRS'];
             if (!in_array($value, $allowedValues, true)) {
                 throw new InvalidFieldValueException('salutation has to be one of ' . implode('or ', $allowedValues));
