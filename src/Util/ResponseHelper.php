@@ -114,7 +114,7 @@ class ResponseHelper
     {
         if ($class === DateTime::class) {
             /** @phpstan-ignore-next-line */
-            return self::getDate($data, $key, 'U'); // U = default of gateway response
+            return self::getDateTime($data, $key, 'U'); // U = default of gateway response
         }
 
         if (!is_subclass_of($class, AbstractModel::class)) {
