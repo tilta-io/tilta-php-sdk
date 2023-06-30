@@ -10,77 +10,79 @@ declare(strict_types=1);
 
 namespace Tilta\Sdk\Util;
 
-use BadMethodCallException;
 use DateTime;
-use DateTimeInterface;
 use InvalidArgumentException;
 use Tilta\Sdk\Exception\InvalidResponseException;
 use Tilta\Sdk\Model\AbstractModel;
 
 /**
- * @method static string getStringNN(array $data, string $key)
- * @method static int getIntNN(array $data, string $key)
- * @method static float getFloatNN(array $data, string $key)
- * @method static DateTime getDateTimeNN(array $data, string $key, string $format = DateTimeInterface::ATOM)
- * @method static DateTime getDateNN(array $data, string $key, string $format = 'Y-m-d')
+ * @internal
  */
 class ResponseHelper
 {
     /**
-     * @return mixed
+     * @return ($nullable is true ? mixed|null : mixed)
      */
-    public static function __callStatic(string $name, array $arguments)
+    public static function getValue(array $data, string $key, bool $nullable = true)
     {
-        if (preg_match('/^(get(Object|String|DateTime|Date|Int|Float))NN$/', $name, $matches)) {
-            return self::returnNotNull($matches[1], $arguments);
-        }
-
-        throw new BadMethodCallException('Method `' . $name . '` does not exists on `' . self::class . '`');
+        return $data[$key] ?? self::throwIfNotNullable($data, $key, $nullable);
     }
 
     /**
-     * @return mixed|null
+     * @return ($nullable is true ? string|null : string)
      */
-    public static function getValue(array $data, string $key)
+    public static function getString(array $data, string $key, bool $nullable = true): ?string
     {
-        return $data[$key] ?? null;
+        $value = self::getValue($data, $key, $nullable);
+
+        return is_string($value) || is_numeric($value) ? (string) $value : self::throwIfNotNullable($data, $key, $nullable);
     }
 
-    public static function getString(array $data, string $key): ?string
+    /**
+     * @return ($nullable is true ? int|null : int)
+     */
+    public static function getInt(array $data, string $key, bool $nullable = true): ?int
     {
-        $value = self::getValue($data, $key);
+        $value = self::getValue($data, $key, $nullable);
 
-        return is_string($value) || is_numeric($value) ? (string) $value : null;
+        return is_numeric($value) ? (int) $value : self::throwIfNotNullable($data, $key, $nullable);
     }
 
-    public static function getInt(array $data, string $key): ?int
+    /**
+     * @return ($nullable is true ? float|null : float)
+     */
+    public static function getFloat(array $data, string $key, bool $nullable = true): ?float
     {
-        $value = self::getValue($data, $key);
+        $value = self::getValue($data, $key, $nullable);
 
-        return is_numeric($value) ? (int) $value : null;
-    }
-
-    public static function getFloat(array $data, string $key): ?float
-    {
-        $value = self::getValue($data, $key);
-
-        return is_numeric($value) ? (float) $value : null;
+        return is_numeric($value) ? (float) $value : self::throwIfNotNullable($data, $key, $nullable);
     }
 
     public static function getBoolean(array $data, string $key): ?bool
     {
-        $value = self::getValue($data, $key);
+        $value = self::getValue($data, $key, true);
 
-        return (bool) $value;
+        if (is_numeric($value)) {
+            return (int) $value === 1;
+        }
+
+        if (is_bool($value)) {
+            return $value;
+        }
+
+        return false;
     }
 
-    public static function getArray(array $data, string $key, string $itemClass = null, bool $itemReadOnly = true): ?array
+    /**
+     * @return ($nullable is true ? array|null : array)
+     */
+    public static function getArray(array $data, string $key, string $itemClass = null, bool $itemReadOnly = true, bool $nullable = true): ?array
     {
         if ($itemClass !== null && !is_subclass_of($itemClass, AbstractModel::class)) {
             throw new InvalidArgumentException('argument `$itemClass` needs to be a subclass of ' . AbstractModel::class);
         }
 
-        $value = self::getValue($data, $key);
+        $value = self::getValue($data, $key, $nullable);
 
         $values = is_array($value) ? $value : null;
         if ($values !== null && $itemClass !== null) {
@@ -92,65 +94,73 @@ class ResponseHelper
         return $values;
     }
 
-    public static function getDateTime(array $data, string $key, string $format = 'Y-m-d H:i:s'): ?DateTime
+    /**
+     * @return ($nullable is true ? DateTime|null : DateTime)
+     */
+    public static function getDateTime(array $data, string $key, string $format = 'Y-m-d H:i:s', bool $nullable = true): ?DateTime
     {
-        $value = self::getString($data, $key);
-        $return = $value ? DateTime::createFromFormat($format, $value) : null;
+        $value = self::getString($data, $key, $nullable);
+        // added `!` to set time of object to midnight if no time-format is given
+        $return = $value ? DateTime::createFromFormat('!' . $format, $value) : null;
 
-        return $return ?: null;
+        return $return ?: self::throwIfNotNullable($data, $key, $nullable);
     }
 
-    public static function getDate(array $data, string $key, string $format = 'Y-m-d'): ?DateTime
+    /**
+     * @return ($nullable is true ? DateTime|null : DateTime)
+     */
+    public static function getDate(array $data, string $key, string $format = 'Y-m-d', bool $nullable = true): ?DateTime
     {
-        return self::getDateTime($data, $key, $format);
+        return self::getDateTime($data, $key, $format, $nullable);
     }
 
     /**
      * @template T
      * @param class-string<T> $class the class to instantiate
-     * @return T|null
+     * @return ($nullable is true ? T|null : T)
      */
-    public static function getObject(array $data, string $key, string $class, bool $readOnly = true, bool $createEmptyObjectOnNull = false)
+    public static function getObject(array $data, string $key, string $class, bool $readOnly = true, bool $createEmptyObjectOnNull = false, bool $nullable = true)
     {
         if ($class === DateTime::class) {
             /** @phpstan-ignore-next-line */
-            return self::getDateTime($data, $key, 'U'); // U = default of gateway response
+            return self::getDateTime($data, $key, 'U', $nullable); // U = default of gateway response
         }
+
+        $value = self::getValue($data, $key, true);
 
         if (!is_subclass_of($class, AbstractModel::class)) {
             throw new InvalidArgumentException('argument `$class` needs to be a subclass of ' . AbstractModel::class);
         }
 
-        return isset($data[$key]) && is_array($data[$key]) ? new $class($data[$key], $readOnly) : ($createEmptyObjectOnNull ? new $class() : null);
+        $instance = new $class([], $readOnly);
+        if (is_array($value)) {
+            if ($value !== ['___PHPUNIT___']) {
+                $instance->fromArray($value);
+            }
+
+            return $instance;
+        } elseif ($createEmptyObjectOnNull) {
+            return $instance;
+        }
+
+        return self::throwIfNotNullable($data, $key, $nullable);
     }
 
     /**
-     * @template T
-     * @param class-string<T> $class the class to instantiate
-     * @return T
+     * @phpstan-ignore-next-line
      */
-    public static function getObjectNN(array $data, string $key, string $class, bool $readOnly = true)
+    private static function throwIfNotNullable(array $data, string $key, bool $nullable)
     {
-        return self::__callStatic('getObjectNN', func_get_args());
-    }
-
-    /**
-     * @return mixed
-     */
-    private static function returnNotNull(string $method, array $arguments = [])
-    {
-        $value = self::$method(...$arguments);
-
-        if ($value === null) {
+        if (!$nullable) {
             throw new InvalidResponseException(
                 sprintf(
                     'Key `%s` was expected in response. key does not exist, or is null. Object: %s',
-                    $arguments[1],
-                    (string) json_encode($arguments[0])
+                    $key,
+                    (string) json_encode($data)
                 )
             );
         }
 
-        return $value;
+        return null;
     }
 }

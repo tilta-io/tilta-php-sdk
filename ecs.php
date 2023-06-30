@@ -6,6 +6,8 @@ use PhpCsFixer\Fixer\ClassNotation\ProtectedToPrivateFixer;
 use PhpCsFixer\Fixer\Comment\HeaderCommentFixer;
 use PhpCsFixer\Fixer\Operator\NotOperatorWithSpaceFixer;
 use PhpCsFixer\Fixer\Operator\NotOperatorWithSuccessorSpaceFixer;
+use Symplify\CodingStandard\Fixer\ArrayNotation\ArrayListItemNewlineFixer;
+use Symplify\CodingStandard\Fixer\ArrayNotation\ArrayOpenerAndCloserNewlineFixer;
 use Symplify\EasyCodingStandard\Config\ECSConfig;
 use Symplify\EasyCodingStandard\ValueObject\Option;
 use Symplify\EasyCodingStandard\ValueObject\Set\SetList;
@@ -43,7 +45,13 @@ file that was distributed with this source code.', 'separate' => 'bottom', 'loca
         ProtectedToPrivateFixer::class,
         NotOperatorWithSpaceFixer::class,
         NotOperatorWithSuccessorSpaceFixer::class,
-        AssignmentInConditionSniff::class
+        AssignmentInConditionSniff::class,
+        ArrayListItemNewlineFixer::class => [
+            __DIR__.'/tests/Functional/Util/ResponseHelperTest.php'
+        ],
+        ArrayOpenerAndCloserNewlineFixer::class => [
+            __DIR__.'/tests/Functional/Util/ResponseHelperTest.php'
+        ]
     ]);
 
     $ecsConfig->cacheDirectory(__DIR__ . '/var/cache/cs_fixer');

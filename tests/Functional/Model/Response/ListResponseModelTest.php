@@ -12,13 +12,13 @@ namespace Tilta\Sdk\Tests\Functional\Model\Request;
 
 use Tilta\Sdk\Model\Response\ListResponseModel;
 use Tilta\Sdk\Tests\Acceptance\Model\AbstractModelTestCase;
-use Tilta\Sdk\Tests\Functional\Mock\Model\ArrayTestModelChild;
+use Tilta\Sdk\Tests\Functional\Mock\Model\SimpleTestModel;
 
 class ListResponseModelTest extends AbstractModelTestCase
 {
     public function testToArray(): void
     {
-        $model = (new ListResponseModel(ArrayTestModelChild::class, [
+        $model = (new ListResponseModel(SimpleTestModel::class, [
             'limit' => 500,
             'offset' => 2,
             'total' => 4000,
@@ -37,8 +37,8 @@ class ListResponseModelTest extends AbstractModelTestCase
 
         $this->assertIsArray($model->getItems());
         $this->assertCount(3, $model->getItems());
-        $this->assertInstanceOf(ArrayTestModelChild::class, $model->getItems()[0]);
-        $this->assertInstanceOf(ArrayTestModelChild::class, $model->getItems()[1]);
-        $this->assertInstanceOf(ArrayTestModelChild::class, $model->getItems()[2]);
+        $this->assertInstanceOf(SimpleTestModel::class, $model->getItems()[0]);
+        $this->assertInstanceOf(SimpleTestModel::class, $model->getItems()[1]);
+        $this->assertInstanceOf(SimpleTestModel::class, $model->getItems()[2]);
     }
 }

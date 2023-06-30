@@ -14,8 +14,8 @@ use Tilta\Sdk\Exception\Validation\InvalidFieldValueException;
 use Tilta\Sdk\Model\AbstractModel;
 use Tilta\Sdk\Tests\Acceptance\Model\AbstractModelTestCase;
 use Tilta\Sdk\Tests\Functional\Mock\Model\ArrayTestModel;
-use Tilta\Sdk\Tests\Functional\Mock\Model\ArrayTestModelChild;
 use Tilta\Sdk\Tests\Functional\Mock\Model\ArrayTestModelFieldMapping;
+use Tilta\Sdk\Tests\Functional\Mock\Model\SimpleTestModel;
 use Tilta\Sdk\Tests\Functional\Mock\Model\ValidationOverrideTypeNullTestModel;
 use Tilta\Sdk\Util\Validation;
 use TypeError;
@@ -32,6 +32,7 @@ class AbstractModelTest extends AbstractModelTestCase
             'bool_value' => false,
             'object_value' => [
                 'field_value' => 'a value',
+                'nullable_field_value' => null,
             ],
             'simple_array_value' => [
                 'key1' => 'value1',
@@ -40,12 +41,15 @@ class AbstractModelTest extends AbstractModelTestCase
             'array_with_object_value' => [
                 [
                     'field_value' => 'object 1',
+                    'nullable_field_value' => null,
                 ],
                 [
                     'field_value' => 'object 2',
+                    'nullable_field_value' => null,
                 ],
                 [
                     'field_value' => 'object 3',
+                    'nullable_field_value' => null,
                 ],
             ],
             'nullable_object_value' => [
@@ -56,6 +60,7 @@ class AbstractModelTest extends AbstractModelTestCase
                 'bool_value' => true,
                 'object_value' => [
                     'field_value' => 'another value',
+                    'nullable_field_value' => null,
                 ],
                 'simple_array_value' => [
                     'value 1-1',
@@ -64,12 +69,15 @@ class AbstractModelTest extends AbstractModelTestCase
                 'array_with_object_value' => [
                     [
                         'field_value' => 'object 1-1',
+                        'nullable_field_value' => null,
                     ],
                     [
                         'field_value' => 'object 1-2',
+                        'nullable_field_value' => null,
                     ],
                     [
                         'field_value' => 'object 1-3',
+                        'nullable_field_value' => null,
                     ],
                 ],
                 // nullable values added for `reverse test` - does not have any effect, and will be not tested
@@ -94,7 +102,7 @@ class AbstractModelTest extends AbstractModelTestCase
         $this->assertEquals(546.5464, $model->getFloatValue());
         $this->assertEquals('my-string', $model->getStringValue());
         $this->assertFalse($model->getBoolValue());
-        $this->assertInstanceOf(ArrayTestModelChild::class, $model->getObjectValue());
+        $this->assertInstanceOf(SimpleTestModel::class, $model->getObjectValue());
         $this->assertEquals('a value', $model->getObjectValue()->getFieldValue());
         $this->assertNotNull($model->getNullableObjectValue());
         $this->assertTrue($model->getNullableObjectValue()->getBoolValue());
@@ -106,7 +114,7 @@ class AbstractModelTest extends AbstractModelTestCase
         // test array values with objects
         $this->assertIsArray($model->getArrayWithObjectValue());
         $this->assertCount(3, $model->getArrayWithObjectValue());
-        $this->assertInstanceOf(ArrayTestModelChild::class, $model->getArrayWithObjectValue()[0]);
+        $this->assertInstanceOf(SimpleTestModel::class, $model->getArrayWithObjectValue()[0]);
         $this->assertEquals('object 1', $model->getArrayWithObjectValue()[0]->getFieldValue());
         $this->assertEquals('object 2', $model->getArrayWithObjectValue()[1]->getFieldValue());
 
@@ -115,7 +123,7 @@ class AbstractModelTest extends AbstractModelTestCase
         $this->assertNotNull($subModel);
         $this->assertIsArray($subModel->getArrayWithObjectValue());
         $this->assertCount(3, $subModel->getArrayWithObjectValue());
-        $this->assertInstanceOf(ArrayTestModelChild::class, $subModel->getArrayWithObjectValue()[0]);
+        $this->assertInstanceOf(SimpleTestModel::class, $subModel->getArrayWithObjectValue()[0]);
         $this->assertEquals('value 1-1', $subModel->getSimpleArrayValue()[0]);
         $this->assertEquals('value 1-2', $subModel->getSimpleArrayValue()[1]);
 
@@ -134,6 +142,7 @@ class AbstractModelTest extends AbstractModelTestCase
             'bool_value' => false,
             'object_value' => [
                 'field_value' => 'a value',
+                'nullable_field_value' => null,
             ],
             'simple_array_value' => [
                 'key1' => 'value1',
@@ -142,12 +151,15 @@ class AbstractModelTest extends AbstractModelTestCase
             'array_with_object_value' => [
                 [
                     'field_value' => 'object 1',
+                    'nullable_field_value' => null,
                 ],
                 [
                     'field_value' => 'object 2',
+                    'nullable_field_value' => null,
                 ],
                 [
                     'field_value' => 'object 3',
+                    'nullable_field_value' => null,
                 ],
             ],
             // nullable values
@@ -163,16 +175,20 @@ class AbstractModelTest extends AbstractModelTestCase
                 'bool_value' => false,
                 'object_value' => [
                     'field_value' => 'very deep value',
+                    'nullable_field_value' => null,
                 ],
                 'array_with_object_value' => [
                     [
                         'field_value' => 'object 1-1',
+                        'nullable_field_value' => null,
                     ],
                     [
                         'field_value' => 'object 1-2',
+                        'nullable_field_value' => null,
                     ],
                     [
                         'field_value' => 'object 1-3',
+                        'nullable_field_value' => null,
                     ],
                 ],
                 'simple_array_value' => [

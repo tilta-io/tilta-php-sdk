@@ -65,6 +65,7 @@ abstract class AbstractModel
 
     /**
      * @internal
+     * @return $this
      */
     public function fromArray(array $data): self
     {
@@ -87,21 +88,22 @@ abstract class AbstractModel
                 if (isset($customMappings[$propertyName])) {
                     $value = $customMappings[$propertyName];
                 } elseif (class_exists($type)) {
-                    $value = $isNullable ? ResponseHelper::getObject($data, $dataKey, $type) : ResponseHelper::getObjectNN($data, $dataKey, $type);
+                    // TODO implement little backdoor or unit-tests, that objects can be empty.
+                    $value = ResponseHelper::getObject($data, $dataKey, $type, $this->_readOnly, false, $isNullable);
                 } else {
                     switch ($type) {
                         case 'int':
-                            $value = $isNullable ? ResponseHelper::getInt($data, $dataKey) : ResponseHelper::getIntNN($data, $dataKey);
+                            $value = ResponseHelper::getInt($data, $dataKey, $isNullable);
                             break;
                         case 'float':
-                            $value = $isNullable ? ResponseHelper::getFloat($data, $dataKey) : ResponseHelper::getFloatNN($data, $dataKey);
+                            $value = ResponseHelper::getFloat($data, $dataKey, $isNullable);
                             break;
                         case 'bool':
                         case 'boolean':
                             $value = ResponseHelper::getBoolean($data, $dataKey);
                             break;
                         case 'string':
-                            $value = $isNullable ? ResponseHelper::getString($data, $dataKey) : ResponseHelper::getStringNN($data, $dataKey);
+                            $value = ResponseHelper::getString($data, $dataKey, $isNullable);
                             break;
                         case 'array':
                             $value = ResponseHelper::getArray($data, $dataKey) ?? [];

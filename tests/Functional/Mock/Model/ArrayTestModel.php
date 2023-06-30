@@ -24,10 +24,10 @@ use Tilta\Sdk\Util\ResponseHelper;
  * @method bool getBoolValue()
  * @method DateTime getDateBySeconds()
  * @method DateTime getNullableDateBySeconds()
- * @method ArrayTestModelChild getObjectValue()
+ * @method SimpleTestModel getObjectValue()
  * @method ArrayTestModel|null getNullableObjectValue()
  * @method array getSimpleArrayValue()
- * @method ArrayTestModelChild[] getArrayWithObjectValue()
+ * @method SimpleTestModel[] getArrayWithObjectValue()
  */
 class ArrayTestModel extends AbstractModel
 {
@@ -49,7 +49,7 @@ class ArrayTestModel extends AbstractModel
 
     protected bool $boolValue;
 
-    protected ArrayTestModelChild $objectValue;
+    protected SimpleTestModel $objectValue;
 
     protected ?ArrayTestModel $nullableObjectValue = null;
 
@@ -60,7 +60,7 @@ class ArrayTestModel extends AbstractModel
     protected function prepareModelData(array $data): array
     {
         return [
-            'arrayWithObjectValue' => static fn (string $key): array => ResponseHelper::getArray($data, $key, ArrayTestModelChild::class) ?? [],
+            'arrayWithObjectValue' => static fn (string $key): array => ResponseHelper::getArray($data, $key, SimpleTestModel::class) ?? [],
         ];
     }
 }
