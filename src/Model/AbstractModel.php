@@ -27,7 +27,7 @@ abstract class AbstractModel
 {
     /**
      * maps the model-field to the gateway-field
-     * @var array<string, string>
+     * @var array<string, string|false>
      */
     protected static array $_additionalFieldMapping = [];
 
@@ -74,6 +74,11 @@ abstract class AbstractModel
         $ref = new ReflectionClass($this);
         foreach ($this->getPropertyNames() as $propertyName) {
             $dataKey = static::$_additionalFieldMapping[$propertyName] ?? $this->convertPropertyNameToSnakeCase($propertyName);
+
+            if ($dataKey === false) {
+                // field has been excluded
+                continue;
+            }
 
             /** @noinspection PhpUnhandledExceptionInspection */
             $property = $ref->getProperty($propertyName);
@@ -201,12 +206,21 @@ abstract class AbstractModel
         $values = [];
         foreach ($preparedData as $key => $value) {
             $key = static::$_additionalFieldMapping[$key] ?? $key;
+            /** @phpstan-ignore-next-line */
+            if ($key === false) {
+                // field has been excluded
+                continue;
+            }
+
             $values[$this->convertPropertyNameToSnakeCase($key)] = $this->convertObjectsRecursively($value);
         }
 
         return $values;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     protected function prepareValuesForGateway(array $data): array
     {
         return $data;
@@ -251,6 +265,11 @@ abstract class AbstractModel
     {
         $vars = [];
         foreach ($this->getPropertyNames() as $propertyName) {
+            if (!(static::$_additionalFieldMapping[$propertyName] ?? true)) {
+                // field has been excluded
+                continue;
+            }
+
             $vars[$propertyName] = $this->{$propertyName} ?? null;
         }
 
