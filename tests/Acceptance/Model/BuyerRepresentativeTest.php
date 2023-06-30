@@ -11,12 +11,13 @@ declare(strict_types=1);
 namespace Tilta\Sdk\Tests\Acceptance\Model\Response\Buyer;
 
 use DateTime;
-use PHPUnit\Framework\TestCase;
 use Tilta\Sdk\Exception\Validation\InvalidFieldValueException;
 use Tilta\Sdk\Model\Address;
 use Tilta\Sdk\Model\BuyerRepresentative;
+use Tilta\Sdk\Tests\Acceptance\Model\AbstractModelTestCase;
+use Tilta\Sdk\Util\ResponseHelper;
 
-class BuyerRepresentativeTest extends TestCase
+class BuyerRepresentativeTest extends AbstractModelTestCase
 {
     public function testFromAndToArray(): void
     {
@@ -27,9 +28,9 @@ class BuyerRepresentativeTest extends TestCase
             'birth_date' => 1686761444,
             'email' => 'abcdef@egagaifg.de',
             'phone' => '0113456789',
-            'address' => [],
+            'address' => ResponseHelper::PHPUNIT_OBJECT,
         ];
-        $model = new BuyerRepresentative($inputData);
+        $model = (new BuyerRepresentative())->fromArray($inputData);
 
         $this->assertEquals('MR', $model->getSalutation());
         $this->assertEquals('first name', $model->getFirstName());
@@ -42,13 +43,7 @@ class BuyerRepresentativeTest extends TestCase
         // unset address to skip validation
         $model->setAddress($this->createMock(Address::class));
 
-        $outputData = $model->toArray();
-
-        // sort array to make sure they are in the same order
-        ksort($inputData);
-        ksort($outputData);
-
-        $this->assertEquals($inputData, $outputData);
+        $this->assertInputOutputModel($inputData, $model);
     }
 
     public function testInvalidSalutation(): void

@@ -21,6 +21,12 @@ use Tilta\Sdk\Model\AbstractModel;
 class ResponseHelper
 {
     /**
+     * @internal
+     * @var string[]
+     */
+    public const PHPUNIT_OBJECT = ['___PHPUNIT___'];
+
+    /**
      * @return ($nullable is true ? mixed|null : mixed)
      */
     public static function getValue(array $data, string $key, bool $nullable = true)
@@ -134,7 +140,7 @@ class ResponseHelper
 
         $instance = new $class([], $readOnly);
         if (is_array($value)) {
-            if ($value !== ['___PHPUNIT___']) {
+            if ($value !== self::PHPUNIT_OBJECT) {
                 $instance->fromArray($value);
             }
 

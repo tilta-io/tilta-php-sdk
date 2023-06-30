@@ -22,9 +22,9 @@ class ListRequestModelTest extends AbstractModelTestCase
             ->setOffset(2)
             ->toArray();
 
-        $this->assertIsArray($data);
-        $this->assertCount(2, $data);
-        $this->assertEquals(500, $data['limit']);
-        $this->assertEquals(2, $data['offset']);
+        static::assertIsArray($data);
+        static::assertCount(2, $data);
+        static::assertValueShouldBeInData(500, $data, 'limit');
+        static::assertValueShouldBeInData(2, $data, 'offset');
     }
 }

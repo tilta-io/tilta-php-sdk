@@ -21,19 +21,19 @@ class UpdateBuyerRequestModelTest extends AbstractModelTestCase
         $model = BuyerHelper::fillUpBuyerObject(new UpdateBuyerRequestModel('Test-123'));
         $data = $model->toArray();
 
-        $this->assertIsArray($data);
-        $this->assertCount(8, $data);
-        $this->assertArrayHasKey('trading_name', $data);
-        $this->assertArrayHasKey('legal_name', $data);
-        $this->assertArrayHasKey('legal_form', $data);
-        $this->assertArrayHasKey('registered_at', $data);
-        $this->assertArrayHasKey('incorporated_at', $data);
-        $this->assertArrayHasKey('representatives', $data);
-        $this->assertIsArray($data['representatives']);
-        $this->assertArrayHasKey('business_address', $data);
-        $this->assertIsArray($data['business_address']);
-        $this->assertArrayHasKey('custom_data', $data);
-        $this->assertIsArray($data['custom_data']);
+        self::assertIsArray($data);
+        self::assertCount(8, $data);
+        self::assertArrayHasKey('trading_name', $data);
+        self::assertArrayHasKey('legal_name', $data);
+        self::assertArrayHasKey('legal_form', $data);
+        self::assertArrayHasKey('registered_at', $data);
+        self::assertArrayHasKey('incorporated_at', $data);
+        self::assertArrayHasKey('representatives', $data);
+        self::assertIsArray($data['representatives']);
+        self::assertArrayHasKey('business_address', $data);
+        self::assertIsArray($data['business_address']);
+        self::assertArrayHasKey('custom_data', $data);
+        self::assertIsArray($data['custom_data']);
     }
 
     public function testNullableFields(): void
@@ -45,7 +45,7 @@ class UpdateBuyerRequestModelTest extends AbstractModelTestCase
 
         $model = new UpdateBuyerRequestModel('Test-123');
         $outputData = $model->toArray();
-        $this->assertIsArray($outputData);
-        $this->assertEquals([], $outputData); // also no empty key/value pairs should be created, to make sure that no null-values got submitted
+        self::assertIsArray($outputData);
+        self::assertEquals([], $outputData); // also no empty key/value pairs should be created, to make sure that no null-values got submitted
     }
 }

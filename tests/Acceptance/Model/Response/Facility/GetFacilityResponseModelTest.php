@@ -31,14 +31,14 @@ class GetFacilityResponseModelTest extends AbstractModelTestCase
         $model = new GetFacilityResponseModel();
         $model->fromArray($inputData);
 
-        $this->assertEquals('buyer-external-id', $model->getBuyerExternalId());
-        $this->assertEquals(123456, $model->getPendingOrdersAmount());
-        $this->assertEquals('PENDING', $model->getStatus());
-        $this->assertInstanceOf(DateTime::class, $model->getExpiresAt());
-        $this->assertEquals(1686925869, $model->getExpiresAt()->getTimestamp());
-        $this->assertEquals('EUR', $model->getCurrency());
-        $this->assertEquals(54684, $model->getTotalAmount());
-        $this->assertEquals(88476, $model->getAvailableAmount());
-        $this->assertEquals(1342561, $model->getUsedAmount());
+        self::assertEquals('buyer-external-id', $model->getBuyerExternalId());
+        self::assertEquals(123456, $model->getPendingOrdersAmount());
+        self::assertEquals('PENDING', $model->getStatus());
+        self::assertInstanceOf(DateTime::class, $model->getExpiresAt());
+        self::assertEquals(1686925869, $model->getExpiresAt()->getTimestamp());
+        self::assertEquals('EUR', $model->getCurrency());
+        self::assertEquals(54684, $model->getTotalAmount());
+        self::assertEquals(88476, $model->getAvailableAmount());
+        self::assertEquals(1342561, $model->getUsedAmount());
     }
 }

@@ -37,7 +37,7 @@ class AddressTest extends AbstractModelTestCase
             'country' => 'DE',
             'additional' => 'additional information',
         ];
-        $model = new Address($inputData);
+        $model = (new Address())->fromArray($inputData);
 
         $this->assertEquals('company street', $model->getStreet());
         $this->assertEquals('house number', $model->getHouseNumber());
@@ -46,7 +46,6 @@ class AddressTest extends AbstractModelTestCase
         $this->assertEquals('DE', $model->getCountry());
         $this->assertEquals('additional information', $model->getAdditional());
 
-        $outputData = $model->toArray();
-        $this->assertEquals($inputData, $outputData);
+        static::assertInputOutputModel($inputData, $model);
     }
 }

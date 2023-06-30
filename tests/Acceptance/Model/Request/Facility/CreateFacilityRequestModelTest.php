@@ -20,8 +20,8 @@ class CreateFacilityRequestModelTest extends AbstractModelTestCase
         $model = (new CreateFacilityRequestModel('external-id'));
         $outputData = $model->toArray();
 
-        $this->assertIsArray($outputData);
-        $this->assertEquals([], $outputData, 'model should return an empty array, cause the external-id is a path parameter');
-        $this->assertEquals('external-id', $model->getExternalId());
+        self::assertIsArray($outputData);
+        self::assertEquals([], $outputData, 'model should return an empty array, cause the external-id is a path parameter');
+        self::assertEquals('external-id', $model->getExternalId());
     }
 }

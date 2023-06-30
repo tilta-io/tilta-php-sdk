@@ -12,6 +12,8 @@ namespace Tilta\Sdk\Tests\Acceptance\Model;
 
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use Tilta\Sdk\Model\AbstractModel;
+use Tilta\Sdk\Util\ResponseHelper;
 
 abstract class AbstractModelTestCase extends TestCase
 {
@@ -24,5 +26,38 @@ abstract class AbstractModelTestCase extends TestCase
         }
 
         return $mock;
+    }
+
+    protected static function assertInputOutputModel(array $inputData, AbstractModel $model): void
+    {
+        $inputData = self::replacePHPUnitArrays($inputData);
+        $outputData = self::replacePHPUnitArrays($model->toArray());
+        // sort array to make sure they are in the same order
+        ksort($inputData);
+        ksort($outputData);
+
+        static::assertEquals($inputData, $outputData);
+    }
+
+    /**
+     * @param mixed $expected
+     */
+    protected static function assertValueShouldBeInData($expected, array $data, string $key): void
+    {
+        static::assertArrayHasKey($key, $data);
+        static::assertEquals($expected, $data[$key]);
+    }
+
+    private static function replacePHPUnitArrays(array $array): array
+    {
+        if ($array === ResponseHelper::PHPUNIT_OBJECT) {
+            return [];
+        }
+
+        foreach ($array as $k => $v) {
+            $array[$k] = is_array($v) ? self::replacePHPUnitArrays($v) : $v;
+        }
+
+        return $array;
     }
 }

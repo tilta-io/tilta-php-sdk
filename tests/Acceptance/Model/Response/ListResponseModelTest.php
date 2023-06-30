@@ -17,17 +17,20 @@ class ListResponseModelTest extends AbstractModelTestCase
 {
     public function testToArray(): void
     {
-        // the given class does not make any sense. because we are not converting data, it does not matter which model got provided.
-        $model = (new ListResponseModel(ListResponseModel::class, [
+        $input = [
             'limit' => 500,
             'offset' => 2,
             'total' => 4000,
             'items' => [],
-        ]));
+        ];
+        // the given class does not make any sense. because we are not converting data, it does not matter which model got provided.
+        $model = (new ListResponseModel(ListResponseModel::class))->fromArray($input);
 
-        $this->assertEquals(500, $model->getLimit());
-        $this->assertEquals(2, $model->getOffset());
-        $this->assertEquals(4000, $model->getTotal());
-        $this->assertIsArray($model->getItems());
+        static::assertEquals(500, $model->getLimit());
+        static::assertEquals(2, $model->getOffset());
+        static::assertEquals(4000, $model->getTotal());
+        static::assertIsArray($model->getItems());
+
+        $this->assertInputOutputModel($input, $model);
     }
 }

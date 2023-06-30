@@ -23,4 +23,12 @@ class AbstractRequestTestCase extends TestCase
 
         return $clientMock;
     }
+
+    protected function createMockedTiltaClientResponse(array $responseData): TiltaClient
+    {
+        $clientMock = $this->createMock(TiltaClient::class);
+        $clientMock->method('request')->willReturn($responseData);
+
+        return $clientMock;
+    }
 }

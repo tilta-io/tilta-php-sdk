@@ -14,6 +14,7 @@ use DateTime;
 use Tilta\Sdk\Exception\InvalidResponseException;
 use Tilta\Sdk\Model\Address;
 use Tilta\Sdk\Model\Buyer;
+use Tilta\Sdk\Util\ResponseHelper;
 
 class BuyerTest extends AbstractModelTestCase
 {
@@ -27,29 +28,23 @@ class BuyerTest extends AbstractModelTestCase
             'registered_at' => 1686763038,
             'incorporated_at' => 1686763038,
             'representatives' => [],
-            'business_address' => [],
+            'business_address' => ResponseHelper::PHPUNIT_OBJECT,
             'custom_data' => [],
         ];
         $model = new Buyer($inputData);
 
-        $this->assertEquals('external id', $model->getExternalId());
-        $this->assertEquals('trading name', $model->getTradingName());
-        $this->assertEquals('legal name', $model->getLegalName());
-        $this->assertEquals('legal form', $model->getLegalForm());
-        $this->assertInstanceOf(DateTime::class, $model->getRegisteredAt());
-        $this->assertInstanceOf(DateTime::class, $model->getIncorporatedAt());
-        $this->assertIsArray($model->getRepresentatives());
+        self::assertEquals('external id', $model->getExternalId());
+        self::assertEquals('trading name', $model->getTradingName());
+        self::assertEquals('legal name', $model->getLegalName());
+        self::assertEquals('legal form', $model->getLegalForm());
+        self::assertInstanceOf(DateTime::class, $model->getRegisteredAt());
+        self::assertInstanceOf(DateTime::class, $model->getIncorporatedAt());
+        self::assertIsArray($model->getRepresentatives());
 
         // set mock to skip validation
         $model->setBusinessAddress($this->createMock(Address::class));
 
-        $outputData = $model->toArray();
-
-        // sort array to make sure they are in the same order
-        ksort($inputData);
-        ksort($outputData);
-
-        $this->assertEquals($inputData, $outputData);
+        self::assertInputOutputModel($inputData, $model);
     }
 
     public function testRequiredFieldRegisteredAt(): void
