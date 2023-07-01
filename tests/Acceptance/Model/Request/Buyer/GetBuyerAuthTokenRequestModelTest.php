@@ -22,6 +22,6 @@ class GetBuyerAuthTokenRequestModelTest extends AbstractModelTestCase
 
         static::assertIsArray($data);
         static::assertCount(0, $data); // no data should be provided
-        static::assertEquals('buyer-id', $model->getExternalBuyerId());
+        static::assertEquals('buyer-id', $model->getBuyerExternalId());
     }
 }

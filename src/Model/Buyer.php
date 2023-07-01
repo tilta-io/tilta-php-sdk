@@ -34,7 +34,7 @@ use Tilta\Sdk\Util\Validation;
  * @method array getCustomData()
  * @method $this setCustomData(array $customData)
  */
-class Buyer extends AbstractModel
+class Buyer extends AbstractModel implements HasBuyerFieldInterface
 {
     protected string $externalId;
 
@@ -56,6 +56,14 @@ class Buyer extends AbstractModel
     protected ?Address $businessAddress = null;
 
     protected ?array $customData = [];
+
+    /**
+     * @internal
+     */
+    public function getBuyerExternalId(): string
+    {
+        return $this->getExternalId();
+    }
 
     protected function prepareModelData(array $data): array
     {

@@ -10,7 +10,6 @@ declare(strict_types=1);
 
 namespace Tilta\Sdk\Service\Request\Buyer;
 
-use Tilta\Sdk\Exception\GatewayException\NotFoundException\BuyerNotFoundException;
 use Tilta\Sdk\HttpClient\TiltaClient;
 use Tilta\Sdk\Model\Request\Buyer\UpdateBuyerRequestModel;
 use Tilta\Sdk\Service\Request\AbstractRequest;
@@ -33,10 +32,5 @@ class UpdateBuyerRequest extends AbstractRequest
     protected function getMethod($requestModel): string
     {
         return TiltaClient::METHOD_POST;
-    }
-
-    protected function getNotFoundExceptionClass(): ?string
-    {
-        return BuyerNotFoundException::class;
     }
 }

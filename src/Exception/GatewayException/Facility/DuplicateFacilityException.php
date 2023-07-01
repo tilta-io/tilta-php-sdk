@@ -14,6 +14,11 @@ use Tilta\Sdk\Exception\GatewayException;
 
 class DuplicateFacilityException extends GatewayException
 {
+    public function getTiltaCode(): string
+    {
+        return 'BUYER_ALREADY_HAVE_FACILITY';
+    }
+
     protected function getErrorMessage(): string
     {
         return 'The buyer does already have an active facility';

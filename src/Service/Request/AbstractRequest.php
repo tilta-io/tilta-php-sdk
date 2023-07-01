@@ -12,15 +12,13 @@ namespace Tilta\Sdk\Service\Request;
 
 use Exception;
 use InvalidArgumentException;
-use RuntimeException;
-use Tilta\Sdk\Exception\GatewayException\EntityNotFoundException;
-use Tilta\Sdk\Exception\GatewayException\NotFoundException;
+use Tilta\Sdk\Exception\GatewayException;
 use Tilta\Sdk\Exception\TiltaException;
 use Tilta\Sdk\Exception\Validation\InvalidFieldValueCollectionException;
 use Tilta\Sdk\HttpClient\TiltaClient;
 use Tilta\Sdk\Model\AbstractModel;
-use Tilta\Sdk\Model\Request\EntityRequestModelInterface;
 use Tilta\Sdk\Model\Request\RequestModelInterface;
+use Tilta\Sdk\Util\ExceptionHandler;
 
 /**
  * @template T_RequestModel of RequestModelInterface
@@ -66,8 +64,8 @@ abstract class AbstractRequest
                 $this->isAuthorisationRequired($requestModel)
             );
         } catch (Exception $exception) {
-            if ($exception instanceof NotFoundException) {
-                $this->processNotFound($requestModel, $exception);
+            if ($exception instanceof GatewayException && $requestModel instanceof AbstractModel) {
+                $exception = ExceptionHandler::mapException($exception, $requestModel) ?? $exception;
             }
 
             $this->processFailed($requestModel, $exception);
@@ -93,38 +91,6 @@ abstract class AbstractRequest
      */
     protected function processFailed($requestModel, Exception $exception): void
     {
-    }
-
-    /**
-     * @param T_RequestModel $requestModel
-     * @throws EntityNotFoundException
-     */
-    protected function processNotFound($requestModel, NotFoundException $exception): void
-    {
-        if ($requestModel instanceof EntityRequestModelInterface) {
-            $exceptionClass = $this->getNotFoundExceptionClass();
-            if ($exceptionClass === null) {
-                $exception->setExternalId($requestModel->getExternalId());
-
-                return;
-            }
-
-            if (!is_subclass_of($exceptionClass, EntityNotFoundException::class)) {
-                throw new RuntimeException(sprintf('%s needs to be an subclass of %s', $exceptionClass, EntityNotFoundException::class));
-            }
-
-            throw new $exceptionClass(
-                $requestModel->getExternalId(),
-                $exception->getCode(),
-                $exception->getResponseData(),
-                $exception->getRequestData()
-            );
-        }
-    }
-
-    protected function getNotFoundExceptionClass(): ?string
-    {
-        return null;
     }
 
     /**

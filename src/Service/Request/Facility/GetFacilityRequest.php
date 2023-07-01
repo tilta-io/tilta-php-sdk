@@ -26,7 +26,7 @@ class GetFacilityRequest extends AbstractRequest
 {
     protected function getPath($requestModel): string
     {
-        return 'buyers/' . $requestModel->getExternalBuyerId() . '/facility';
+        return 'buyers/' . $requestModel->getBuyerExternalId() . '/facility';
     }
 
     protected function processSuccess($requestModel, ?array $responseData = null): GetFacilityResponseModel
@@ -42,9 +42,9 @@ class GetFacilityRequest extends AbstractRequest
     {
         if ($exception instanceof NotFoundException) {
             if ($exception->getMessage() === 'No Buyer active Facility found') {
-                throw new NoActiveFacilityFoundException($requestModel->getExternalBuyerId(), $exception->getHttpCode(), $exception->getResponseData(), $exception->getRequestData());
+                throw new NoActiveFacilityFoundException($requestModel->getBuyerExternalId(), $exception->getHttpCode(), $exception->getResponseData(), $exception->getRequestData());
             } elseif ($exception->getMessage() === 'No Buyer found') {
-                throw new BuyerNotFoundException($requestModel->getExternalBuyerId(), $exception->getHttpCode(), $exception->getResponseData(), $exception->getRequestData());
+                throw new BuyerNotFoundException($requestModel->getBuyerExternalId(), $exception->getHttpCode(), $exception->getResponseData(), $exception->getRequestData());
             }
         }
     }

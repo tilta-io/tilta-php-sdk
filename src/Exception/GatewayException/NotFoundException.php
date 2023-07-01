@@ -24,22 +24,11 @@ class NotFoundException extends GatewayException
         parent::__construct($httpCode, $responseData, $requestData);
     }
 
-    final public function getExternalId(): ?string
-    {
-        return $this->externalId;
-    }
-
-    final public function setExternalId(string $externalId): void
-    {
-        $this->externalId = $externalId;
-        $this->message = $this->getErrorMessage();
-    }
-
     protected function getErrorMessage(): string
     {
         $message = parent::getErrorMessage();
 
-        if ($message === '' && $this->externalId !== null) {
+        if (($message === '' || static::$entityName !== null) && $this->externalId !== null) {
             if (static::$entityName !== null) {
                 return sprintf('%s with external_id `%s` does not exist.', static::$entityName, $this->externalId);
             }

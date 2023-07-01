@@ -19,8 +19,13 @@ class NoActiveFacilityFoundException extends NotFoundException
         parent::__construct($buyerExternalId, $httpCode, $responseData, $requestData);
     }
 
+    public function getTiltaCode(): string
+    {
+        return 'NO_ACTIVE_FACILITY_FOUND';
+    }
+
     protected function getErrorMessage(): string
     {
-        return 'The buyer does not have an active facility';
+        return sprintf('The buyer with external_id `%s` does not have an active facility', $this->externalId);
     }
 }

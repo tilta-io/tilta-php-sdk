@@ -70,7 +70,6 @@ class CreateFacilityRequestTest extends AbstractRequestTestCase
     public function testCreateFacilityBuyerNotFound(): void
     {
         $client = $this->createMockedTiltaClientException(new NotFoundException('test', 404, [
-            // TODO TILSDK-9
             'message' => 'No Buyer found',
         ]));
 

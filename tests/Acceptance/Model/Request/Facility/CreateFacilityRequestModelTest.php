@@ -17,11 +17,11 @@ class CreateFacilityRequestModelTest extends AbstractModelTestCase
 {
     public function testToArray(): void
     {
-        $model = (new CreateFacilityRequestModel('external-id'));
+        $model = (new CreateFacilityRequestModel('buyer-external-id'));
         $outputData = $model->toArray();
 
         self::assertIsArray($outputData);
         self::assertEquals([], $outputData, 'model should return an empty array, cause the external-id is a path parameter');
-        self::assertEquals('external-id', $model->getExternalId());
+        self::assertEquals('buyer-external-id', $model->getBuyerExternalId());
     }
 }

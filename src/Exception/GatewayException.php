@@ -53,6 +53,6 @@ class GatewayException extends TiltaException
 
     protected function getErrorMessage(): string
     {
-        return $this->responseData['message'] ?? static::$defaultErrorMessage ?? '';
+        return $this->responseData['message'] ?? $this->responseData['error'] ?? static::$defaultErrorMessage ?? '';
     }
 }

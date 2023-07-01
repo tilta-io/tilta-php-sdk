@@ -14,7 +14,7 @@ use DateTime;
 use Tilta\Sdk\Model\Address;
 use Tilta\Sdk\Model\Buyer;
 use Tilta\Sdk\Model\BuyerRepresentative;
-use Tilta\Sdk\Model\Request\EntityRequestModelInterface;
+use Tilta\Sdk\Model\Request\RequestModelInterface;
 
 /**
  * @method DateTime|null getRegisteredAt()
@@ -26,7 +26,7 @@ use Tilta\Sdk\Model\Request\EntityRequestModelInterface;
  * @method array|null getCustomData()
  * @method $this setCustomData(?array $customData)
  */
-class UpdateBuyerRequestModel extends Buyer implements EntityRequestModelInterface
+class UpdateBuyerRequestModel extends Buyer implements RequestModelInterface
 {
     public function __construct(string $externalMerchantId)
     {
@@ -35,11 +35,6 @@ class UpdateBuyerRequestModel extends Buyer implements EntityRequestModelInterfa
 
         $this->setCustomData(null);
         $this->setRepresentatives(null);
-    }
-
-    public function getExternalId(): string
-    {
-        return $this->externalId;
     }
 
     protected function prepareValuesForGateway(array $data): array

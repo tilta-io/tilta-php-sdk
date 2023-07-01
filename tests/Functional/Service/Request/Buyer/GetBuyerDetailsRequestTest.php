@@ -39,7 +39,10 @@ class GetBuyerDetailsRequestTest extends AbstractRequestTestCase
 
     public function testGetBuyerNotFound(): void
     {
-        $client = $this->createMockedTiltaClientException(new NotFoundException('test'));
+        $exception = new NotFoundException('test', 404, [
+            'message' => 'No Buyer found',
+        ]);
+        $client = $this->createMockedTiltaClientException($exception);
 
         $this->expectException(BuyerNotFoundException::class);
         (new GetBuyerDetailsRequest($client))->execute(new GetBuyerDetailsRequestModel('test'));

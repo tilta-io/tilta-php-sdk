@@ -10,7 +10,6 @@ declare(strict_types=1);
 
 namespace Tilta\Sdk\Service\Request\Buyer;
 
-use Tilta\Sdk\Exception\GatewayException\NotFoundException\BuyerNotFoundException;
 use Tilta\Sdk\Exception\InvalidResponseException;
 use Tilta\Sdk\Model\Buyer;
 use Tilta\Sdk\Model\Request\Buyer\GetBuyerDetailsRequestModel;
@@ -23,7 +22,7 @@ class GetBuyerDetailsRequest extends AbstractRequest
 {
     protected function getPath($requestModel): string
     {
-        return 'buyers/' . $requestModel->getExternalBuyerId();
+        return 'buyers/' . $requestModel->getBuyerExternalId();
     }
 
     protected function processSuccess($requestModel, ?array $responseData = null): Buyer
@@ -33,10 +32,5 @@ class GetBuyerDetailsRequest extends AbstractRequest
         }
 
         return new Buyer($responseData);
-    }
-
-    protected function getNotFoundExceptionClass(): ?string
-    {
-        return BuyerNotFoundException::class;
     }
 }

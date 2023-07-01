@@ -60,7 +60,10 @@ class UpdateBuyerRequestTest extends AbstractRequestTestCase
 
     public function testUpdateBuyerNotFound(): void
     {
-        $client = $this->createMockedTiltaClientException(new NotFoundException('test'));
+        $exception = new NotFoundException('test', 404, [
+            'message' => 'No Buyer found',
+        ]);
+        $client = $this->createMockedTiltaClientException($exception);
 
         $this->expectException(BuyerNotFoundException::class);
         (new UpdateBuyerRequest($client))->execute(new UpdateBuyerRequestModel('test'));

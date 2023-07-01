@@ -8,12 +8,12 @@
 
 declare(strict_types=1);
 
-namespace Tilta\Sdk\Model\Request;
+namespace Tilta\Sdk\Model;
 
-interface EntityRequestModelInterface extends RequestModelInterface
+/**
+ * @internal is used for exception handling
+ */
+interface HasMerchantFieldInterface
 {
-    /**
-     * @internal
-     */
-    public function getExternalId(): string;
+    public function getMerchantExternalId(): string;
 }

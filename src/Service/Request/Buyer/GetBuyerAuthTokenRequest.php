@@ -22,7 +22,7 @@ class GetBuyerAuthTokenRequest extends AbstractRequest
 {
     protected function getPath($requestModel): string
     {
-        return 'auth/buyer/' . $requestModel->getExternalBuyerId();
+        return 'auth/buyer/' . $requestModel->getBuyerExternalId();
     }
 
     protected function processSuccess($requestModel, ?array $responseData = null): GetBuyerAuthTokenResponseModel
