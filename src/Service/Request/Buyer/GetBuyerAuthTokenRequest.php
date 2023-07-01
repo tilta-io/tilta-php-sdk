@@ -25,12 +25,8 @@ class GetBuyerAuthTokenRequest extends AbstractRequest
         return 'auth/buyer/' . $requestModel->getBuyerExternalId();
     }
 
-    protected function processSuccess($requestModel, ?array $responseData = null): GetBuyerAuthTokenResponseModel
+    protected function processSuccess($requestModel, array $responseData): GetBuyerAuthTokenResponseModel
     {
-        if (!is_array($responseData)) {
-            throw new InvalidResponseException('got no response from gateway. A response was expected.');
-        }
-
         return new GetBuyerAuthTokenResponseModel($responseData);
     }
 }

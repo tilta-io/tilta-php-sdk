@@ -14,7 +14,6 @@ use Exception;
 use Tilta\Sdk\Exception\GatewayException\Facility\NoActiveFacilityFoundException;
 use Tilta\Sdk\Exception\GatewayException\NotFoundException;
 use Tilta\Sdk\Exception\GatewayException\NotFoundException\BuyerNotFoundException;
-use Tilta\Sdk\Exception\InvalidResponseException;
 use Tilta\Sdk\Model\Request\Facility\GetFacilityRequestModel;
 use Tilta\Sdk\Model\Response\Facility\GetFacilityResponseModel;
 use Tilta\Sdk\Service\Request\AbstractRequest;
@@ -29,12 +28,8 @@ class GetFacilityRequest extends AbstractRequest
         return 'buyers/' . $requestModel->getBuyerExternalId() . '/facility';
     }
 
-    protected function processSuccess($requestModel, ?array $responseData = null): GetFacilityResponseModel
+    protected function processSuccess($requestModel, array $responseData): GetFacilityResponseModel
     {
-        if (!is_array($responseData)) {
-            throw new InvalidResponseException('got no response from gateway. A response was expected.');
-        }
-
         return new GetFacilityResponseModel($responseData);
     }
 

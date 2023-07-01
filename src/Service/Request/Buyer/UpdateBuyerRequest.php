@@ -19,12 +19,14 @@ use Tilta\Sdk\Service\Request\AbstractRequest;
  */
 class UpdateBuyerRequest extends AbstractRequest
 {
+    protected static bool $allowEmptyResponse = true;
+
     protected function getPath($requestModel): string
     {
         return 'buyers/' . $requestModel->getExternalId();
     }
 
-    protected function processSuccess($requestModel, ?array $responseData = null): bool
+    protected function processSuccess($requestModel, array $responseData): bool
     {
         return true;
     }

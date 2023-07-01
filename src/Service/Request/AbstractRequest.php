@@ -13,6 +13,7 @@ namespace Tilta\Sdk\Service\Request;
 use Exception;
 use InvalidArgumentException;
 use Tilta\Sdk\Exception\GatewayException;
+use Tilta\Sdk\Exception\GatewayException\EmptyResponseException;
 use Tilta\Sdk\Exception\TiltaException;
 use Tilta\Sdk\Exception\Validation\InvalidFieldValueCollectionException;
 use Tilta\Sdk\HttpClient\TiltaClient;
@@ -27,6 +28,8 @@ use Tilta\Sdk\Util\ExceptionHandler;
 abstract class AbstractRequest
 {
     protected ?TiltaClient $client;
+
+    protected static bool $allowEmptyResponse = false;
 
     public function __construct(TiltaClient $client = null)
     {
@@ -63,6 +66,10 @@ abstract class AbstractRequest
                 $this->getMethod($requestModel),
                 $this->isAuthorisationRequired($requestModel)
             );
+
+            if ($response === [] && !static::$allowEmptyResponse) {
+                throw new EmptyResponseException();
+            }
         } catch (Exception $exception) {
             if ($exception instanceof GatewayException && $requestModel instanceof AbstractModel) {
                 $exception = ExceptionHandler::mapException($exception, $requestModel) ?? $exception;
@@ -84,7 +91,7 @@ abstract class AbstractRequest
      * @param T_RequestModel $requestModel
      * @return T_ResponseModel
      */
-    abstract protected function processSuccess($requestModel, ?array $responseData = null);
+    abstract protected function processSuccess($requestModel, array $responseData);
 
     /**
      * @param T_RequestModel $requestModel
