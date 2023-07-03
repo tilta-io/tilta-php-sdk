@@ -41,6 +41,16 @@ class GetOrderListForBuyerRequestTest extends AbstractRequestTestCase
         static::assertContainsOnlyInstancesOf(Order::class, $response->getItems());
     }
 
+    public function testResponseCanBeEmpty(): void
+    {
+        $expectedResponse = [];
+        $request = new GetOrderListForBuyerRequest($this->createMockedTiltaClientResponse($expectedResponse));
+
+        $response = $request->execute($this->createMock(GetOrderListForBuyerRequestModel::class));
+        static::assertInstanceOf(GetOrderListForBuyerResponseModel::class, $response);
+        static::assertCount(0, $response->getItems());
+    }
+
     public function testRequestOnline(): void
     {
         $buyerId = BuyerHelper::getBuyerExternalIdWithValidFacility(__FUNCTION__);

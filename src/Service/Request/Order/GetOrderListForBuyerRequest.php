@@ -19,6 +19,8 @@ use Tilta\Sdk\Service\Request\AbstractRequest;
  */
 class GetOrderListForBuyerRequest extends AbstractRequest
 {
+    protected static bool $allowEmptyResponse = true;
+
     protected function getPath($requestModel): string
     {
         return 'buyers/' . $requestModel->getBuyerExternalId() . '/orders';
