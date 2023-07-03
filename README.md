@@ -379,6 +379,35 @@ __Expected exceptions thrown by service__
 |-------------------------------------------------------------------------------------|----------------------------------------------------------------------------|
 | `\Tilta\Sdk\Exception\GatewayException\NotFoundException\OrderNotFoundException`    | if the order does not exist.                                               |
 
+#### GetOrderListRequest
+| 	                 | 	                                                                                                             |
+|-------------------|---------------------------------------------------------------------------------------------------------------|
+| Api documentation | [Link](https://docs.tilta.io/reference/get_v1-orders)                                                         |
+| Request service   | [\Tilta\Sdk\Service\Request\Order\GetOrderListRequest](src/Service/Request/Order/GetOrderListRequest.php)     |
+| Request model     | [\Tilta\Sdk\Model\Request\Order\OrderListRequestModel](src/Model/Request/Order/OrderListRequestModel.php)     |
+| Response model    | [\Tilta\Sdk\Model\Response\Order\OrderListResponseModel](src/Model/Response/Order/OrderListResponseModel.php) |
+
+Use this service to fetch all orders.
+
+__Usage__
+
+```php
+/** @var \Tilta\Sdk\HttpClient\TiltaClient $client */
+$requestService = new \Tilta\Sdk\Service\Request\Order\GetOrderListRequest($client);
+
+$requestModel = (new \Tilta\Sdk\Model\Request\Order\OrderListRequestModel())
+    // optional for pagination:
+    ->setOffset(150)
+    ->setLimit(50):
+    
+/** @var \Tilta\Sdk\Model\Response\Order\OrderListResponseModel $response */
+$response = $requestService->execute($requestModel);
+$totalItemCount = $response->getTotal();
+/** @var Tilta\Sdk\Model\Order[] $items */
+$items = $response->getItems();
+[...]
+```
+
 ### Additional features
 
 #### Logging
