@@ -18,6 +18,7 @@ use Tilta\Sdk\Exception\TiltaException;
 use Tilta\Sdk\Exception\Validation\InvalidFieldValueCollectionException;
 use Tilta\Sdk\HttpClient\TiltaClient;
 use Tilta\Sdk\Model\AbstractModel;
+use Tilta\Sdk\Model\Request\AbstractRequestModel;
 use Tilta\Sdk\Model\Request\RequestModelInterface;
 use Tilta\Sdk\Util\ExceptionHandler;
 
@@ -50,7 +51,7 @@ abstract class AbstractRequest
     public function execute($requestModel)
     {
         if (!$requestModel instanceof RequestModelInterface) {
-            throw new InvalidArgumentException(sprintf('Provided request model have to be an instance of %s or %s', RequestModelInterface::class, self::class));
+            throw new InvalidArgumentException(sprintf('Provided request model have to be an instance of %s or %s', RequestModelInterface::class, AbstractRequestModel::class));
         }
 
         try {
