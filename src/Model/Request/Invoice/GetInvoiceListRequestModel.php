@@ -14,7 +14,6 @@ use Tilta\Sdk\Model\HasMerchantFieldInterface;
 use Tilta\Sdk\Model\Request\ListRequestModel;
 
 /**
- * @method $this setPaymentMethod(?string $paymentMethod)
  * @method $this setMerchantExternalId(?string $merchantExternalId)
  */
 class GetInvoiceListRequestModel extends ListRequestModel implements HasMerchantFieldInterface
