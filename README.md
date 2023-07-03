@@ -587,6 +587,35 @@ __Expected exceptions thrown by service__
 | TODO | TODO |
 | TODO | TODO |
 
+#### GetInvoiceRequest
+
+| 	                 | 	                                                                                                                  |
+|-------------------|--------------------------------------------------------------------------------------------------------------------|
+| Api documentation | [Link](https://docs.tilta.io/reference/get_v1-invoices-external-id)                                                |
+| Request service   | [\Tilta\Sdk\Service\Request\Invoice\CreateInvoiceRequest](src/Service/Request/Invoice/GetInvoiceRequest.php)       |
+| Request model     | [\Tilta\Sdk\Model\Request\Invoice\CreateInvoiceRequestModel](src/Model/Request/Invoice/GetInvoiceRequestModel.php) |
+| Response model    | [\Tilta\Sdk\Model\Invoice](src/Model/Invoice.php)                                                                  |
+
+Use this service to fetch a single invoice.
+
+__Usage__
+
+```php
+/** @var \Tilta\Sdk\HttpClient\TiltaClient $client */
+$requestService = new \Tilta\Sdk\Service\Request\Invoice\GetInvoiceRequest($client);
+
+$requestModel = (new \Tilta\Sdk\Model\Request\Invoice\GetInvoiceRequestModel('invoice-external-id'));
+    
+/** @var \Tilta\Sdk\Model\Invoice $response */
+$response = $requestService->execute($requestModel);
+```
+
+__Expected exceptions thrown by service__
+
+| 	                                                                                  | 	                              |
+|------------------------------------------------------------------------------------|--------------------------------|
+| `\Tilta\Sdk\Exception\GatewayException\NotFoundException\InvoiceNotFoundException` | if the invoice does not exist. |
+
 ### Additional features
 
 #### Logging
