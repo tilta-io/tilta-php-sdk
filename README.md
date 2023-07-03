@@ -616,6 +616,42 @@ __Expected exceptions thrown by service__
 |------------------------------------------------------------------------------------|--------------------------------|
 | `\Tilta\Sdk\Exception\GatewayException\NotFoundException\InvoiceNotFoundException` | if the invoice does not exist. |
 
+#### GetInvoiceRequest
+
+| 	                 | 	                                                                                                                           |
+|-------------------|-----------------------------------------------------------------------------------------------------------------------------|
+| Api documentation | [Link](https://docs.tilta.io/reference/get_v1-invoices)                                                                     |
+| Request service   | [\Tilta\Sdk\Service\Request\Invoice\CreateInvoiceRequest](src/Service/Request/Invoice/GetInvoiceListRequest.php)            |
+| Request model     | [\Tilta\Sdk\Model\Request\Invoice\CreateInvoiceRequestModel](src/Model/Request/Invoice/GetInvoiceListRequestModel.php)      |
+| Response model    | [\Tilta\Sdk\Model\Response\Invoice\GetInvoiceListResponseModel](src/Model/Response/Invoice/GetInvoiceListResponseModel.php) |
+
+Use this service to fetch all invoices.
+
+__Usage__
+
+```php
+/** @var \Tilta\Sdk\HttpClient\TiltaClient $client */
+$requestService = new \Tilta\Sdk\Service\Request\Invoice\GetInvoiceListRequest($client);
+
+$requestModel = (new \Tilta\Sdk\Model\Request\Invoice\GetInvoiceListRequestModel())
+    // optional for pagination:
+    ->setOffset(150)
+    ->setLimit(50)
+    ->setMerchantExternalId('merchant-external-id');
+    
+/** @var \Tilta\Sdk\Model\Response\Invoice\GetInvoiceListResponseModel $response */
+$response = $requestService->execute($requestModel);
+$totalItemCount = $response->getTotal();
+/** @var \Tilta\Sdk\Model\Invoice[] $items */
+$items = $response->getItems();
+```
+
+__Expected exceptions thrown by service__
+
+| 	                                                                                   | 	                                     |
+|-------------------------------------------------------------------------------------|---------------------------------------|
+| `\Tilta\Sdk\Exception\GatewayException\NotFoundException\MerchantNotFoundException` | if the given merchant does not exist. |
+
 ### Additional features
 
 #### Logging
