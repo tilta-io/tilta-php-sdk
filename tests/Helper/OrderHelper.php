@@ -65,13 +65,18 @@ class OrderHelper
             ->setPaymentMethod(PaymentMethodEnum::BNPL);
     }
 
-    public static function createValidOrderWithStatus(string $externalId, string $status = OrderStatusEnum::PENDING_CONFIRMATION): Order
+    /**
+     * @template T of Order
+     * @param class-string<T> $class
+     * @return T
+     */
+    public static function createValidOrderWithStatus(string $externalId, string $status = OrderStatusEnum::PENDING_CONFIRMATION, string $class = Order::class): Order
     {
         $order = self::createValidOrder($externalId, 'buyer-id');
         $data = $order->toArray();
         $data['status'] = $status;
 
-        return (new Order())->fromArray($data);
+        return (new $class())->fromArray($data);
     }
 
     public static function createUniqueExternalId(string $testName): string

@@ -466,9 +466,9 @@ $items = $response->getItems();
 
 __Expected exceptions thrown by service__
 
-| 	                                                                                  | 	                                  |
-|------------------------------------------------------------------------------------|------------------------------------|
-| `\Tilta\Sdk\Exception\GatewayException\NotFoundException\BuyerNotFoundException`   | if the given buyer does not exist. |
+| 	                                                                                | 	                                  |
+|----------------------------------------------------------------------------------|------------------------------------|
+| `\Tilta\Sdk\Exception\GatewayException\NotFoundException\BuyerNotFoundException` | if the given buyer does not exist. |
 
 #### GetPaymentTermsRequest
 
@@ -504,6 +504,45 @@ __Expected exceptions thrown by service__
 | `\Tilta\Sdk\Exception\GatewayException\NotFoundException\MerchantNotFoundException` | if the given merchant does not exist.                                      |
 | `\Tilta\Sdk\Exception\GatewayException\Facility\FacilityExceededException`          | if the buyer have an active facility but the order would exceed the limit. |
 
+#### AddOrdersToBuyerRequest
+
+| 	                 | 	                                                                                                                           |
+|-------------------|-----------------------------------------------------------------------------------------------------------------------------|
+| Api documentation | [Link](https://docs.tilta.io/reference/get_v1-buyers-external-id-orders)                                                    |
+| Request service   | [\Tilta\Sdk\Service\Request\Order\AddOrdersToBuyerRequest](src/Service/Request/Order/AddOrdersToBuyerRequest.php)           |
+| Request model     | [\Tilta\Sdk\Model\Request\Order\AddOrdersToBuyerRequestModel](src/Model/Request/Order/AddOrdersToBuyerRequestModel.php)     |
+| Response model    | [\Tilta\Sdk\Model\Response\Order\AddOrdersToBuyerResponseModel](src/Model/Response/Order/AddOrdersToBuyerResponseModel.php) |
+
+Use this service to add existing orders, which are not processed by Tilta, to the buyer debtor.
+
+**Please note**: The `ExistingOrder`-Model is just a subclass of the `Order`-Model. The difference is, that you can
+not set the `buyerExternalId` for the order, because this value has to be set on the request-model (once).
+So please make sure that you only provide orders, for one single buyer.
+
+__Usage__
+
+```php
+/** @var \Tilta\Sdk\HttpClient\TiltaClient $client */
+$requestService = new \Tilta\Sdk\Service\Request\Order\AddOrdersToBuyerRequest($client);
+
+$requestModel = (new \Tilta\Sdk\Model\Request\Order\AddOrdersToBuyerRequestModel('buyer-external-id'))
+    ->setItems([
+        new \Tilta\Sdk\Model\Request\Order\AddOrdersToBuyer\ExistingOrder('oder-id-1'),
+        new \Tilta\Sdk\Model\Request\Order\AddOrdersToBuyer\ExistingOrder('oder-id-2'),
+        new \Tilta\Sdk\Model\Request\Order\AddOrdersToBuyer\ExistingOrder('oder-id-3')
+    ])
+    ->addOrderItem(new \Tilta\Sdk\Model\Request\Order\AddOrdersToBuyer\ExistingOrder('oder-id-4'));
+    
+/** @var \Tilta\Sdk\Model\Response\Order\AddOrdersToBuyerResponseModel $response */
+$response = $requestService->execute($requestModel);
+/** @var \Tilta\Sdk\Model\Order[] $items */
+$items = $response->getItems();
+```
+
+| 	                                                                                   | 	                                                            |
+|-------------------------------------------------------------------------------------|--------------------------------------------------------------|
+| `\Tilta\Sdk\Exception\GatewayException\NotFoundException\BuyerNotFoundException`    | if the given buyer does not exist.                           |
+| `\Tilta\Sdk\Exception\GatewayException\NotFoundException\MerchantNotFoundException` | if the given merchant for at least one order does not exist. |
 
 ### Additional features
 

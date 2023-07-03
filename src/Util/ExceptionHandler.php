@@ -46,6 +46,10 @@ class ExceptionHandler
             return new MerchantNotFoundException($requestModel->getMerchantExternalId(), ...self::getDefaultArgumentsForException($exception));
         }
 
+        if (preg_match('/No Merchants? with external_id \[([^\]]+)\] found\.?/', $exception->getMessage(), $matches)) {
+            return new MerchantNotFoundException($matches[1], ...self::getDefaultArgumentsForException($exception));
+        }
+
         if ($requestModel instanceof HasOrderIdFieldInterface) {
             if ($exception->getMessage() === 'No Order found') {
                 return new OrderNotFoundException($requestModel->getOrderExternalId());
