@@ -175,6 +175,38 @@ class ResponseHelperTest extends TestCase
         ];
     }
 
+    public function testGetArrayList(): void
+    {
+        // special case, if the response is just a list of objects instead an object with keys.
+        $model = new class() extends AbstractModel {
+            protected array $items;
+
+            /**
+             * @return SimpleTestModel[]
+             */
+            public function getItems(): array
+            {
+                return $this->items;
+            }
+
+            protected function prepareModelData(array $data): array
+            {
+                return [
+                    'items' => static fn (string $key): ?array => ResponseHelper::getArray($data, null, SimpleTestModel::class),
+                ];
+            }
+        };
+        $model->fromArray([
+            ['field_value' => 'value1'],
+            ['field_value' => 'value2'],
+        ]);
+        static::assertIsArray($model->getItems());
+        static::assertCount(2, $model->getItems());
+        static::assertContainsOnlyInstancesOf(SimpleTestModel::class, $model->getItems());
+        static::assertEquals('value1', $model->getItems()[0]->getFieldValue());
+        static::assertEquals('value2', $model->getItems()[1]->getFieldValue());
+    }
+
     /**
      * @dataProvider dataProviderGetObject
      * @phpstan-ignore-next-line

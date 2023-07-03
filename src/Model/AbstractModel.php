@@ -205,14 +205,18 @@ abstract class AbstractModel
 
         $values = [];
         foreach ($preparedData as $key => $value) {
-            $key = static::$_additionalFieldMapping[$key] ?? $key;
-            /** @phpstan-ignore-next-line */
-            if ($key === false) {
-                // field has been excluded
-                continue;
+            if (!is_numeric($key)) { // for the case, if the request-array is a list of objects (instead of an object)
+                $key = static::$_additionalFieldMapping[$key] ?? $key;
+                /** @phpstan-ignore-next-line */
+                if ($key === false) {
+                    // field has been excluded
+                    continue;
+                }
+
+                $key = $this->convertPropertyNameToSnakeCase($key);
             }
 
-            $values[$this->convertPropertyNameToSnakeCase($key)] = $this->convertObjectsRecursively($value);
+            $values[$key] = $this->convertObjectsRecursively($value);
         }
 
         return $values;

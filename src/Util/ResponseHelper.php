@@ -82,13 +82,13 @@ class ResponseHelper
     /**
      * @return ($nullable is true ? array|null : array)
      */
-    public static function getArray(array $data, string $key, string $itemClass = null, bool $itemReadOnly = true, bool $nullable = true): ?array
+    public static function getArray(array $data, string $key = null, string $itemClass = null, bool $itemReadOnly = true, bool $nullable = true): ?array
     {
         if ($itemClass !== null && !is_subclass_of($itemClass, AbstractModel::class)) {
             throw new InvalidArgumentException('argument `$itemClass` needs to be a subclass of ' . AbstractModel::class);
         }
 
-        $value = self::getValue($data, $key, $nullable);
+        $value = $key !== null ? self::getValue($data, $key, $nullable) : $data;
 
         $values = is_array($value) ? $value : null;
         if ($values !== null && $itemClass !== null) {
