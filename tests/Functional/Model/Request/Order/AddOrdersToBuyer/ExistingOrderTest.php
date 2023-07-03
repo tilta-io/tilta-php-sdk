@@ -8,7 +8,7 @@
 
 declare(strict_types=1);
 
-namespace Functional\Model\Request\Order\AddOrdersToBuyer;
+namespace Tilta\Sdk\Tests\Functional\Model\Request\Order\AddOrdersToBuyer;
 
 use BadMethodCallException;
 use Tilta\Sdk\Model\Request\Order\AddOrdersToBuyer\ExistingOrder;

@@ -8,7 +8,7 @@
 
 declare(strict_types=1);
 
-namespace Functional\Model\Response\Order;
+namespace Tilta\Sdk\Tests\Functional\Model\Response\Order;
 
 use DateTime;
 use Tilta\Sdk\Model\Response\Order\GetPaymentTermsResponseModel;

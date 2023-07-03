@@ -8,7 +8,7 @@
 
 declare(strict_types=1);
 
-namespace Functional\Model;
+namespace Tilta\Sdk\Tests\Functional\Model;
 
 use DateTime;
 use Tilta\Sdk\Model\Address;

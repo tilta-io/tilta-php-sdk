@@ -8,7 +8,7 @@
 
 declare(strict_types=1);
 
-namespace Functional\Service\Request\Order;
+namespace Tilta\Sdk\Tests\Functional\Service\Request\Order;
 
 use Tilta\Sdk\Model\Order;
 use Tilta\Sdk\Model\Request\Order\GetOrderListRequestModel;
