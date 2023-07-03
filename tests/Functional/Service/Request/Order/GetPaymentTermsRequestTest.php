@@ -10,10 +10,10 @@ declare(strict_types=1);
 
 namespace Functional\Service\Request\Order;
 
-use Tilta\Sdk\Exception\GatewayException\Facility\FacilityExceededException;
 use DateTime;
 use Throwable;
 use Tilta\Sdk\Exception\GatewayException;
+use Tilta\Sdk\Exception\GatewayException\Facility\FacilityExceededException;
 use Tilta\Sdk\Exception\GatewayException\NotFoundException\BuyerNotFoundException;
 use Tilta\Sdk\Exception\GatewayException\NotFoundException\MerchantNotFoundException;
 use Tilta\Sdk\Model\Order\Amount;
