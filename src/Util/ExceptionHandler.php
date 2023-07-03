@@ -11,12 +11,14 @@ declare(strict_types=1);
 namespace Tilta\Sdk\Util;
 
 use Tilta\Sdk\Exception\GatewayException;
+use Tilta\Sdk\Exception\GatewayException\Facility\FacilityExceededException;
 use Tilta\Sdk\Exception\GatewayException\Facility\NoActiveFacilityFoundException;
 use Tilta\Sdk\Exception\GatewayException\NotFoundException\BuyerNotFoundException;
 use Tilta\Sdk\Exception\GatewayException\NotFoundException\MerchantNotFoundException;
 use Tilta\Sdk\Model\AbstractModel;
 use Tilta\Sdk\Model\HasBuyerFieldInterface;
 use Tilta\Sdk\Model\HasMerchantFieldInterface;
+use Tilta\Sdk\Model\HasOrderIdFieldInterface;
 
 class ExceptionHandler
 {
@@ -24,7 +26,9 @@ class ExceptionHandler
     {
         if ($requestModel instanceof HasBuyerFieldInterface) {
             if ($exception->getTiltaCode() === 'NO_ACTIVE_FACILITY_FOUND') {
-                return new NoActiveFacilityFoundException($requestModel->getBuyerExternalId(), $exception->getHttpCode(), $exception->getResponseData(), $exception->getRequestData());
+                return new NoActiveFacilityFoundException($requestModel->getBuyerExternalId(), ...self::getDefaultArgumentsForException($exception));
+            } elseif ($exception->getTiltaCode() === 'FACILITY_EXCEEDED_AVAILABLE_AMOUNT') {
+                return new FacilityExceededException($requestModel->getBuyerExternalId(), ...self::getDefaultArgumentsForException($exception));
             }
 
             if ($exception->getMessage() === 'No Buyer found') {

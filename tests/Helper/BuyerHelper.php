@@ -14,6 +14,10 @@ use DateTime;
 use Tilta\Sdk\Model\Address;
 use Tilta\Sdk\Model\Buyer;
 use Tilta\Sdk\Model\BuyerRepresentative;
+use Tilta\Sdk\Model\Request\Buyer\CreateBuyerRequestModel;
+use Tilta\Sdk\Model\Request\Facility\CreateFacilityRequestModel;
+use Tilta\Sdk\Service\Request\Buyer\CreateBuyerRequest;
+use Tilta\Sdk\Service\Request\Facility\CreateFacilityRequest;
 
 class BuyerHelper
 {
@@ -67,5 +71,21 @@ class BuyerHelper
     public static function createUniqueExternalId(string $testName): string
     {
         return 'unit-testing_' . $testName . '_' . round(microtime(true));
+    }
+
+    public static function getBuyerExternalIdWithValidFacility(string $testName): string
+    {
+        $testBuyerId = getenv('TILTA_TEST_BUYER');
+        if ($testBuyerId === '' || $testBuyerId === false) {
+            $client = TiltaClientHelper::getClient();
+            $buyer = self::createValidBuyer(self::createUniqueExternalId($testName), CreateBuyerRequestModel::class);
+            (new CreateBuyerRequest($client))->execute($buyer);
+            (new CreateFacilityRequest($client))->execute((new CreateFacilityRequestModel($buyer->getExternalId())));
+            sleep(1);
+
+            return $buyer->getBuyerExternalId();
+        }
+
+        return $testBuyerId;
     }
 }

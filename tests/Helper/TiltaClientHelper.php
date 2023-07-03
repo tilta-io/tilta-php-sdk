@@ -24,4 +24,9 @@ class TiltaClientHelper
     {
         return (string) getenv('TILTA_API_TOKEN');
     }
+
+    public static function getMerchantId(): string
+    {
+        return (string) getenv('TILTA_MERCHANT_ID');
+    }
 }
