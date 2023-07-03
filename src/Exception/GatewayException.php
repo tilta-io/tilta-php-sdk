@@ -48,7 +48,7 @@ class GatewayException extends TiltaException
 
     public function getTiltaCode(): string
     {
-        return $this->requestData['code'] ?? $this->tiltaCode;
+        return $this->responseData['code'] ?? $this->tiltaCode;
     }
 
     protected function getErrorMessage(): string
