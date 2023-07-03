@@ -26,6 +26,7 @@ class ListRequestModel extends AbstractRequestModel
     {
         $data = parent::_toArray();
 
+        // if a property is null, the parameter should not be given.
         return array_filter($data, static fn ($value): bool => $value !== null);
     }
 }
