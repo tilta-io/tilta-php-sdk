@@ -652,6 +652,48 @@ __Expected exceptions thrown by service__
 |-------------------------------------------------------------------------------------|---------------------------------------|
 | `\Tilta\Sdk\Exception\GatewayException\NotFoundException\MerchantNotFoundException` | if the given merchant does not exist. |
 
+#### CreateCreditNoteRequest
+
+| 	                 | 	                                                                                                                                 |
+|-------------------|-----------------------------------------------------------------------------------------------------------------------------------|
+| Api documentation | [Link](https://docs.tilta.io/reference/post_v1-buyers-external-id-creditnotes)                                                    |
+| Request service   | [\Tilta\Sdk\Service\Request\CreditNote\CreateCreditNoteRequest](src/Service/Request/CreditNote/CreateCreditNoteRequest.php)       |
+| Request model     | [\Tilta\Sdk\Model\Request\CreditNote\CreateCreditNoteRequestModel](src/Model/Request/CreditNote/CreateCreditNoteRequestModel.php) |
+| Response model    | [\Tilta\Sdk\Model\CreditNote](src/Model/CreditNote.php)                                                                           |
+
+Use this service to create a new credit note for a buyer
+
+__Usage__
+
+```php
+/** @var \Tilta\Sdk\HttpClient\TiltaClient $client */
+$requestService = new \Tilta\Sdk\Service\Request\CreditNote\CreateCreditNoteRequest($client);
+
+$requestModel = (new \Tilta\Sdk\Model\Request\CreditNote\CreateCreditNoteRequestModel())
+            ->setCreditNoteExternalId('credit-note-external-id')
+            ->setBuyerExternalId('buyer-external-id')
+            ->setCreatedAt(new DateTime())
+            ->setCurrency('EUR')
+            ->setTotalAmount(900)
+            ->setDeliveryAddress(new \Tilta\Sdk\Model\Address())
+            ->setLineItems([
+                new \Tilta\Sdk\Model\Order\LineItem(),
+                new \Tilta\Sdk\Model\Order\LineItem(),
+                new \Tilta\Sdk\Model\Order\LineItem(),
+            ])
+            ->setOrderExternalIds(['order-external-id-1', 'order-external-id-2']); // just provide an array with one value, if you create a credit-node for a single order.
+    
+/** @var \Tilta\Sdk\Model\CreditNote $response */
+$response = $requestService->execute($requestModel);
+```
+
+__Expected exceptions thrown by service__
+
+| 	                                                                                | 	                                                               |
+|----------------------------------------------------------------------------------|-----------------------------------------------------------------|
+| `\Tilta\Sdk\Exception\GatewayException\NotFoundException\BuyerNotFoundException` | if the given buyer does not exist.                              |
+| `\Tilta\Sdk\Exception\GatewayException\InvoiceForCreditNoteNotFound`             | if order(s) got not found or order(s) does not have an invoice. |
+
 ### Additional features
 
 #### Logging
