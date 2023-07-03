@@ -93,7 +93,10 @@ class ResponseHelper
         $values = is_array($value) ? $value : null;
         if ($values !== null && $itemClass !== null) {
             foreach ($values as $i => $e) {
-                $values[$i] = new $itemClass($e, $itemReadOnly);
+                $values[$i] = new $itemClass([], $itemReadOnly);
+                if ($e !== self::PHPUNIT_OBJECT) {
+                    $values[$i]->fromArray($e);
+                }
             }
         }
 
