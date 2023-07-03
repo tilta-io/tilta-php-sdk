@@ -15,7 +15,6 @@ use Tilta\Sdk\Model\Address;
 use Tilta\Sdk\Model\Order;
 use Tilta\Sdk\Model\Order\Amount;
 use Tilta\Sdk\Model\Order\LineItem;
-use Tilta\Sdk\Tests\Functional\Model\AbstractModelTest;
 use Tilta\Sdk\Util\ResponseHelper;
 
 class OrderTest extends AbstractModelTest
