@@ -63,7 +63,7 @@ class ModelCorrectAnnotationTest extends TestCase
                     $class,
                     $methodConfig['name'],
                     $methodConfig,
-                ], $this->getMethodMetaData($class)),
+                ], array_values($this->getMethodMetaData($class))),
             ];
         }
 
