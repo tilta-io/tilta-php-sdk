@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace Tilta\Sdk\Tests\Functional\Service\Request;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Tilta\Sdk\Exception\GatewayException;
 use Tilta\Sdk\HttpClient\TiltaClient;
@@ -24,10 +25,17 @@ class AbstractRequestTestCase extends TestCase
         return $clientMock;
     }
 
-    protected function createMockedTiltaClientResponse(array $responseData): TiltaClient
+    /**
+     * @psalm-return MockObject&TiltaClient
+     */
+    protected function createMockedTiltaClientResponse(array $responseData)
     {
         $clientMock = $this->createMock(TiltaClient::class);
-        $clientMock->method('request')->willReturn($responseData);
+
+        $clientMock
+            ->expects(static::once())
+            ->method('request')
+            ->willReturn($responseData);
 
         return $clientMock;
     }
