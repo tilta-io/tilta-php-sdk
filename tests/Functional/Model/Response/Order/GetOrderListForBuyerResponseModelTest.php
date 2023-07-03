@@ -14,7 +14,6 @@ use Tilta\Sdk\Model\Order;
 use Tilta\Sdk\Model\Response\Order\GetOrderListForBuyerResponseModel;
 use Tilta\Sdk\Tests\Acceptance\Model\AbstractModelTestCase;
 use Tilta\Sdk\Tests\Helper\OrderHelper;
-use Tilta\Sdk\Util\ResponseHelper;
 
 class GetOrderListForBuyerResponseModelTest extends AbstractModelTestCase
 {
