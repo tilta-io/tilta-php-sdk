@@ -11,15 +11,15 @@ declare(strict_types=1);
 namespace Tilta\Sdk\Tests\Functional\Model\Response\Order;
 
 use Tilta\Sdk\Model\Order;
-use Tilta\Sdk\Model\Response\Order\OrderListResponseModel;
+use Tilta\Sdk\Model\Response\Order\GetOrderListResponseModel;
 use Tilta\Sdk\Tests\Acceptance\Model\AbstractModelTestCase;
 use Tilta\Sdk\Util\ResponseHelper;
 
-class OrderListResponseModelTest extends AbstractModelTestCase
+class GetOrderListResponseModelTest extends AbstractModelTestCase
 {
     public function testFromArray(): void
     {
-        $model = (new OrderListResponseModel())->fromArray([
+        $model = (new GetOrderListResponseModel())->fromArray([
             'offset' => 5,
             'limit' => 10,
             'total' => 100,

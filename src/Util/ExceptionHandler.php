@@ -39,7 +39,10 @@ class ExceptionHandler
             }
         }
 
-        if ($requestModel instanceof HasMerchantFieldInterface && $exception->getMessage() === 'No Merchant found') {
+        if ($requestModel instanceof HasMerchantFieldInterface && (
+            $exception->getMessage() === 'No Merchant found' ||
+            $exception->getMessage() === 'Merchant not found.'
+        )) {
             return new MerchantNotFoundException($requestModel->getMerchantExternalId(), ...self::getDefaultArgumentsForException($exception));
         }
 

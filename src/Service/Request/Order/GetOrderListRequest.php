@@ -10,12 +10,12 @@ declare(strict_types=1);
 
 namespace Tilta\Sdk\Service\Request\Order;
 
-use Tilta\Sdk\Model\Request\Order\OrderListRequestModel;
-use Tilta\Sdk\Model\Response\Order\OrderListResponseModel;
+use Tilta\Sdk\Model\Request\Order\GetOrderListRequestModel;
+use Tilta\Sdk\Model\Response\Order\GetOrderListResponseModel;
 use Tilta\Sdk\Service\Request\AbstractRequest;
 
 /**
- * @extends AbstractRequest<OrderListRequestModel, OrderListResponseModel>
+ * @extends AbstractRequest<GetOrderListRequestModel, GetOrderListResponseModel>
  */
 class GetOrderListRequest extends AbstractRequest
 {
@@ -24,8 +24,8 @@ class GetOrderListRequest extends AbstractRequest
         return 'orders';
     }
 
-    protected function processSuccess($requestModel, array $responseData): OrderListResponseModel
+    protected function processSuccess($requestModel, array $responseData): GetOrderListResponseModel
     {
-        return new OrderListResponseModel($responseData);
+        return new GetOrderListResponseModel($responseData);
     }
 }

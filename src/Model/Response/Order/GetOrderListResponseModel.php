@@ -16,7 +16,7 @@ use Tilta\Sdk\Model\Response\ListResponseModel;
 /**
  * @extends ListResponseModel<Order>
  */
-class OrderListResponseModel extends ListResponseModel
+class GetOrderListResponseModel extends ListResponseModel
 {
     public function __construct(array $data = [])
     {

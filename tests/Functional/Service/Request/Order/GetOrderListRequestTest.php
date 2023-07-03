@@ -11,8 +11,8 @@ declare(strict_types=1);
 namespace Functional\Service\Request\Order;
 
 use Tilta\Sdk\Model\Order;
-use Tilta\Sdk\Model\Request\Order\OrderListRequestModel;
-use Tilta\Sdk\Model\Response\Order\OrderListResponseModel;
+use Tilta\Sdk\Model\Request\Order\GetOrderListRequestModel;
+use Tilta\Sdk\Model\Response\Order\GetOrderListResponseModel;
 use Tilta\Sdk\Service\Request\Order\GetOrderListRequest;
 use Tilta\Sdk\Tests\Functional\Service\Request\AbstractRequestTestCase;
 use Tilta\Sdk\Tests\Helper\TiltaClientHelper;
@@ -61,12 +61,12 @@ class GetOrderListRequestTest extends AbstractRequestTestCase
         ];
         $request = new GetOrderListRequest($this->createMockedTiltaClientResponse($expectedResponse));
 
-        $model = (new OrderListRequestModel())
+        $model = (new GetOrderListRequestModel())
             ->setLimit(5)
             ->setOffset(3);
 
         $response = $request->execute($model);
-        static::assertInstanceOf(OrderListResponseModel::class, $response);
+        static::assertInstanceOf(GetOrderListResponseModel::class, $response);
         static::assertCount(2, $response->getItems());
         static::assertContainsOnlyInstancesOf(Order::class, $response->getItems());
     }
@@ -78,12 +78,12 @@ class GetOrderListRequestTest extends AbstractRequestTestCase
     {
         $request = new GetOrderListRequest(TiltaClientHelper::getClient());
 
-        $model = (new OrderListRequestModel())
+        $model = (new GetOrderListRequestModel())
             ->setLimit(5)
             ->setOffset(3);
 
         $response = $request->execute($model);
-        static::assertInstanceOf(OrderListResponseModel::class, $response);
+        static::assertInstanceOf(GetOrderListResponseModel::class, $response);
         static::assertEquals(5, $response->getLimit());
         static::assertEquals(3, $response->getOffset());
         static::assertIsArray($response->getItems());
