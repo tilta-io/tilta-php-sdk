@@ -1,4 +1,7 @@
-<phpunit>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.5/phpunit.xsd"
+         bootstrap="tests/bootstrap.php">
+
     <testsuites>
         <testsuite name="acceptance">
             <directory>tests/Acceptance</directory>
@@ -16,4 +19,17 @@
         <!--<env name="TILTA_MERCHANT_ID" value="// INSERT YOUR MERCHANT-ID HERE \\" force="true" />-->
         <!--<env name="TILTA_TEST_BUYER" value="// INSERT A VALID BUYER_EXTERNAL_ID WITH FACILITY HERE \\" force="true" />-->
     </php>
+
+    <!--
+    <coverage processUncoveredFiles="true">
+        <include>
+            <directory>src/</directory>
+        </include>
+        <exclude />
+        <report>
+            <html outputDirectory="../coverage_report_html"/>
+            <text outputFile="../coverage_report.txt"/>
+        </report>
+    </coverage>
+    -->
 </phpunit>
