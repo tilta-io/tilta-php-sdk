@@ -15,11 +15,13 @@ use Tilta\Sdk\Exception\GatewayException;
 use Tilta\Sdk\Exception\GatewayException\Facility\FacilityExceededException;
 use Tilta\Sdk\Exception\GatewayException\Facility\NoActiveFacilityFoundException;
 use Tilta\Sdk\Exception\GatewayException\NotFoundException\BuyerNotFoundException;
+use Tilta\Sdk\Exception\GatewayException\NotFoundException\InvoiceNotFoundException;
 use Tilta\Sdk\Exception\GatewayException\NotFoundException\MerchantNotFoundException;
 use Tilta\Sdk\Exception\GatewayException\NotFoundException\OrderNotFoundException;
 use Tilta\Sdk\Exception\GatewayException\Order\OrderIsCanceledException;
 use Tilta\Sdk\Model\AbstractModel;
 use Tilta\Sdk\Model\HasBuyerFieldInterface;
+use Tilta\Sdk\Model\HasInvoiceIdFieldInterface;
 use Tilta\Sdk\Model\HasMerchantFieldInterface;
 use Tilta\Sdk\Model\HasOrderIdFieldInterface;
 
@@ -60,6 +62,10 @@ class ExceptionHandler
             ) {
                 return new OrderIsCanceledException(...self::getDefaultArgumentsForException($exception));
             }
+        }
+
+        if ($requestModel instanceof HasInvoiceIdFieldInterface && $exception->getMessage() === 'No Invoice found') {
+            return new InvoiceNotFoundException($requestModel->getInvoiceExternalId(), ...self::getDefaultArgumentsForException($exception));
         }
 
         return null;

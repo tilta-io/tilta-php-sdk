@@ -539,10 +539,53 @@ $response = $requestService->execute($requestModel);
 $items = $response->getItems();
 ```
 
+__Expected exceptions thrown by service__
+
 | 	                                                                                   | 	                                                            |
 |-------------------------------------------------------------------------------------|--------------------------------------------------------------|
 | `\Tilta\Sdk\Exception\GatewayException\NotFoundException\BuyerNotFoundException`    | if the given buyer does not exist.                           |
 | `\Tilta\Sdk\Exception\GatewayException\NotFoundException\MerchantNotFoundException` | if the given merchant for at least one order does not exist. |
+
+#### CreateInvoiceRequest
+
+| 	                 | 	                                                                                                                     |
+|-------------------|-----------------------------------------------------------------------------------------------------------------------|
+| Api documentation | [Link](https://docs.tilta.io/reference/post_v1-invoices)                                                              |
+| Request service   | [\Tilta\Sdk\Service\Request\Invoice\CreateInvoiceRequest](src/Service/Request/Invoice/CreateInvoiceRequest.php)       |
+| Request model     | [\Tilta\Sdk\Model\Request\Invoice\CreateInvoiceRequestModel](src/Model/Request/Invoice/CreateInvoiceRequestModel.php) |
+| Response model    | [\Tilta\Sdk\Model\Invoice](src/Model/Invoice.php)                                                                     |
+
+Use this service to add create a new Invoice for (multiple) orders.
+
+__Usage__
+
+```php
+/** @var \Tilta\Sdk\HttpClient\TiltaClient $client */
+$requestService = new \Tilta\Sdk\Service\Request\Invoice\CreateInvoiceRequest($client);
+
+$requestModel = (new \Tilta\Sdk\Model\Request\Invoice\CreateInvoiceRequestModel())
+    ->setInvoiceExternalId('invoice-external-id')
+    ->setInvoiceNumber('invoice-number')
+    ->setOrderExternalIds(['order-external-id-1', 'order-external-id-2']) // just provide an array with one value, if you create an invoice for a single order.
+    ->setAmount(new \Tilta\Sdk\Model\Order\Amount())
+    ->setDeliveryAddress(new \Tilta\Sdk\Model\Address())
+    ->setLineItems([
+      new \Tilta\Sdk\Model\Order\LineItem(),
+      new \Tilta\Sdk\Model\Order\LineItem(),
+      new \Tilta\Sdk\Model\Order\LineItem(),
+      new \Tilta\Sdk\Model\Order\LineItem(),
+    ]);
+    
+/** @var \Tilta\Sdk\Model\Invoice $response */
+$response = $requestService->execute($requestModel);
+```
+
+__Expected exceptions thrown by service__
+
+| 	    | 	    |
+|------|------|
+| TODO | TODO |
+| TODO | TODO |
 
 ### Additional features
 
