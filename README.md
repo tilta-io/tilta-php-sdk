@@ -439,6 +439,37 @@ __Expected exceptions thrown by service__
 | `\Tilta\Sdk\Exception\GatewayException\NotFoundException\OrderNotFoundException`   | if the order does not exist.            |
 | `\Tilta\Sdk\Exception\GatewayException\NotFoundException\OrderIsCanceledException` | if the order has been already canceled. |
 
+#### CancelOrderRequest
+
+| 	                 | 	                                                                                                                                   |
+|-------------------|-------------------------------------------------------------------------------------------------------------------------------------|
+| Api documentation | [Link](https://docs.tilta.io/reference/get_v1-buyers-external-id-orders)                                                            |
+| Request service   | [\Tilta\Sdk\Service\Request\Order\GetOrderListForBuyerRequest](src/Service/Request/Order/GetOrderListForBuyerRequest.php)           |
+| Request model     | [\Tilta\Sdk\Model\Request\Order\GetOrderListForBuyerRequestModel](src/Model/Request/Order/GetOrderListForBuyerRequestModel.php)     |
+| Response model    | [\Tilta\Sdk\Model\Response\Order\GetOrderListForBuyerResponseModel](src/Model/Response/Order/GetOrderListForBuyerResponseModel.php) |
+
+Use this service to fetch all orders for given buyer.
+
+__Usage__
+
+```php
+/** @var \Tilta\Sdk\HttpClient\TiltaClient $client */
+$requestService = new \Tilta\Sdk\Service\Request\Order\GetOrderListForBuyerRequest($client);
+
+$requestModel = (new \Tilta\Sdk\Model\Request\Order\GetOrderListForBuyerRequestModel('buyer-external-id'));
+    
+/** @var \Tilta\Sdk\Model\Response\Order\GetOrderListForBuyerResponseModel $response */
+$response = $requestService->execute($requestModel);
+/** @var \Tilta\Sdk\Model\Order[] $items */
+$items = $response->getItems();
+```
+
+__Expected exceptions thrown by service__
+
+| 	                                                                                  | 	                                  |
+|------------------------------------------------------------------------------------|------------------------------------|
+| `\Tilta\Sdk\Exception\GatewayException\NotFoundException\BuyerNotFoundException`   | if the given buyer does not exist. |
+
 ### Additional features
 
 #### Logging
