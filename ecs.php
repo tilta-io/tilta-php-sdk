@@ -47,10 +47,12 @@ file that was distributed with this source code.', 'separate' => 'bottom', 'loca
         NotOperatorWithSuccessorSpaceFixer::class,
         AssignmentInConditionSniff::class,
         ArrayListItemNewlineFixer::class => [
-            __DIR__.'/tests/Functional/Util/ResponseHelperTest.php'
+            __DIR__ . '/tests/Functional/Util/ResponseHelperTest.php',
+            __DIR__ . '/tests/Functional/Service/*'
         ],
         ArrayOpenerAndCloserNewlineFixer::class => [
-            __DIR__.'/tests/Functional/Util/ResponseHelperTest.php'
+            __DIR__ . '/tests/Functional/Util/ResponseHelperTest.php',
+            __DIR__ . '/tests/Functional/Service/*'
         ]
     ]);
 
