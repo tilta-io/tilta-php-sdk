@@ -87,12 +87,12 @@ Please have a look into the corresponding documentation of each API Request.
 
 #### GetBuyerAuthTokenRequest
 
-| 	                 | 	                                                                     |
-|-------------------|-----------------------------------------------------------------------|
-| Api documentation | [Link](https://docs.tilta.io/reference/get_v1-auth-buyer-external-id) |
-| Request service   | `\Tilta\Sdk\Service\Request\Buyer\GetBuyerAuthTokenRequest`           |
-| Request model     | `\Tilta\Sdk\Model\Request\Buyer\GetBuyerAuthTokenRequestModel`        |
-| Response model    | `\Tilta\Sdk\Model\Response\Buyer\GetBuyerAuthTokenResponseModel`      |
+| 	                 | 	                                                                                                                             |
+|-------------------|-------------------------------------------------------------------------------------------------------------------------------|
+| Api documentation | [Link](https://docs.tilta.io/reference/get_v1-auth-buyer-external-id)                                                         |
+| Request service   | [\Tilta\Sdk\Service\Request\Buyer\GetBuyerAuthTokenRequest](src/Service/Request/Buyer/GetBuyerAuthTokenRequest.php)           |
+| Request model     | [\Tilta\Sdk\Model\Request\Buyer\GetBuyerAuthTokenRequestModel](src/Model/Request/Buyer/GetBuyerAuthTokenRequestModel.php)     |
+| Response model    | [\Tilta\Sdk\Model\Response\Buyer\GetBuyerAuthTokenResponseModel](src/Model/Response/Buyer/GetBuyerAuthTokenResponseModel.php) |
 
 Use this service to generate JWT token for the buyer, so he can use the buyer-onboarding requests.
 
@@ -100,8 +100,7 @@ __Usage__
 
 ```php
 /** @var \Tilta\Sdk\HttpClient\TiltaClient $client */
-/** @var boolean $isSandbox */
-$tokenRequestService = new \Tilta\Sdk\Service\Request\Buyer\GetBuyerAuthTokenRequest($client, $isSandbox);
+$tokenRequestService = new \Tilta\Sdk\Service\Request\Buyer\GetBuyerAuthTokenRequest($client);
 
 $requestModel = new \Tilta\Sdk\Model\Request\Buyer\GetBuyerAuthTokenRequestModel('EXTERNAL-MERCHANT-ID');
     
@@ -112,12 +111,12 @@ $accessToken = $responseModel->getBuyerAuthToken();
 
 #### GetBuyerDetailsRequest
 
-| 	                 | 	                                                                 |
-|-------------------|-------------------------------------------------------------------|
-| Api documentation | [Link](https://docs.tilta.io/reference/get_v1-buyers-external-id) |
-| Request service   | `\Tilta\Sdk\Service\Request\Buyer\GetBuyerDetailsRequest`         |
-| Request model     | `\Tilta\Sdk\Model\Request\Buyer\GetBuyerDetailsRequestModel`      |
-| Response model    | `\Tilta\Sdk\Model\Buyer`                                          |
+| 	                 | 	                                                                                                                     |
+|-------------------|-----------------------------------------------------------------------------------------------------------------------|
+| Api documentation | [Link](https://docs.tilta.io/reference/get_v1-buyers-external-id)                                                     |
+| Request service   | [\Tilta\Sdk\Service\Request\Buyer\GetBuyerDetailsRequest](src/Service/Request/Buyer/GetBuyerDetailsRequest.php)       |
+| Request model     | [\Tilta\Sdk\Model\Request\Buyer\GetBuyerDetailsRequestModel](src/Model/Request/Buyer/GetBuyerDetailsRequestModel.php) |
+| Response model    | [\Tilta\Sdk\Model\Buyer](src/Model/Buyer.php)                                                                         |
 
 Use this service to fetch a buyer from the gateway by its external-id (of the merchant)
 
@@ -125,8 +124,7 @@ __Usage__
 
 ```php
 /** @var \Tilta\Sdk\HttpClient\TiltaClient $client */
-/** @var boolean $isSandbox */
-$tokenRequestService = new \Tilta\Sdk\Service\Request\Buyer\GetBuyerDetailsRequest($client, $isSandbox);
+$tokenRequestService = new \Tilta\Sdk\Service\Request\Buyer\GetBuyerDetailsRequest($client);
 
 $requestModel = new \Tilta\Sdk\Model\Request\Buyer\GetBuyerDetailsRequestModel('EXTERNAL-MERCHANT-ID');
     
@@ -139,12 +137,12 @@ $legalName = $responseModel->getLegalName();
 
 #### GetBuyerListRequest
 
-| 	                 | 	                                                            |
-|-------------------|--------------------------------------------------------------|
-| Api documentation | [Link](https://docs.tilta.io/reference/get_v1-buyers)        |
-| Request service   | `\Tilta\Sdk\Service\Request\Buyer\GetBuyerListRequest`       |
-| Request model     | `\Tilta\Sdk\Model\Request\Buyer\GetBuyersListRequestModel`   |
-| Response model    | `\Tilta\Sdk\Model\Response\Buyer\GetBuyersListResponseModel` |
+| 	                 | 	                                                                                                                     |
+|-------------------|-----------------------------------------------------------------------------------------------------------------------|
+| Api documentation | [Link](https://docs.tilta.io/reference/get_v1-buyers)                                                                 |
+| Request service   | [\Tilta\Sdk\Service\Request\Buyer\GetBuyerListRequest](src/Service/Request/Buyer/GetBuyerListRequest.php)             |
+| Request model     | [\Tilta\Sdk\Model\Request\Buyer\GetBuyersListRequestModel](src/Model/Request/Buyer/GetBuyersListRequestModel.php)     |
+| Response model    | [\Tilta\Sdk\Model\Response\Buyer\GetBuyersListResponseModel](src/Model/Response/Buyer/GetBuyersListResponseModel.php) |
 
 Use this service to get all buyers. Use `limit` & `offset` to navigate through the pages.
 
@@ -152,8 +150,7 @@ __Usage__
 
 ```php
 /** @var \Tilta\Sdk\HttpClient\TiltaClient $client */
-/** @var boolean $isSandbox */
-$tokenRequestService = new \Tilta\Sdk\Service\Request\Buyer\GetBuyerListRequest($client, $isSandbox);
+$tokenRequestService = new \Tilta\Sdk\Service\Request\Buyer\GetBuyerListRequest($client);
 
 $requestModel = (new \Tilta\Sdk\Model\Request\Buyer\GetBuyersListRequestModel())
     // optional parameters
@@ -174,12 +171,12 @@ $legalNameOfCompany2 = $items[1]->getLegalName();
 
 #### CreateBuyerRequest
 
-| 	                 | 	                                                      |
-|-------------------|--------------------------------------------------------|
-| Api documentation | [Link](https://docs.tilta.io/reference/post_v1-buyers) |
-| Request service   | `\Tilta\Sdk\Service\Request\Buyer\CreateBuyerRequest`  |
-| Request model     | `\Tilta\Sdk\Model\Buyer`                               |
-| Response model    | `true`                                                 |
+| 	                 | 	                                                                                                       |
+|-------------------|---------------------------------------------------------------------------------------------------------|
+| Api documentation | [Link](https://docs.tilta.io/reference/post_v1-buyers)                                                  |
+| Request service   | [\Tilta\Sdk\Service\Request\Buyer\CreateBuyerRequest](src/Service/Request/Buyer/CreateBuyerRequest.php) |
+| Request model     | [\Tilta\Sdk\Model\Buyer](src/Model/Buyer.php)                                                           |
+| Response model    | `true`                                                                                                  |
 
 Use this service to create a new buyer.
 
@@ -187,8 +184,7 @@ __Usage__
 
 ```php
 /** @var \Tilta\Sdk\HttpClient\TiltaClient $client */
-/** @var boolean $isSandbox */
-$requestService = new \Tilta\Sdk\Service\Request\Buyer\CreateBuyerRequest($client, $isSandbox);
+$requestService = new \Tilta\Sdk\Service\Request\Buyer\CreateBuyerRequest($client);
 
 $requestModel = (new \Tilta\Sdk\Model\Buyer())
     ->setExternalId('EXTERNAL_MERCHANT_ID')
@@ -210,12 +206,12 @@ $response = $requestService->execute($requestModel); // true if successfully
 
 #### UpdateBuyerRequest
 
-| 	                 | 	                                                                  |
-|-------------------|--------------------------------------------------------------------|
-| Api documentation | [Link](https://docs.tilta.io/reference/post_v1-buyers-external-id) |
-| Request service   | `\Tilta\Sdk\Service\Request\Buyer\UpdateBuyerRequest`              |
-| Request model     | `\Tilta\Sdk\Model\Request\Buyer\UpdateBuyerRequestModel`           |
-| Response model    | `true`                                                             |
+| 	                 | 	                                                                                                             |
+|-------------------|---------------------------------------------------------------------------------------------------------------|
+| Api documentation | [Link](https://docs.tilta.io/reference/post_v1-buyers-external-id)                                            |
+| Request service   | [\Tilta\Sdk\Service\Request\Buyer\UpdateBuyerRequest](src/Service/Request/Buyer/UpdateBuyerRequest.php)       |
+| Request model     | [\Tilta\Sdk\Model\Request\Buyer\UpdateBuyerRequestModel](src/Model/Request/Buyer/UpdateBuyerRequestModel.php) |
+| Response model    | `true`                                                                                                        |
 
 Use this service to update buyers data.
 
@@ -227,8 +223,7 @@ __Usage__
 
 ```php
 /** @var \Tilta\Sdk\HttpClient\TiltaClient $client */
-/** @var boolean $isSandbox */
-$requestService = new \Tilta\Sdk\Service\Request\Buyer\UpdateBuyerRequest($client, $isSandbox);
+$requestService = new \Tilta\Sdk\Service\Request\Buyer\UpdateBuyerRequest($client);
 
 $requestModel = (new \Tilta\Sdk\Model\Request\Buyer\UpdateBuyerRequestModel('EXTERNAL_MERCHANT_ID'))
     // same methods as in the \Tilta\Sdk\Model\Buyer model. You must provide all data, just these data, which should be updated.
@@ -244,12 +239,12 @@ $response = $requestService->execute($requestModel); // true if successfully
 
 #### CreateFacilityRequest
 
-| 	                 | 	                                                                           |
-|-------------------|-----------------------------------------------------------------------------|
-| Api documentation | [Link](https://docs.tilta.io/reference/post_v1-buyers-external-id-facility) |
-| Request service   | `\Tilta\Sdk\Service\Request\Facility\CreateFacilityRequest`                 |
-| Request model     | `\Tilta\Sdk\Model\Request\Facility\CreateFacilityRequestModel`              |
-| Response model    | `true`                                                                      |
+| 	                 | 	                                                                                                                         |
+|-------------------|---------------------------------------------------------------------------------------------------------------------------|
+| Api documentation | [Link](https://docs.tilta.io/reference/post_v1-buyers-external-id-facility)                                               |
+| Request service   | [\Tilta\Sdk\Service\Request\Facility\CreateFacilityRequest](src/Service/Request/Facility/CreateFacilityRequest.php)       |
+| Request model     | [\Tilta\Sdk\Model\Request\Facility\CreateFacilityRequestModel](src/Model/Request/Facility/CreateFacilityRequestModel.php) |
+| Response model    | `true`                                                                                                                    |
 
 Use this service to create a new facility for a buyer.
 
@@ -257,8 +252,7 @@ __Usage__
 
 ```php
 /** @var \Tilta\Sdk\HttpClient\TiltaClient $client */
-/** @var boolean $isSandbox */
-$requestService = new \Tilta\Sdk\Service\Request\Facility\CreateFacilityRequest($client, $isSandbox);
+$requestService = new \Tilta\Sdk\Service\Request\Facility\CreateFacilityRequest($client);
 
 $requestModel = (new \Tilta\Sdk\Model\Request\Facility\CreateFacilityRequestModel('EXTERNAL_MERCHANT_ID'));
     
@@ -268,12 +262,12 @@ $response = $requestService->execute($requestModel); // true if successfully
 
 #### GetFacilityRequest
 
-| 	                 | 	                                                                          |
-|-------------------|----------------------------------------------------------------------------|
-| Api documentation | [Link](https://docs.tilta.io/reference/get_v1-buyers-external-id-facility) |
-| Request service   | `\Tilta\Sdk\Service\Request\Facility\GetFacilityRequest`                   |
-| Request model     | `\Tilta\Sdk\Model\Request\Facility\GetFacilityRequestModel`                |
-| Response model    | `\Tilta\Sdk\Model\Response\Facility\GetFacilityResponseModel`              |
+| 	                 | 	                                                                                                                       |
+|-------------------|-------------------------------------------------------------------------------------------------------------------------|
+| Api documentation | [Link](https://docs.tilta.io/reference/get_v1-buyers-external-id-facility)                                              |
+| Request service   | [\Tilta\Sdk\Service\Request\Facility\GetFacilityRequest](src/Service/Request/Facility/GetFacilityRequest.php)           |
+| Request model     | [\Tilta\Sdk\Model\Request\Facility\GetFacilityRequestModel](src/Model/Request/Facility/GetFacilityRequestModel.php)     |
+| Response model    | [\Tilta\Sdk\Model\Response\Facility\GetFacilityResponseModel](src/Model/Response/Facility/GetFacilityResponseModel.php) |
 
 Use this service to get the active facility for a buyer.
 
@@ -281,8 +275,7 @@ __Usage__
 
 ```php
 /** @var \Tilta\Sdk\HttpClient\TiltaClient $client */
-/** @var boolean $isSandbox */
-$requestService = new \Tilta\Sdk\Service\Request\Facility\GetFacilityRequest($client, $isSandbox);
+$requestService = new \Tilta\Sdk\Service\Request\Facility\GetFacilityRequest($client);
 
 $requestModel = (new \Tilta\Sdk\Model\Request\Facility\GetFacilityRequestModel('EXTERNAL_MERCHANT_ID'));
     
@@ -375,11 +368,12 @@ $orderStatus = $response->getStatus();
 
 __Expected exceptions thrown by service__
 
-| 	                                                                                   | 	                                                                          |
-|-------------------------------------------------------------------------------------|----------------------------------------------------------------------------|
-| `\Tilta\Sdk\Exception\GatewayException\NotFoundException\OrderNotFoundException`    | if the order does not exist.                                               |
+| 	                                                                                | 	                            |
+|----------------------------------------------------------------------------------|------------------------------|
+| `\Tilta\Sdk\Exception\GatewayException\NotFoundException\OrderNotFoundException` | if the order does not exist. |
 
 #### GetOrderListRequest
+
 | 	                 | 	                                                                                                             |
 |-------------------|---------------------------------------------------------------------------------------------------------------|
 | Api documentation | [Link](https://docs.tilta.io/reference/get_v1-orders)                                                         |
