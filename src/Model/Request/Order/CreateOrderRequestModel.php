@@ -19,7 +19,7 @@ use Tilta\Sdk\Model\Order\LineItem;
 use Tilta\Sdk\Model\Request\RequestModelInterface;
 
 /**
- * @method $this setOrderExternalId(string $externalId)
+ * @method $this setOrderExternalId(string $orderExternalId)
  * @method $this setBuyerExternalId(string $buyerExternalId)
  * @method $this setMerchantExternalId(string $merchantExternalId)
  * @method $this setOrderedAt(DateTime $orderedAt)
