@@ -39,4 +39,15 @@ class AbstractRequestTestCase extends TestCase
 
         return $clientMock;
     }
+
+    protected function createMock(string $originalClassName): MockObject
+    {
+        $mock = parent::createMock($originalClassName);
+        if (strpos($originalClassName, 'Tilta\Sdk\Model\\') === 0) {
+            $mock->method('toArray')->willReturn([]);
+            $mock->method('validateFields');
+        }
+
+        return $mock;
+    }
 }

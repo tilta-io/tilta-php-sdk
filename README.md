@@ -470,6 +470,41 @@ __Expected exceptions thrown by service__
 |------------------------------------------------------------------------------------|------------------------------------|
 | `\Tilta\Sdk\Exception\GatewayException\NotFoundException\BuyerNotFoundException`   | if the given buyer does not exist. |
 
+#### GetPaymentTermsRequest
+
+| 	                 | 	                                                                                                                         |
+|-------------------|---------------------------------------------------------------------------------------------------------------------------|
+| Api documentation | [Link](https://docs.tilta.io/reference/post_v1-buyers-external-id-orders-paymentterms)                                    |
+| Request service   | [\Tilta\Sdk\Service\Request\Order\GetPaymentTermsRequest](src/Service/Request/Order/GetPaymentTermsRequest.php)           |
+| Request model     | [\Tilta\Sdk\Model\Request\Order\GetPaymentTermsRequestModel](src/Model/Request/Order/GetPaymentTermsRequestModel.php)     |
+| Response model    | [\Tilta\Sdk\Model\Response\Order\GetPaymentTermsResponseModel](src/Model/Response/Order/GetPaymentTermsResponseModel.php) |
+
+Use this service to get the payment terms for an order, which would/may be placed.
+
+__Usage__
+
+```php
+/** @var \Tilta\Sdk\HttpClient\TiltaClient $client */
+$requestService = new \Tilta\Sdk\Service\Request\Order\GetPaymentTermsRequest($client);
+
+$requestModel = (new \Tilta\Sdk\Model\Request\Order\GetPaymentTermsRequestModel())
+    ->setMerchantExternalId('merchant-external-id')
+    ->setBuyerExternalId('buyer-external-id')
+    ->setAmount(new \Tilta\Sdk\Model\Order\Amount());
+    
+/** @var \Tilta\Sdk\Model\Response\Order\GetPaymentTermsResponseModel $response */
+$response = $requestService->execute($requestModel);
+```
+
+__Expected exceptions thrown by service__
+
+| 	                                                                                   | 	                                                                          |
+|-------------------------------------------------------------------------------------|----------------------------------------------------------------------------|
+| `\Tilta\Sdk\Exception\GatewayException\NotFoundException\BuyerNotFoundException`    | if the given buyer does not exist.                                         |
+| `\Tilta\Sdk\Exception\GatewayException\NotFoundException\MerchantNotFoundException` | if the given merchant does not exist.                                      |
+| `\Tilta\Sdk\Exception\GatewayException\Facility\FacilityExceededException`          | if the buyer have an active facility but the order would exceed the limit. |
+
+
 ### Additional features
 
 #### Logging
