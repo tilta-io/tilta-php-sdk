@@ -712,12 +712,12 @@ failed). If you only set a ERROR-Handler it will only log all failed requests.
 Example:
 
 ```php
-$logFile = ;
+$logFile = '/path/to/your/logfile.log';
 $logger = new \Monolog\Logger('name-for-the-logger');
 
-$handlerDebug = new \Monolog\Handler\StreamHandler('/path/to/your/log-file.error.log', LogLevel::DEBUG);
+$handlerDebug = new \Monolog\Handler\StreamHandler('/path/to/your/log-file.debug.log', LogLevel::DEBUG);
 $logger->pushHandler($handlerDebug);
-$handlerError = new \Monolog\Handler\StreamHandler('/path/to/your/log-file.debug.log', LogLevel::ERROR);
+$handlerError = new \Monolog\Handler\StreamHandler('/path/to/your/log-file.error.log', LogLevel::ERROR);
 $logger->pushHandler($handlerError);
 
 \Tilta\Sdk\Util\Logging::setPsr3Logger($logger);
