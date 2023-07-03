@@ -10,7 +10,6 @@ declare(strict_types=1);
 
 namespace Tilta\Sdk\Service\Request\Buyer;
 
-use Tilta\Sdk\Exception\InvalidResponseException;
 use Tilta\Sdk\Model\Request\Buyer\GetBuyerAuthTokenRequestModel;
 use Tilta\Sdk\Model\Response\Buyer\GetBuyerAuthTokenResponseModel;
 use Tilta\Sdk\Service\Request\AbstractRequest;
