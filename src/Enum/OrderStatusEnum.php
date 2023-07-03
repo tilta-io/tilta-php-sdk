@@ -18,9 +18,14 @@ final class OrderStatusEnum
     public const DRAFT = 'DRAFT';
 
     /**
+     * please note the "typo" with double L.
+     * this is the british variant of CANCELED.
+     *
+     * We are developing in american english. This is the reason why the constant is named with a single L.
+     *
      * @var string
      */
-    public const CANCELLED = 'CANCELLED';
+    public const CANCELED = 'CANCELLED';
 
     /**
      * @var string

@@ -11,8 +11,10 @@ declare(strict_types=1);
 namespace Tilta\Sdk\Tests\Helper;
 
 use DateTime;
+use Tilta\Sdk\Enum\OrderStatusEnum;
 use Tilta\Sdk\Enum\PaymentMethodEnum;
 use Tilta\Sdk\Model\Address;
+use Tilta\Sdk\Model\Order;
 use Tilta\Sdk\Model\Order\Amount;
 use Tilta\Sdk\Model\Order\LineItem;
 use Tilta\Sdk\Model\Request\Order\CreateOrderRequestModel;
@@ -61,6 +63,15 @@ class OrderHelper
                     ->setGross(1190)
             )
             ->setPaymentMethod(PaymentMethodEnum::BNPL);
+    }
+
+    public static function createValidOrderWithStatus(string $externalId, string $status = OrderStatusEnum::PENDING_CONFIRMATION): Order
+    {
+        $order = self::createValidOrder($externalId, 'buyer-id');
+        $data = $order->toArray();
+        $data['status'] = $status;
+
+        return (new Order())->fromArray($data);
     }
 
     public static function createUniqueExternalId(string $testName): string

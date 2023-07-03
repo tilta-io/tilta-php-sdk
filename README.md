@@ -402,6 +402,41 @@ $items = $response->getItems();
 [...]
 ```
 
+#### CancelOrderRequest
+
+| 	                 | 	                                                                                                             |
+|-------------------|---------------------------------------------------------------------------------------------------------------|
+| Api documentation | [Link](https://docs.tilta.io/reference/get_v1-orders-external-id)                                             |
+| Request service   | [\Tilta\Sdk\Service\Request\Order\CancelOrderRequest](src/Service/Request/Order/CancelOrderRequest.php)       |
+| Request model     | [\Tilta\Sdk\Model\Request\Order\CancelOrderRequestModel](src/Model/Request/Order/CancelOrderRequestModel.php) |
+| Response model    | [\Tilta\Sdk\Model\Order](src/Model/Order.php)                                                                 |
+
+Use this service to cancel the order (if it hasn't been invoiced yet).
+
+**Please note:** If the request was successful, an order-object is returned, instead of a boolean!
+
+__Usage__
+
+```php
+/** @var \Tilta\Sdk\HttpClient\TiltaClient $client */
+$requestService = new \Tilta\Sdk\Service\Request\Order\CancelOrderRequest($client);
+
+$requestModel = (new \Tilta\Sdk\Model\Request\Order\CancelOrderRequestModel('order-external-id'));
+    
+/** @var \Tilta\Sdk\Model\Order $response */
+$response = $requestService->execute($requestModel);
+$externalId = $response->getOrderExternalId();
+$response->getStatus() === \Tilta\Sdk\Enum\OrderStatusEnum::CANCELED; // true
+[...]
+```
+
+__Expected exceptions thrown by service__
+
+| 	                                                                                  | 	                                       |
+|------------------------------------------------------------------------------------|-----------------------------------------|
+| `\Tilta\Sdk\Exception\GatewayException\NotFoundException\OrderNotFoundException`   | if the order does not exist.            |
+| `\Tilta\Sdk\Exception\GatewayException\NotFoundException\OrderIsCanceledException` | if the order has been already canceled. |
+
 ### Additional features
 
 #### Logging

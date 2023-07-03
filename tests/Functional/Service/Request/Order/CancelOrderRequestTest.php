@@ -13,13 +13,14 @@ namespace Functional\Service\Request\Order;
 use Throwable;
 use Tilta\Sdk\Exception\GatewayException;
 use Tilta\Sdk\Exception\GatewayException\NotFoundException\OrderNotFoundException;
+use Tilta\Sdk\Exception\GatewayException\Order\OrderIsCanceledException;
 use Tilta\Sdk\Model\Order;
-use Tilta\Sdk\Model\Request\Order\GetOrderDetailsRequestModel;
-use Tilta\Sdk\Service\Request\Order\GetOrderDetailsRequest;
+use Tilta\Sdk\Model\Request\Order\CancelOrderRequestModel;
+use Tilta\Sdk\Service\Request\Order\CancelOrderRequest;
 use Tilta\Sdk\Tests\Functional\Service\Request\AbstractRequestTestCase;
 use Tilta\Sdk\Tests\Helper\OrderHelper;
 
-class GetOrderDetailsRequestTest extends AbstractRequestTestCase
+class CancelOrderRequestTest extends AbstractRequestTestCase
 {
     public function testRequest(): void
     {
@@ -29,7 +30,7 @@ class GetOrderDetailsRequestTest extends AbstractRequestTestCase
         $client = $this->createMockedTiltaClientResponse($order->toArray());
 
         // execute request
-        $responseModel = (new GetOrderDetailsRequest($client))->execute(new GetOrderDetailsRequestModel($orderId));
+        $responseModel = (new CancelOrderRequest($client))->execute(new CancelOrderRequestModel($orderId));
 
         // test values
         static::assertInstanceOf(Order::class, $responseModel);
@@ -46,15 +47,17 @@ class GetOrderDetailsRequestTest extends AbstractRequestTestCase
         $client = $this->createMockedTiltaClientException($exception);
 
         $this->expectException($expectedException);
-        $model = $this->createMock(GetOrderDetailsRequestModel::class);
+        $model = $this->createMock(CancelOrderRequestModel::class);
         $model->method('toArray')->willReturn([]);
-        (new GetOrderDetailsRequest($client))->execute($model);
+        (new CancelOrderRequest($client))->execute($model);
     }
 
     public function exceptionDataProvider(): array
     {
         return [
             [['message' => 'No Order found'], OrderNotFoundException::class],
+            [['message' => 'The order is CANCELLED and cannot be updated.'], OrderIsCanceledException::class],
+            [['message' => 'The order is CANCELED and cannot be updated.'], OrderIsCanceledException::class],
         ];
     }
 }

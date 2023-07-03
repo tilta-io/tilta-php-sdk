@@ -10,12 +10,14 @@ declare(strict_types=1);
 
 namespace Tilta\Sdk\Util;
 
+use Tilta\Sdk\Enum\OrderStatusEnum;
 use Tilta\Sdk\Exception\GatewayException;
 use Tilta\Sdk\Exception\GatewayException\Facility\FacilityExceededException;
 use Tilta\Sdk\Exception\GatewayException\Facility\NoActiveFacilityFoundException;
 use Tilta\Sdk\Exception\GatewayException\NotFoundException\BuyerNotFoundException;
 use Tilta\Sdk\Exception\GatewayException\NotFoundException\MerchantNotFoundException;
 use Tilta\Sdk\Exception\GatewayException\NotFoundException\OrderNotFoundException;
+use Tilta\Sdk\Exception\GatewayException\Order\OrderIsCanceledException;
 use Tilta\Sdk\Model\AbstractModel;
 use Tilta\Sdk\Model\HasBuyerFieldInterface;
 use Tilta\Sdk\Model\HasMerchantFieldInterface;
@@ -41,8 +43,16 @@ class ExceptionHandler
             return new MerchantNotFoundException($requestModel->getMerchantExternalId(), ...self::getDefaultArgumentsForException($exception));
         }
 
-        if ($requestModel instanceof HasOrderIdFieldInterface && $exception->getMessage() === 'No Order found') {
-            return new OrderNotFoundException($requestModel->getOrderExternalId());
+        if ($requestModel instanceof HasOrderIdFieldInterface) {
+            if ($exception->getMessage() === 'No Order found') {
+                return new OrderNotFoundException($requestModel->getOrderExternalId());
+            }
+
+            if ($exception->getMessage() === sprintf('The order is %s and cannot be updated.', OrderStatusEnum::CANCELED) ||  // CANCELLED
+                $exception->getMessage() === sprintf('The order is %s and cannot be updated.', 'CANCELED')
+            ) {
+                return new OrderIsCanceledException(...self::getDefaultArgumentsForException($exception));
+            }
         }
 
         return null;
