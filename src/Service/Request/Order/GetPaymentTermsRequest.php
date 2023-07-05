@@ -34,4 +34,9 @@ class GetPaymentTermsRequest extends AbstractRequest
     {
         return TiltaClient::METHOD_POST;
     }
+
+    protected static function getExpectedRequestModelClass(): string
+    {
+        return GetPaymentTermsRequestModel::class;
+    }
 }

@@ -60,4 +60,11 @@ class CancelOrderRequestTest extends AbstractRequestTestCase
             [['message' => 'The order is CANCELED and cannot be updated.'], OrderIsCanceledException::class],
         ];
     }
+
+    public function dataProviderExpectedRequestModel(): array
+    {
+        return [
+            [CancelOrderRequest::class, CancelOrderRequestModel::class],
+        ];
+    }
 }

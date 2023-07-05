@@ -48,4 +48,11 @@ class CreateInvoiceRequestTest extends AbstractRequestTestCase
             // TODO implement
         ];
     }
+
+    public function dataProviderExpectedRequestModel(): array
+    {
+        return [
+            [CreateInvoiceRequest::class, CreateInvoiceRequestModel::class],
+        ];
+    }
 }

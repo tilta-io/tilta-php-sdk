@@ -46,4 +46,11 @@ class GetFacilityRequestTest extends AbstractRequestTestCase
         $this->expectException(NoActiveFacilityFoundException::class);
         (new GetFacilityRequest($client))->execute(new GetFacilityRequestModel('test'));
     }
+
+    public function dataProviderExpectedRequestModel(): array
+    {
+        return [
+            [GetFacilityRequest::class, GetFacilityRequestModel::class],
+        ];
+    }
 }

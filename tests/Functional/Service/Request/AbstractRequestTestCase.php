@@ -10,13 +10,34 @@ declare(strict_types=1);
 
 namespace Tilta\Sdk\Tests\Functional\Service\Request;
 
+use Exception;
+use InvalidArgumentException;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Tilta\Sdk\Exception\GatewayException;
 use Tilta\Sdk\HttpClient\TiltaClient;
+use Tilta\Sdk\Model\Request\AbstractRequestModel;
+use Tilta\Sdk\Service\Request\AbstractRequest;
 
-class AbstractRequestTestCase extends TestCase
+abstract class AbstractRequestTestCase extends TestCase
 {
+    /**
+     * @dataProvider dataProviderExpectedRequestModel
+     */
+    public function testExpectedExceptionOnWrongRequestModelClass(string $requestServiceClass, string $expectedRequestModel): void
+    {
+        if (!is_subclass_of($requestServiceClass, AbstractRequest::class)) {
+            throw new Exception('given request-service class is not a sub-class of ' . AbstractRequest::class);
+        }
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessageMatches('/instance of ' . str_replace('\\', '\\\\', $expectedRequestModel) . '/');
+        (new $requestServiceClass($this->createMock(TiltaClient::class)))->execute(new class() extends AbstractRequestModel {
+        });
+    }
+
+    abstract public function dataProviderExpectedRequestModel(): array;
+
     protected function createMockedTiltaClientException(GatewayException $gatewayException): TiltaClient
     {
         $clientMock = $this->createMock(TiltaClient::class);

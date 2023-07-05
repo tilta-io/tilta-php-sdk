@@ -76,4 +76,11 @@ class CreateFacilityRequestTest extends AbstractRequestTestCase
         $this->expectException(BuyerNotFoundException::class);
         (new CreateFacilityRequest($client))->execute(new CreateFacilityRequestModel('test'));
     }
+
+    public function dataProviderExpectedRequestModel(): array
+    {
+        return [
+            [CreateFacilityRequest::class, CreateFacilityRequestModel::class],
+        ];
+    }
 }

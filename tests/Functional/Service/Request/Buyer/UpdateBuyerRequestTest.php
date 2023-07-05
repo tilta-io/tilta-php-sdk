@@ -68,4 +68,11 @@ class UpdateBuyerRequestTest extends AbstractRequestTestCase
         $this->expectException(BuyerNotFoundException::class);
         (new UpdateBuyerRequest($client))->execute(new UpdateBuyerRequestModel('test'));
     }
+
+    public function dataProviderExpectedRequestModel(): array
+    {
+        return [
+            [UpdateBuyerRequest::class, UpdateBuyerRequestModel::class],
+        ];
+    }
 }

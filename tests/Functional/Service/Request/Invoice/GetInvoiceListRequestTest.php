@@ -59,4 +59,11 @@ class GetInvoiceListRequestTest extends AbstractRequestTestCase
         static::assertIsArray($response->getItems());
         static::assertContainsOnlyInstancesOf(Invoice::class, $response->getItems());
     }
+
+    public function dataProviderExpectedRequestModel(): array
+    {
+        return [
+            [GetInvoiceListRequest::class, GetInvoiceListRequestModel::class],
+        ];
+    }
 }

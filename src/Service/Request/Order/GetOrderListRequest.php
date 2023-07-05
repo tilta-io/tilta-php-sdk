@@ -28,4 +28,9 @@ class GetOrderListRequest extends AbstractRequest
     {
         return new GetOrderListResponseModel($responseData);
     }
+
+    protected static function getExpectedRequestModelClass(): string
+    {
+        return GetOrderListRequestModel::class;
+    }
 }

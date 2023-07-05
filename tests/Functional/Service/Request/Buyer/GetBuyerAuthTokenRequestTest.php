@@ -33,4 +33,11 @@ class GetBuyerAuthTokenRequestTest extends TestCase
         $this->assertNotNull($tokenModel->getBuyerAuthToken());
         $this->assertStringStartsWith('ey', $tokenModel->getBuyerAuthToken());
     }
+
+    public function dataProviderExpectedRequestModel(): array
+    {
+        return [
+            [GetBuyerAuthTokenRequest::class, GetBuyerAuthTokenRequestModel::class],
+        ];
+    }
 }

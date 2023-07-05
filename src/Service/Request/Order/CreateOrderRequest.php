@@ -40,4 +40,9 @@ class CreateOrderRequest extends AbstractRequest
     protected function processFailed($requestModel, Exception $exception): void
     {
     }
+
+    protected static function getExpectedRequestModelClass(): string
+    {
+        return CreateOrderRequestModel::class;
+    }
 }

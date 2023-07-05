@@ -28,4 +28,9 @@ class GetInvoiceListRequest extends AbstractRequest
     {
         return (new GetInvoiceListResponseModel())->fromArray($responseData);
     }
+
+    protected static function getExpectedRequestModelClass(): string
+    {
+        return GetInvoiceListRequestModel::class;
+    }
 }

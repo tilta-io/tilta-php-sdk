@@ -43,4 +43,9 @@ class GetFacilityRequest extends AbstractRequest
             }
         }
     }
+
+    protected static function getExpectedRequestModelClass(): string
+    {
+        return GetFacilityRequestModel::class;
+    }
 }

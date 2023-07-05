@@ -34,4 +34,9 @@ class CancelOrderRequest extends AbstractRequest
     {
         return TiltaClient::METHOD_POST;
     }
+
+    protected static function getExpectedRequestModelClass(): string
+    {
+        return CancelOrderRequestModel::class;
+    }
 }

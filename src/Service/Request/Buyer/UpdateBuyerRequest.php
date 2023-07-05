@@ -35,4 +35,9 @@ class UpdateBuyerRequest extends AbstractRequest
     {
         return TiltaClient::METHOD_POST;
     }
+
+    protected static function getExpectedRequestModelClass(): string
+    {
+        return UpdateBuyerRequestModel::class;
+    }
 }

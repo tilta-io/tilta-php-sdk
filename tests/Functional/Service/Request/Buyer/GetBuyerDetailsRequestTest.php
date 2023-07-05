@@ -47,4 +47,11 @@ class GetBuyerDetailsRequestTest extends AbstractRequestTestCase
         $this->expectException(BuyerNotFoundException::class);
         (new GetBuyerDetailsRequest($client))->execute(new GetBuyerDetailsRequestModel('test'));
     }
+
+    public function dataProviderExpectedRequestModel(): array
+    {
+        return [
+            [GetBuyerDetailsRequest::class, GetBuyerDetailsRequestModel::class],
+        ];
+    }
 }

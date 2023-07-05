@@ -57,4 +57,11 @@ class GetOrderDetailsRequestTest extends AbstractRequestTestCase
             [['message' => 'No Order found'], OrderNotFoundException::class],
         ];
     }
+
+    public function dataProviderExpectedRequestModel(): array
+    {
+        return [
+            [GetOrderDetailsRequest::class, GetOrderDetailsRequestModel::class],
+        ];
+    }
 }

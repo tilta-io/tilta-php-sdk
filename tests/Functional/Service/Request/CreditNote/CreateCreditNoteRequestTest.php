@@ -51,4 +51,11 @@ class CreateCreditNoteRequestTest extends AbstractRequestTestCase
             [['code' => 'NO_INVOICE_FOUND'], InvoiceForCreditNoteNotFound::class],
         ];
     }
+
+    public function dataProviderExpectedRequestModel(): array
+    {
+        return [
+            [CreateCreditNoteRequest::class, CreateCreditNoteRequestModel::class],
+        ];
+    }
 }

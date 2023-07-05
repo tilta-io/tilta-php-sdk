@@ -88,4 +88,11 @@ class AddOrdersToBuyerRequestTest extends AbstractRequestTestCase
             [['code' => 'FACILITY_EXCEEDED_AVAILABLE_AMOUNT'], FacilityExceededException::class],
         ];
     }
+
+    public function dataProviderExpectedRequestModel(): array
+    {
+        return [
+            [GetPaymentTermsRequest::class, GetPaymentTermsRequestModel::class],
+        ];
+    }
 }

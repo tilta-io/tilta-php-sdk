@@ -28,4 +28,9 @@ class GetOrderDetailsRequest extends AbstractRequest
     {
         return (new Order())->fromArray($responseData);
     }
+
+    protected static function getExpectedRequestModelClass(): string
+    {
+        return GetOrderDetailsRequestModel::class;
+    }
 }

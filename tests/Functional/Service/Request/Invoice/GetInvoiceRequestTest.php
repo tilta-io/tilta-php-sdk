@@ -49,4 +49,11 @@ class GetInvoiceRequestTest extends AbstractRequestTestCase
             [['message' => 'No Invoice found'], InvoiceNotFoundException::class],
         ];
     }
+
+    public function dataProviderExpectedRequestModel(): array
+    {
+        return [
+            [GetInvoiceRequest::class, GetInvoiceRequestModel::class],
+        ];
+    }
 }

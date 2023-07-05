@@ -89,4 +89,11 @@ class GetOrderListRequestTest extends AbstractRequestTestCase
         static::assertIsArray($response->getItems());
         static::assertContainsOnlyInstancesOf(Order::class, $response->getItems());
     }
+
+    public function dataProviderExpectedRequestModel(): array
+    {
+        return [
+            [GetOrderListRequest::class, GetOrderListRequestModel::class],
+        ];
+    }
 }

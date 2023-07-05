@@ -54,6 +54,11 @@ abstract class AbstractRequest
             throw new InvalidArgumentException(sprintf('Provided request model have to be an instance of %s or %s', RequestModelInterface::class, AbstractRequestModel::class));
         }
 
+        $expectedRequestModelClass = static::getExpectedRequestModelClass();
+        if (!$requestModel instanceof $expectedRequestModelClass) {
+            throw new InvalidArgumentException(sprintf('Provided request model have to be an instance of %s', $expectedRequestModelClass));
+        }
+
         try {
             if (!$this->client instanceof TiltaClient) {
                 throw new InvalidArgumentException(sprintf('please set a `%s` instance to the request-service. Use the parameter in the constructor or use the function `setClient` to set the client-instance.', TiltaClient::class));
@@ -82,6 +87,12 @@ abstract class AbstractRequest
 
         return $this->processSuccess($requestModel, $response);
     }
+
+    /**
+     * @deprecated may be replaced with php attributes. is just used to validate the given request model
+     * @return class-string<RequestModelInterface>
+     */
+    abstract protected static function getExpectedRequestModelClass(): string;
 
     /**
      * @param T_RequestModel $requestModel

@@ -39,4 +39,11 @@ class GetBuyerListRequestTest extends TestCase
             $this->assertInstanceOf(Buyer::class, $items[0]);
         }
     }
+
+    public function dataProviderExpectedRequestModel(): array
+    {
+        return [
+            [GetBuyerListRequest::class, GetBuyersListRequestModel::class],
+        ];
+    }
 }

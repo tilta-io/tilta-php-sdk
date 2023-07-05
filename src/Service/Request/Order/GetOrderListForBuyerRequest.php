@@ -30,4 +30,9 @@ class GetOrderListForBuyerRequest extends AbstractRequest
     {
         return (new GetOrderListForBuyerResponseModel())->fromArray($responseData);
     }
+
+    protected static function getExpectedRequestModelClass(): string
+    {
+        return GetOrderListForBuyerRequestModel::class;
+    }
 }

@@ -10,15 +10,15 @@ declare(strict_types=1);
 
 namespace Tilta\Sdk\Tests\Functional\Service\Request\Buyer;
 
-use PHPUnit\Framework\TestCase;
 use Tilta\Sdk\Model\Request\Buyer\CreateBuyerRequestModel;
 use Tilta\Sdk\Model\Request\Buyer\GetBuyerDetailsRequestModel;
 use Tilta\Sdk\Service\Request\Buyer\CreateBuyerRequest;
 use Tilta\Sdk\Service\Request\Buyer\GetBuyerDetailsRequest;
+use Tilta\Sdk\Tests\Functional\Service\Request\AbstractRequestTestCase;
 use Tilta\Sdk\Tests\Helper\BuyerHelper;
 use Tilta\Sdk\Tests\Helper\TiltaClientHelper;
 
-class CreateBuyerRequestTest extends TestCase
+class CreateBuyerRequestTest extends AbstractRequestTestCase
 {
     public CreateBuyerRequest $requestService;
 
@@ -44,5 +44,12 @@ class CreateBuyerRequestTest extends TestCase
 
         // compare input buyer with output. Both buyers should contain exactly the same data.
         $this->assertEquals($inputBuyer->toArray(), $buyer->toArray());
+    }
+
+    public function dataProviderExpectedRequestModel(): array
+    {
+        return [
+            [GetBuyerDetailsRequest::class, GetBuyerDetailsRequestModel::class],
+        ];
     }
 }

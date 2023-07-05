@@ -28,4 +28,9 @@ class GetBuyerAuthTokenRequest extends AbstractRequest
     {
         return new GetBuyerAuthTokenResponseModel($responseData);
     }
+
+    protected static function getExpectedRequestModelClass(): string
+    {
+        return GetBuyerAuthTokenRequestModel::class;
+    }
 }

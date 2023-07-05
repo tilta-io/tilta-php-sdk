@@ -28,4 +28,9 @@ class GetBuyerDetailsRequest extends AbstractRequest
     {
         return new Buyer($responseData);
     }
+
+    protected static function getExpectedRequestModelClass(): string
+    {
+        return GetBuyerDetailsRequestModel::class;
+    }
 }

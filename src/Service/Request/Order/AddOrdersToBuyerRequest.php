@@ -34,4 +34,9 @@ class AddOrdersToBuyerRequest extends AbstractRequest
     {
         return TiltaClient::METHOD_POST;
     }
+
+    protected static function getExpectedRequestModelClass(): string
+    {
+        return AddOrdersToBuyerRequestModel::class;
+    }
 }

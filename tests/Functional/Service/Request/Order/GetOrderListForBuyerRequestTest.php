@@ -84,4 +84,11 @@ class GetOrderListForBuyerRequestTest extends AbstractRequestTestCase
             [['message' => 'No Buyer found'], BuyerNotFoundException::class],
         ];
     }
+
+    public function dataProviderExpectedRequestModel(): array
+    {
+        return [
+            [GetOrderListForBuyerRequest::class, GetOrderListForBuyerRequestModel::class],
+        ];
+    }
 }

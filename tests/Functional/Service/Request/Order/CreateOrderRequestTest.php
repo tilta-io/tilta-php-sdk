@@ -66,4 +66,11 @@ class CreateOrderRequestTest extends AbstractRequestTestCase
             [['message' => 'No Merchant found'], MerchantNotFoundException::class],
         ];
     }
+
+    public function dataProviderExpectedRequestModel(): array
+    {
+        return [
+            [CreateOrderRequest::class, CreateOrderRequestModel::class],
+        ];
+    }
 }
