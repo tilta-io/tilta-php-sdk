@@ -19,7 +19,7 @@ use Tilta\Sdk\Model\Request\Facility\CreateFacilityRequestModel;
 use Tilta\Sdk\Service\Request\Buyer\CreateBuyerRequest;
 use Tilta\Sdk\Service\Request\Facility\CreateFacilityRequest;
 
-class BuyerHelper
+class BuyerHelper extends AbstractHelper
 {
     /**
      * @template T of Buyer
@@ -68,9 +68,9 @@ class BuyerHelper
             ]);
     }
 
-    public static function createUniqueExternalId(string $testName): string
+    public static function createUniqueExternalId(string $testName, string $prefixCacheKey = null): string
     {
-        return 'unit-testing_' . $testName . '_' . round(microtime(true));
+        return parent::createUniqueExternalId($testName, $prefixCacheKey) . '-buyer';
     }
 
     public static function getBuyerExternalIdWithValidFacility(string $testName): string

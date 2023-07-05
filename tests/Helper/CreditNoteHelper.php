@@ -16,7 +16,7 @@ use Tilta\Sdk\Model\CreditNote;
 use Tilta\Sdk\Model\Order\LineItem;
 use Tilta\Sdk\Model\Request\CreditNote\CreateCreditNoteRequestModel;
 
-class CreditNoteHelper
+class CreditNoteHelper extends AbstractHelper
 {
     public static function createValidCreditNote(string $creditNoteExternalId): CreditNote
     {
@@ -90,5 +90,10 @@ class CreditNoteHelper
                     ->setQuantity(1),
             ])
             ->setOrderExternalIds(['order-external-id-1', 'order-external-id-2']);
+    }
+
+    public static function createUniqueExternalId(string $testName, string $prefixCacheKey = null): string
+    {
+        return parent::createUniqueExternalId($testName, $prefixCacheKey) . '-credit-note';
     }
 }

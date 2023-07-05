@@ -10,6 +10,7 @@
             <directory>tests/Functional/Util</directory>
             <directory>tests/Functional/Service</directory>
             <directory>tests/Functional/Model</directory>
+            <directory>tests/Functional/FullTest</directory>
         </testsuite>
     </testsuites>
 

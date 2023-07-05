@@ -19,7 +19,7 @@ use Tilta\Sdk\Model\Order\Amount;
 use Tilta\Sdk\Model\Order\LineItem;
 use Tilta\Sdk\Model\Request\Order\CreateOrderRequestModel;
 
-class OrderHelper
+class OrderHelper extends AbstractHelper
 {
     public static function createValidOrder(string $externalId, string $buyerExternalId): CreateOrderRequestModel
     {
@@ -79,8 +79,8 @@ class OrderHelper
         return (new $class())->fromArray($data);
     }
 
-    public static function createUniqueExternalId(string $testName): string
+    public static function createUniqueExternalId(string $testName, string $prefixCacheKey = null): string
     {
-        return 'unit-testing_' . $testName . '_' . round(microtime(true));
+        return parent::createUniqueExternalId($testName, $prefixCacheKey) . '-order';
     }
 }

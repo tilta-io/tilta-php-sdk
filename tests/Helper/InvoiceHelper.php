@@ -13,7 +13,7 @@ namespace Tilta\Sdk\Tests\Helper;
 use DateTime;
 use Tilta\Sdk\Model\Invoice;
 
-class InvoiceHelper
+class InvoiceHelper extends AbstractHelper
 {
     public static function createValidInvoice(string $invoiceExternalId): Invoice
     {
@@ -59,5 +59,10 @@ class InvoiceHelper
                 'additional' => 'additional address details',
             ],
         ]);
+    }
+
+    public static function createUniqueExternalId(string $testName, string $prefixCacheKey = null): string
+    {
+        return parent::createUniqueExternalId($testName, $prefixCacheKey) . '-invoice';
     }
 }
