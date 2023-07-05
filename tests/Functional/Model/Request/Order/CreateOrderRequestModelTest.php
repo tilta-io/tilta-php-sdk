@@ -16,7 +16,7 @@ use Tilta\Sdk\Model\Address;
 use Tilta\Sdk\Model\Order\Amount;
 use Tilta\Sdk\Model\Order\LineItem;
 use Tilta\Sdk\Model\Request\Order\CreateOrderRequestModel;
-use Tilta\Sdk\Tests\Acceptance\Model\AbstractModelTestCase;
+use Tilta\Sdk\Tests\Functional\Model\AbstractModelTestCase;
 
 class CreateOrderRequestModelTest extends AbstractModelTestCase
 {

@@ -8,13 +8,13 @@
 
 declare(strict_types=1);
 
-namespace Tilta\Sdk\Tests\Acceptance\Model\Response\Buyer;
+namespace Tilta\Sdk\Tests\Functional\Model\Response\Buyer;
 
 use DateTime;
 use Tilta\Sdk\Exception\Validation\InvalidFieldValueException;
 use Tilta\Sdk\Model\Address;
 use Tilta\Sdk\Model\BuyerRepresentative;
-use Tilta\Sdk\Tests\Acceptance\Model\AbstractModelTestCase;
+use Tilta\Sdk\Tests\Functional\Model\AbstractModelTestCase;
 use Tilta\Sdk\Util\ResponseHelper;
 
 class BuyerRepresentativeTest extends AbstractModelTestCase

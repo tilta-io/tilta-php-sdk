@@ -12,7 +12,6 @@ namespace Tilta\Sdk\Tests\Functional\Model;
 
 use Tilta\Sdk\Exception\Validation\InvalidFieldValueException;
 use Tilta\Sdk\Model\AbstractModel;
-use Tilta\Sdk\Tests\Acceptance\Model\AbstractModelTestCase;
 use Tilta\Sdk\Tests\Functional\Mock\Model\ArrayTestModel;
 use Tilta\Sdk\Tests\Functional\Mock\Model\ArrayTestModelFieldMapping;
 use Tilta\Sdk\Tests\Functional\Mock\Model\SimpleTestModel;

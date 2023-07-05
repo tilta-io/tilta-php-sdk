@@ -12,7 +12,7 @@ namespace Tilta\Sdk\Tests\Functional\Model\Request\Order\AddOrdersToBuyer;
 
 use BadMethodCallException;
 use Tilta\Sdk\Model\Request\Order\AddOrdersToBuyer\ExistingOrder;
-use Tilta\Sdk\Tests\Acceptance\Model\AbstractModelTestCase;
+use Tilta\Sdk\Tests\Functional\Model\AbstractModelTestCase;
 
 class ExistingOrderTest extends AbstractModelTestCase
 {

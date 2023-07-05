@@ -8,10 +8,10 @@
 
 declare(strict_types=1);
 
-namespace Tilta\Sdk\Tests\Acceptance\Model\Request;
+namespace Tilta\Sdk\Tests\Functional\Model\Request;
 
 use Tilta\Sdk\Model\Request\ListRequestModel;
-use Tilta\Sdk\Tests\Acceptance\Model\AbstractModelTestCase;
+use Tilta\Sdk\Tests\Functional\Model\AbstractModelTestCase;
 
 class ListRequestModelTest extends AbstractModelTestCase
 {

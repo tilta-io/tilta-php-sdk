@@ -12,7 +12,7 @@ namespace Tilta\Sdk\Tests\Acceptance\Response\Request\Facility;
 
 use DateTime;
 use Tilta\Sdk\Model\Response\Facility\GetFacilityResponseModel;
-use Tilta\Sdk\Tests\Acceptance\Model\AbstractModelTestCase;
+use Tilta\Sdk\Tests\Functional\Model\AbstractModelTestCase;
 
 class GetFacilityResponseModelTest extends AbstractModelTestCase
 {

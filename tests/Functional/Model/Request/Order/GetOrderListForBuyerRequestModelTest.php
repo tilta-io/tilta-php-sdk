@@ -11,7 +11,7 @@ declare(strict_types=1);
 namespace Tilta\Sdk\Tests\Functional\Service\Request\Order;
 
 use Tilta\Sdk\Model\Request\Order\GetOrderListForBuyerRequestModel;
-use Tilta\Sdk\Tests\Acceptance\Model\AbstractModelTestCase;
+use Tilta\Sdk\Tests\Functional\Model\AbstractModelTestCase;
 
 class GetOrderListForBuyerRequestModelTest extends AbstractModelTestCase
 {

@@ -12,7 +12,7 @@ namespace Tilta\Sdk\Tests\Functional\Model\Request\Order;
 
 use Tilta\Sdk\Model\Order\Amount;
 use Tilta\Sdk\Model\Request\Order\GetPaymentTermsRequestModel;
-use Tilta\Sdk\Tests\Acceptance\Model\AbstractModelTestCase;
+use Tilta\Sdk\Tests\Functional\Model\AbstractModelTestCase;
 
 class GetPaymentTermsRequestModelTest extends AbstractModelTestCase
 {

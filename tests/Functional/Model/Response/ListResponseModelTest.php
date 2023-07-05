@@ -11,8 +11,8 @@ declare(strict_types=1);
 namespace Tilta\Sdk\Tests\Functional\Model\Request;
 
 use Tilta\Sdk\Model\Response\ListResponseModel;
-use Tilta\Sdk\Tests\Acceptance\Model\AbstractModelTestCase;
 use Tilta\Sdk\Tests\Functional\Mock\Model\SimpleTestModel;
+use Tilta\Sdk\Tests\Functional\Model\AbstractModelTestCase;
 
 class ListResponseModelTest extends AbstractModelTestCase
 {

@@ -11,7 +11,7 @@ declare(strict_types=1);
 namespace Tilta\Sdk\Tests\Functional\Service\Request\Invoice;
 
 use Tilta\Sdk\Model\Request\Invoice\GetInvoiceListRequestModel;
-use Tilta\Sdk\Tests\Acceptance\Model\AbstractModelTestCase;
+use Tilta\Sdk\Tests\Functional\Model\AbstractModelTestCase;
 
 class GetInvoiceListRequestModelTest extends AbstractModelTestCase
 {

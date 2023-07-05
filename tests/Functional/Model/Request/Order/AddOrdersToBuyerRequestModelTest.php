@@ -13,7 +13,7 @@ namespace Tilta\Sdk\Tests\Functional\Model\Request\Order;
 use Tilta\Sdk\Enum\OrderStatusEnum;
 use Tilta\Sdk\Model\Request\Order\AddOrdersToBuyer\ExistingOrder;
 use Tilta\Sdk\Model\Request\Order\AddOrdersToBuyerRequestModel;
-use Tilta\Sdk\Tests\Acceptance\Model\AbstractModelTestCase;
+use Tilta\Sdk\Tests\Functional\Model\AbstractModelTestCase;
 use Tilta\Sdk\Tests\Helper\OrderHelper;
 
 class AddOrdersToBuyerRequestModelTest extends AbstractModelTestCase

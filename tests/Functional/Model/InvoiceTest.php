@@ -15,7 +15,6 @@ use Tilta\Sdk\Model\Address;
 use Tilta\Sdk\Model\Invoice;
 use Tilta\Sdk\Model\Order\Amount;
 use Tilta\Sdk\Model\Order\LineItem;
-use Tilta\Sdk\Tests\Acceptance\Model\AbstractModelTestCase;
 
 class InvoiceTest extends AbstractModelTestCase
 {

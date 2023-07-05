@@ -14,7 +14,6 @@ use DateTime;
 use Tilta\Sdk\Model\Address;
 use Tilta\Sdk\Model\CreditNote;
 use Tilta\Sdk\Model\Order\LineItem;
-use Tilta\Sdk\Tests\Acceptance\Model\AbstractModelTestCase;
 use Tilta\Sdk\Util\ResponseHelper;
 
 class CreditNoteTest extends AbstractModelTestCase

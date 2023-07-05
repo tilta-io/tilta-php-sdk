@@ -12,7 +12,7 @@ namespace Tilta\Sdk\Tests\Functional\Model\Response\Order;
 
 use DateTime;
 use Tilta\Sdk\Model\Response\Order\GetPaymentTermsResponseModel;
-use Tilta\Sdk\Tests\Acceptance\Model\AbstractModelTestCase;
+use Tilta\Sdk\Tests\Functional\Model\AbstractModelTestCase;
 
 class GetPaymentTermsResponseModelTest extends AbstractModelTestCase
 {

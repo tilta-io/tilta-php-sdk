@@ -12,7 +12,7 @@ namespace Tilta\Sdk\Tests\Functional\Model\Response\Invoice;
 
 use Tilta\Sdk\Model\Invoice;
 use Tilta\Sdk\Model\Response\Invoice\GetInvoiceListResponseModel;
-use Tilta\Sdk\Tests\Acceptance\Model\AbstractModelTestCase;
+use Tilta\Sdk\Tests\Functional\Model\AbstractModelTestCase;
 use Tilta\Sdk\Util\ResponseHelper;
 
 class GetInvoiceListResponseModelTest extends AbstractModelTestCase

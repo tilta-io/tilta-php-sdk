@@ -8,7 +8,7 @@
 
 declare(strict_types=1);
 
-namespace Tilta\Sdk\Tests\Acceptance\Model;
+namespace Tilta\Sdk\Tests\Functional\Model;
 
 use DateTime;
 use Tilta\Sdk\Exception\InvalidResponseException;

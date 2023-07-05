@@ -8,10 +8,10 @@
 
 declare(strict_types=1);
 
-namespace Tilta\Sdk\Tests\Acceptance\Model\Response\Buyer;
+namespace Tilta\Sdk\Tests\Functional\Model\Response\Buyer;
 
 use Tilta\Sdk\Model\Response\Buyer\GetBuyerAuthTokenResponseModel;
-use Tilta\Sdk\Tests\Acceptance\Model\AbstractModelTestCase;
+use Tilta\Sdk\Tests\Functional\Model\AbstractModelTestCase;
 
 class GetBuyerAuthTokenResponseModelTest extends AbstractModelTestCase
 {

@@ -11,7 +11,7 @@ declare(strict_types=1);
 namespace Tilta\Sdk\Tests\Acceptance\Service\Request\Facility;
 
 use Tilta\Sdk\Model\Request\Facility\GetFacilityRequestModel;
-use Tilta\Sdk\Tests\Acceptance\Model\AbstractModelTestCase;
+use Tilta\Sdk\Tests\Functional\Model\AbstractModelTestCase;
 
 class GetFacilityRequestModelTest extends AbstractModelTestCase
 {

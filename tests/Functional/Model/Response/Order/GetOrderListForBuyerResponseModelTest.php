@@ -12,7 +12,7 @@ namespace Tilta\Sdk\Tests\Functional\Model\Response\Order;
 
 use Tilta\Sdk\Model\Order;
 use Tilta\Sdk\Model\Response\Order\GetOrderListForBuyerResponseModel;
-use Tilta\Sdk\Tests\Acceptance\Model\AbstractModelTestCase;
+use Tilta\Sdk\Tests\Functional\Model\AbstractModelTestCase;
 use Tilta\Sdk\Tests\Helper\OrderHelper;
 
 class GetOrderListForBuyerResponseModelTest extends AbstractModelTestCase

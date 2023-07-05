@@ -12,7 +12,7 @@ namespace Tilta\Sdk\Tests\Functional\Service\Request\Order;
 
 use Tilta\Sdk\Enum\PaymentMethodEnum;
 use Tilta\Sdk\Model\Request\Order\GetOrderListRequestModel;
-use Tilta\Sdk\Tests\Acceptance\Model\AbstractModelTestCase;
+use Tilta\Sdk\Tests\Functional\Model\AbstractModelTestCase;
 
 class GetOrderListRequestModelTest extends AbstractModelTestCase
 {
