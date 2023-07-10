@@ -40,8 +40,8 @@ class CreditNoteTest extends AbstractModelTestCase
         $model = (new CreditNote())->fromArray($inputData);
         static::assertEquals('credit-note-external-id', $model->getCreditNoteExternalId());
         static::assertEquals('buyer-external-id', $model->getBuyerExternalId());
-        static::assertInstanceOf(DateTime::class, $model->getCreatedAt());
-        static::assertEquals(1688402226, $model->getCreatedAt()->getTimestamp());
+        static::assertInstanceOf(DateTime::class, $model->getInvoicedAt());
+        static::assertEquals(1688402226, $model->getInvoicedAt()->getTimestamp());
         static::assertEquals('EUR', $model->getCurrency());
         static::assertInstanceOf(Address::class, $model->getBillingAddress());
         static::assertInstanceOf(Amount::class, $model->getAmount());

@@ -23,7 +23,7 @@ use Tilta\Sdk\Model\Request\RequestModelInterface;
 /**
  * @method $this setCreditNoteExternalId(string $creditNoteExternalId)
  * @method $this setBuyerExternalId(string $buyerExternalId)
- * @method $this setCreatedAt(DateTime $createdAt)
+ * @method $this setInvoicedAt(DateTime $invoicedAt)
  * @method $this setAmount(Amount $amount)
  * @method $this setCurrency(string $currency)
  * @method $this setBillingAddress(Address $billingAddress)
@@ -35,7 +35,7 @@ class CreateCreditNoteRequestModel extends CreditNote implements HasBuyerFieldIn
 {
     protected static array $_additionalFieldMapping = [
         'creditNoteExternalId' => 'externalId', // from parent
-        'createdAt' => 'date',                  // from parent
+        'invoicedAt' => 'date', // TILLSDK-17: got renamed in a future release
         'merchantExternalId' => false,
         'buyerExternalId' => false, // path parameter,
         'billingAddress' => 'delivery_address', // TILLSDK-15: got renamed in a future release

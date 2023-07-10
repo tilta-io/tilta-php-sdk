@@ -63,7 +63,7 @@ class CreditNoteHelper extends AbstractHelper
         return (new CreateCreditNoteRequestModel())
             ->setCreditNoteExternalId('credit-note-external-id')
             ->setBuyerExternalId('buyer-external-id')
-            ->setCreatedAt((new DateTime())->setTimestamp(1688402371))
+            ->setInvoicedAt((new DateTime())->setTimestamp(1688402371))
             ->setCurrency('EUR')
             ->setAmount(
                 (new Amount())

@@ -61,7 +61,7 @@ class FullPaymentProcessWithInvoiceTest extends AbstractFullPaymentProcessTestCa
     {
         $requestModel = (new CreateCreditNoteRequestModel())
             ->setCreditNoteExternalId(self::$creditNoteExternalId)
-            ->setCreatedAt(new DateTime())
+            ->setInvoicedAt(new DateTime())
             ->setOrderExternalIds([self::$orderExternalId])
             ->setLineItems(self::$orderToBePlaced->getLineItems())
             ->setAmount(self::$orderToBePlaced->getAmount())
