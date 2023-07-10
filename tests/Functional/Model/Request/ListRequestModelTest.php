@@ -27,4 +27,23 @@ class ListRequestModelTest extends AbstractModelTestCase
         static::assertValueShouldBeInData(500, $data, 'limit');
         static::assertValueShouldBeInData(2, $data, 'offset');
     }
+
+    public function testNotGivenValues(): void
+    {
+        $data = (new ListRequestModel())->toArray();
+
+        static::assertIsArray($data);
+        static::assertCount(0, $data, 'if no query params has been given, the request-data should be empty');
+    }
+
+    public function testOneGivenValue(): void
+    {
+        $data = (new ListRequestModel())
+            ->setLimit(100)
+            ->toArray();
+
+        static::assertIsArray($data);
+        static::assertCount(1, $data);
+        static::assertValueShouldBeInData(100, $data, 'limit');
+    }
 }
