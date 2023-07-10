@@ -33,7 +33,7 @@ class CreateBuyerRequestTest extends AbstractRequestTestCase
 
     public function testCreateBuyer(): void
     {
-        $externalId = 'unit-testing_' . __FUNCTION__ . '_' . round(microtime(true));
+        $externalId = BuyerHelper::createUniqueExternalId(__FUNCTION__);
 
         $inputBuyer = BuyerHelper::createValidBuyer($externalId, CreateBuyerRequestModel::class);
         $response = $this->requestService->execute($inputBuyer);
