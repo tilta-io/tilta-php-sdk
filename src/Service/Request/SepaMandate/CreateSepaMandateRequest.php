@@ -36,13 +36,10 @@ class CreateSepaMandateRequest extends AbstractRequest
 
     protected function processSuccess($requestModel, array $responseData): SepaMandate
     {
-        return (new SepaMandate())->fromArray([
-            ...[
-                // the iban is not returned by the create-request. Added it to fill the model with more useful data
-                'iban' => $requestModel->getIban(),
-            ],
-            ...$responseData,
-        ]);
+        // the iban is not returned by the create-request. Added it to fill the model with more useful data
+        $responseData['iban'] ??= $requestModel->getIban();
+
+        return (new SepaMandate())->fromArray($responseData);
     }
 
     protected function processFailed($requestModel, Exception $exception): void
