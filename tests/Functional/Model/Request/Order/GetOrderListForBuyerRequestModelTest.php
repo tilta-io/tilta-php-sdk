@@ -8,7 +8,7 @@
 
 declare(strict_types=1);
 
-namespace Tilta\Sdk\Tests\Functional\Service\Request\Order;
+namespace Tilta\Sdk\Tests\Functional\Model\Request\Order;
 
 use Tilta\Sdk\Model\Request\Order\GetOrderListForBuyerRequestModel;
 use Tilta\Sdk\Tests\Functional\Model\AbstractModelTestCase;

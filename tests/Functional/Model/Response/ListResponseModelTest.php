@@ -8,7 +8,7 @@
 
 declare(strict_types=1);
 
-namespace Tilta\Sdk\Tests\Functional\Model\Request;
+namespace Tilta\Sdk\Tests\Functional\Model\Response;
 
 use Tilta\Sdk\Model\Response\ListResponseModel;
 use Tilta\Sdk\Tests\Functional\Mock\Model\SimpleTestModel;

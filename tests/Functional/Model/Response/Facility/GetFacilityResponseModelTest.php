@@ -8,7 +8,7 @@
 
 declare(strict_types=1);
 
-namespace Tilta\Sdk\Tests\Acceptance\Response\Request\Facility;
+namespace Tilta\Sdk\Tests\Acceptance\Model\Response\Facility;
 
 use DateTime;
 use Tilta\Sdk\Model\Response\Facility\GetFacilityResponseModel;

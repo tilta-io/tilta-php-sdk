@@ -8,7 +8,7 @@
 
 declare(strict_types=1);
 
-namespace Tilta\Sdk\Tests\Functional\Service\Request\Invoice;
+namespace Tilta\Sdk\Tests\Functional\Model\Request\Invoice;
 
 use DateTime;
 use Tilta\Sdk\Model\Address;

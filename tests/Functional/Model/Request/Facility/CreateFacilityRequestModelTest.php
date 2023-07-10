@@ -8,7 +8,7 @@
 
 declare(strict_types=1);
 
-namespace Tilta\Sdk\Tests\Functional\Service\Request\Facility;
+namespace Tilta\Sdk\Tests\Functional\Model\Request\Facility;
 
 use Tilta\Sdk\Model\Request\Facility\CreateFacilityRequestModel;
 use Tilta\Sdk\Tests\Functional\Model\AbstractModelTestCase;

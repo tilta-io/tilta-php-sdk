@@ -8,7 +8,7 @@
 
 declare(strict_types=1);
 
-namespace Tilta\Sdk\Tests\Functional\Service\Request\Order;
+namespace Tilta\Sdk\Tests\Functional\Model\Request\Order;
 
 use Tilta\Sdk\Enum\PaymentMethodEnum;
 use Tilta\Sdk\Model\Request\Order\GetOrderListRequestModel;
