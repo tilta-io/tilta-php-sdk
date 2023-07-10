@@ -14,9 +14,12 @@ use PHPUnit\Framework\TestCase;
 use Tilta\Sdk\HttpClient\TiltaClient;
 use Tilta\Sdk\Model\Request\Buyer\CreateBuyerRequestModel;
 use Tilta\Sdk\Model\Request\SepaMandate\CreateSepaMandateRequestModel;
+use Tilta\Sdk\Model\Request\SepaMandate\GetSepaMandateListRequestModel;
 use Tilta\Sdk\Model\Response\SepaMandate;
+use Tilta\Sdk\Model\REsponse\SepaMandate\GetSepaMandateListResponseModel;
 use Tilta\Sdk\Service\Request\Buyer\CreateBuyerRequest;
 use Tilta\Sdk\Service\Request\SepaMandate\CreateSepaMandateRequest;
+use Tilta\Sdk\Service\Request\SepaMandate\GetSepaMandateListRequest;
 use Tilta\Sdk\Tests\Helper\BuyerHelper;
 use Tilta\Sdk\Tests\Helper\TiltaClientHelper;
 
@@ -52,5 +55,18 @@ class OtherGatewayRequestTest extends TestCase
         $responseModel = (new CreateSepaMandateRequest(self::$client))->execute($requestModel);
         static::assertInstanceOf(SepaMandate::class, $responseModel);
         static::assertEquals('DE02120300000000202051', $responseModel->getIban());
+    }
+
+    /**
+     * @depends testCreateBuyer
+     */
+    public function testFetchSepaMandateList(): void
+    {
+        $requestModel = (new GetSepaMandateListRequestModel(self::$buyerExternalId));
+
+        $responseModel = (new GetSepaMandateListRequest(self::$client))->execute($requestModel);
+        static::assertInstanceOf(GetSepaMandateListResponseModel::class, $responseModel);
+        static::assertCount(1, $responseModel->getItems());
+        static::assertEquals('DE02120300000000202051', $responseModel->getItems()[0]->getIban());
     }
 }
