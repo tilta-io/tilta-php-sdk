@@ -560,10 +560,10 @@ Use this service to create a new invoice for (multiple) orders.
 **Please note:** In most cases, the `invoice_number` is the same as the `external_id`. The `invoice_number` is the
 official printed number on the invoice document, while the `external_id` is the internal identifier of the invoice in
 your system. You may submit the `invoice_number` as the `external_id` as well if you don't want to submit a separate
-number. 
+number.
 
 However, please remember that you always have to use the `external_id` in future requests as reference to the invoice.
-So if you are using the `invoice_number` as the `external_id`, you have to submit the "invoice number" as the 
+So if you are using the `invoice_number` as the `external_id`, you have to submit the "invoice number" as the
 `external_id`.
 
 __Usage__
@@ -702,6 +702,38 @@ __Expected exceptions thrown by service__
 |----------------------------------------------------------------------------------|-----------------------------------------------------------------|
 | `\Tilta\Sdk\Exception\GatewayException\NotFoundException\BuyerNotFoundException` | if the given buyer does not exist.                              |
 | `\Tilta\Sdk\Exception\GatewayException\InvoiceForCreditNoteNotFound`             | if order(s) got not found or order(s) does not have an invoice. |
+
+#### CreateSepaMandateRequest
+
+| 	                 | 	                                                                                                                                          |
+|-------------------|--------------------------------------------------------------------------------------------------------------------------------------------|
+| Api documentation | [Link](https://docs.tilta.io/reference/post_v1-buyers-external-id-mandates)                                                                |
+| Request service   | [\Tilta\Sdk\Service\Request\SepaMandate\CreateSepaMandateRequest](src/Service/Request/SepaMandate/CreateSepaMandateRequest.php)            |
+| Request model     | [\Tilta\Sdk\Model\Request\SepaMandate\CreateSepaMandateRequestModel](src/Model/Request/SepaMandate/CreateSepaMandateRequestModel.php)      |
+| Response model    | [\Tilta\Sdk\Model\Response\SepaMandate](src/Model/Response/SepaMandate.php)                                                                |
+
+Use this service to create a SEPA mandate for the given buyer
+
+__Usage__
+
+```php
+/** @var \Tilta\Sdk\HttpClient\TiltaClient $client */
+$requestService = new \Tilta\Sdk\Service\Request\SepaMandate\CreateSepaMandateRequest($client);
+
+$requestModel = (new \Tilta\Sdk\Model\Request\SepaMandate\CreateSepaMandateRequestModel('buyer-external-id'))
+    ->setIban('DE123456789987654')
+    
+/** @var \Tilta\Sdk\Model\Response\SepaMandate $response */
+$response = $requestService->execute($requestModel);
+$response->getIban();
+$response->getMandateId();
+```
+
+__Expected exceptions thrown by service__
+
+| 	                                                                                | 	                                  |
+|----------------------------------------------------------------------------------|------------------------------------|
+| `\Tilta\Sdk\Exception\GatewayException\NotFoundException\BuyerNotFoundException` | if the given buyer does not exist. |
 
 ### Additional features
 
