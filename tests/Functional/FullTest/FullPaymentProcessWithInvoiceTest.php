@@ -64,7 +64,7 @@ class FullPaymentProcessWithInvoiceTest extends AbstractFullPaymentProcessTestCa
             ->setCreatedAt(new DateTime())
             ->setOrderExternalIds([self::$orderExternalId])
             ->setLineItems(self::$orderToBePlaced->getLineItems())
-            ->setTotalAmount(self::$orderToBePlaced->getAmount()->getGross())
+            ->setAmount(self::$orderToBePlaced->getAmount())
             ->setCurrency(self::$orderToBePlaced->getAmount()->getCurrency())
             ->setBuyerExternalId(self::$orderToBePlaced->getBuyerExternalId());
 

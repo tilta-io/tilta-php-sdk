@@ -683,7 +683,7 @@ $requestModel = (new \Tilta\Sdk\Model\Request\CreditNote\CreateCreditNoteRequest
             ->setBuyerExternalId('buyer-external-id')
             ->setCreatedAt(new DateTime())
             ->setCurrency('EUR')
-            ->setTotalAmount(900)
+            ->setAmount(900)
             ->setBillingAddress(new \Tilta\Sdk\Model\Address())
             ->setLineItems([
                 new \Tilta\Sdk\Model\Order\LineItem(),

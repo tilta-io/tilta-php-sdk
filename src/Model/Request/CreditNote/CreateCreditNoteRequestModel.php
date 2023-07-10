@@ -16,6 +16,7 @@ use Tilta\Sdk\Exception\Validation\InvalidFieldValueException;
 use Tilta\Sdk\Model\Address;
 use Tilta\Sdk\Model\CreditNote;
 use Tilta\Sdk\Model\HasBuyerFieldInterface;
+use Tilta\Sdk\Model\Order\Amount;
 use Tilta\Sdk\Model\Order\LineItem;
 use Tilta\Sdk\Model\Request\RequestModelInterface;
 
@@ -23,7 +24,7 @@ use Tilta\Sdk\Model\Request\RequestModelInterface;
  * @method $this setCreditNoteExternalId(string $creditNoteExternalId)
  * @method $this setBuyerExternalId(string $buyerExternalId)
  * @method $this setCreatedAt(DateTime $createdAt)
- * @method $this setTotalAmount(int $totalAmount)
+ * @method $this setAmount(Amount $amount)
  * @method $this setCurrency(string $currency)
  * @method $this setBillingAddress(Address $billingAddress)
  * @method string[] getOrderExternalIds()
@@ -38,6 +39,7 @@ class CreateCreditNoteRequestModel extends CreditNote implements HasBuyerFieldIn
         'merchantExternalId' => false,
         'buyerExternalId' => false, // path parameter,
         'billingAddress' => 'delivery_address', // TILLSDK-15: got renamed in a future release
+        'amount' => 'total_amount', // TILSDK-14: currently there is no object in the response, just the amount. at the moment it seems like, it the net amount.
     ];
 
     public function getBuyerExternalId(): string

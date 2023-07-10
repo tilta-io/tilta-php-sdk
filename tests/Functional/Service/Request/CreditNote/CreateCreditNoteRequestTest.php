@@ -17,13 +17,45 @@ use Tilta\Sdk\Model\CreditNote;
 use Tilta\Sdk\Model\Request\CreditNote\CreateCreditNoteRequestModel;
 use Tilta\Sdk\Service\Request\CreditNote\CreateCreditNoteRequest;
 use Tilta\Sdk\Tests\Functional\Service\Request\AbstractRequestTestCase;
-use Tilta\Sdk\Tests\Helper\CreditNoteHelper;
 
 class CreateCreditNoteRequestTest extends AbstractRequestTestCase
 {
     public function testCreateCreditNoteOffline(): void
     {
-        $client = $this->createMockedTiltaClientResponse(CreditNoteHelper::createValidCreditNote('credit-note-external-id')->toArray());
+        $client = $this->createMockedTiltaClientResponse([
+            'external_id' => 'credit-note-external-id',
+            'date' => 1688402226,
+            'total_amount' => 100,
+            'currency' => 'EUR',
+            'delivery_address' => [
+                'street' => 'string',
+                'house' => 'string',
+                'postcode' => '12345',
+                'city' => 'string',
+                'country' => 'DE',
+                'additional' => 'string',
+            ],
+            'line_items' => [
+                [
+                    'name' => 'line-item 1',
+                    'category' => 'string',
+                    'description' => 'string',
+                    'price' => 25,
+                    'currency' => 'EUR',
+                    'quantity' => 2,
+                ],
+                [
+                    'name' => 'line-item 2',
+                    'category' => 'string',
+                    'description' => 'string',
+                    'price' => 50,
+                    'currency' => 'EUR',
+                    'quantity' => 1,
+                ],
+            ],
+            'buyer_id' => 'buyer-external-id',
+            'merchant_id' => 'merchant-external-id',
+        ]);
 
         $responseModel = (new CreateCreditNoteRequest($client))->execute($this->createMock(CreateCreditNoteRequestModel::class));
         static::assertInstanceOf(CreditNote::class, $responseModel);

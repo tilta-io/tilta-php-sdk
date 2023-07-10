@@ -13,6 +13,7 @@ namespace Tilta\Sdk\Tests\Functional\Model\Request;
 use DateTime;
 use Tilta\Sdk\Exception\Validation\InvalidFieldException;
 use Tilta\Sdk\Model\Address;
+use Tilta\Sdk\Model\Order\Amount;
 use Tilta\Sdk\Model\Order\LineItem;
 use Tilta\Sdk\Model\Request\CreditNote\CreateCreditNoteRequestModel;
 use Tilta\Sdk\Tests\Functional\Model\AbstractModelTestCase;
@@ -26,7 +27,13 @@ class CreateCreditNoteRequestModelTest extends AbstractModelTestCase
             ->setBuyerExternalId('buyer-external-id')
             ->setCreatedAt((new DateTime())->setTimestamp(1688402371))
             ->setCurrency('EUR')
-            ->setTotalAmount(900)
+            ->setAmount(
+                (new Amount())
+                    ->setGross((int) round(900 * 1.19, 0))
+                    ->setNet(900)
+                    ->setTax((int) round(900 * 1.19, 0) - 900)
+                    ->setCurrency('EUR')
+            )
             ->setBillingAddress($this->createMock(Address::class))
             ->setLineItems([
                 $this->createMock(LineItem::class),

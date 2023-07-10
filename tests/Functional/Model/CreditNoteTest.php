@@ -13,6 +13,7 @@ namespace Tilta\Sdk\Tests\Functional\Model;
 use DateTime;
 use Tilta\Sdk\Model\Address;
 use Tilta\Sdk\Model\CreditNote;
+use Tilta\Sdk\Model\Order\Amount;
 use Tilta\Sdk\Model\Order\LineItem;
 use Tilta\Sdk\Util\ResponseHelper;
 
@@ -43,7 +44,7 @@ class CreditNoteTest extends AbstractModelTestCase
         static::assertEquals(1688402226, $model->getCreatedAt()->getTimestamp());
         static::assertEquals('EUR', $model->getCurrency());
         static::assertInstanceOf(Address::class, $model->getBillingAddress());
-        static::assertEquals(900, $model->getTotalAmount());
+        static::assertInstanceOf(Amount::class, $model->getAmount());
         static::assertIsArray($model->getLineItems());
         static::assertCount(3, $model->getLineItems());
         static::assertContainsOnlyInstancesOf(LineItem::class, $model->getLineItems());
