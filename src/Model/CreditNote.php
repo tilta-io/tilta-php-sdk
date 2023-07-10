@@ -46,9 +46,6 @@ class CreditNote extends AbstractModel implements HasBuyerFieldInterface
 
     protected static array $_additionalFieldMapping = [
         'creditNoteExternalId' => 'external_id',
-        'invoicedAt' => 'date', // TILLSDK-17: got renamed in a future release
-        'buyerExternalId' => 'buyer_id', // TILLSDK-17: got renamed in a future release
-        'merchantExternalId' => 'merchant_id', // TILLSDK-17: got renamed in a future release
         'billingAddress' => 'delivery_address', // TILLSDK-15: got renamed in a future release
         'amount' => 'total_amount', // TILSDK-14: currently there is no object in the response, just the amount. at the moment it seems like, it the net amount.
     ];
