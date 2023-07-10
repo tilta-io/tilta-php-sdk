@@ -27,7 +27,7 @@ class CreateCreditNoteRequestModelTest extends AbstractModelTestCase
             ->setCreatedAt((new DateTime())->setTimestamp(1688402371))
             ->setCurrency('EUR')
             ->setTotalAmount(900)
-            ->setDeliveryAddress($this->createMock(Address::class))
+            ->setBillingAddress($this->createMock(Address::class))
             ->setLineItems([
                 $this->createMock(LineItem::class),
                 $this->createMock(LineItem::class),

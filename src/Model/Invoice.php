@@ -21,13 +21,14 @@ use Tilta\Sdk\Util\ResponseHelper;
  * @method string getInvoiceNumber()
  * @method DateTime getInvoicedAt()
  * @method Amount getAmount()
- * @method Address getDeliveryAddress()
+ * @method Address getBillingAddress()
  * @method LineItem[] getLineItems()
  */
 class Invoice extends AbstractModel
 {
     protected static array $_additionalFieldMapping = [
         'invoiceExternalId' => 'external_id',
+        'billingAddress' => 'delivery_address', // TILLSDK-15: got renamed in a future release
     ];
 
     protected string $invoiceExternalId;
@@ -48,7 +49,7 @@ class Invoice extends AbstractModel
      */
     protected array $lineItems = [];
 
-    protected Address $deliveryAddress;
+    protected Address $billingAddress;
 
     public function __construct(array $data = [], bool $readOnly = false)
     {

@@ -577,7 +577,7 @@ $requestModel = (new \Tilta\Sdk\Model\Request\Invoice\CreateInvoiceRequestModel(
     ->setInvoiceNumber('invoice-number')
     ->setOrderExternalIds(['order-external-id-1', 'order-external-id-2']) // just provide an array with one value, if you create an invoice for a single order.
     ->setAmount(new \Tilta\Sdk\Model\Order\Amount())
-    ->setDeliveryAddress(new \Tilta\Sdk\Model\Address())
+    ->setBillingAddress(new \Tilta\Sdk\Model\Address())
     ->setLineItems([
       new \Tilta\Sdk\Model\Order\LineItem(),
       new \Tilta\Sdk\Model\Order\LineItem(),
@@ -684,7 +684,7 @@ $requestModel = (new \Tilta\Sdk\Model\Request\CreditNote\CreateCreditNoteRequest
             ->setCreatedAt(new DateTime())
             ->setCurrency('EUR')
             ->setTotalAmount(900)
-            ->setDeliveryAddress(new \Tilta\Sdk\Model\Address())
+            ->setBillingAddress(new \Tilta\Sdk\Model\Address())
             ->setLineItems([
                 new \Tilta\Sdk\Model\Order\LineItem(),
                 new \Tilta\Sdk\Model\Order\LineItem(),

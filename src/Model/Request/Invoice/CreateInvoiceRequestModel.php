@@ -24,7 +24,7 @@ use Tilta\Sdk\Model\Request\RequestModelInterface;
  * @method $this setInvoiceNumber(string $invoiceNumber)
  * @method $this setInvoicedAt(DateTime $invoicedAt)
  * @method $this setAmount(Amount $amount)
- * @method $this setDeliveryAddress(Address $deliveryAddress)
+ * @method $this setBillingAddress(Address $billingAddress)
  * @method $this setLineItems(LineItem[] $lineItems)
  */
 class CreateInvoiceRequestModel extends Invoice implements RequestModelInterface

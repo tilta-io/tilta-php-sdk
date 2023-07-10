@@ -19,7 +19,7 @@ use Tilta\Sdk\Util\ResponseHelper;
  * @method DateTime getCreatedAt()
  * @method int getTotalAmount()
  * @method string getCurrency()
- * @method Address getDeliveryAddress()
+ * @method Address getBillingAddress()
  * @method LineItem[] getLineItems()
  * @method string getMerchantExternalId()
  */
@@ -35,7 +35,7 @@ class CreditNote extends AbstractModel implements HasBuyerFieldInterface
 
     protected string $currency;
 
-    protected Address $deliveryAddress;
+    protected Address $billingAddress;
 
     protected array $lineItems;
 
@@ -48,6 +48,7 @@ class CreditNote extends AbstractModel implements HasBuyerFieldInterface
         'createdAt' => 'date',
         'buyerExternalId' => 'buyer_id',
         'merchantExternalId' => 'merchant_id',
+        'billingAddress' => 'delivery_address', // TILLSDK-15: got renamed in a future release
     ];
 
     public function getBuyerExternalId(): string

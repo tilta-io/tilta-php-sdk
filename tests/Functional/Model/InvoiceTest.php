@@ -75,7 +75,7 @@ class InvoiceTest extends AbstractModelTestCase
         static::assertEquals(9, (int) $model->getInvoicedAt()->format('m'));
         static::assertEquals(17, (int) $model->getInvoicedAt()->format('d'));
         static::assertInstanceOf(Amount::class, $model->getAmount());
-        static::assertInstanceOf(Address::class, $model->getDeliveryAddress());
+        static::assertInstanceOf(Address::class, $model->getBillingAddress());
         static::assertIsArray($model->getLineItems());
         static::assertCount(2, $model->getLineItems());
         static::assertContainsOnlyInstancesOf(LineItem::class, $model->getLineItems());

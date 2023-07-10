@@ -65,7 +65,7 @@ class CreditNoteHelper extends AbstractHelper
             ->setCreatedAt((new DateTime())->setTimestamp(1688402371))
             ->setCurrency('EUR')
             ->setTotalAmount(900)
-            ->setDeliveryAddress(
+            ->setBillingAddress(
                 (new Address())
                     ->setStreet('street')
                     ->setHouseNumber('123')

@@ -37,7 +37,7 @@ class FullPaymentProcessWithInvoiceTest extends AbstractFullPaymentProcessTestCa
             ->setInvoicedAt(new DateTime());
 
         if (($address = self::$orderToBePlaced->getDeliveryAddress()) instanceof Address) {
-            $requestModel->setDeliveryAddress($address);
+            $requestModel->setBillingAddress($address);
         }
 
         $responseModel = (new CreateInvoiceRequest(self::$client))->execute($requestModel);
@@ -69,7 +69,7 @@ class FullPaymentProcessWithInvoiceTest extends AbstractFullPaymentProcessTestCa
             ->setBuyerExternalId(self::$orderToBePlaced->getBuyerExternalId());
 
         if (($address = self::$orderToBePlaced->getDeliveryAddress()) instanceof Address) {
-            $requestModel->setDeliveryAddress($address);
+            $requestModel->setBillingAddress($address);
         }
 
         $responseModel = (new CreateCreditNoteRequest(self::$client))->execute($requestModel);

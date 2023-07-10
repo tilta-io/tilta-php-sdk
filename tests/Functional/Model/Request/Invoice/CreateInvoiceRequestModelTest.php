@@ -27,7 +27,7 @@ class CreateInvoiceRequestModelTest extends AbstractModelTestCase
             ->setOrderExternalIds(['order-external-id-1', 'order-external-id-1'])
             ->setInvoicedAt((new DateTime())->setTimestamp(1688401332))
             ->setAmount($this->createMock(Amount::class))
-            ->setDeliveryAddress($this->createMock(Address::class))
+            ->setBillingAddress($this->createMock(Address::class))
             ->setLineItems([
                 $this->createMock(LineItem::class),
                 $this->createMock(LineItem::class),
