@@ -37,7 +37,6 @@ class CreateCreditNoteRequestModel extends CreditNote implements HasBuyerFieldIn
         'createdAt' => 'date',                  // from parent
         'merchantExternalId' => false,
         'buyerExternalId' => false, // path parameter,
-        'billingAddress' => 'delivery_address', // TILLSDK-15: got renamed in a future release
     ];
 
     public function getBuyerExternalId(): string
