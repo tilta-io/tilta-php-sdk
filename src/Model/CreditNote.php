@@ -50,7 +50,6 @@ class CreditNote extends AbstractModel implements HasBuyerFieldInterface
         'buyerExternalId' => 'buyer_id',
         'merchantExternalId' => 'merchant_id',
         'billingAddress' => 'delivery_address', // TILLSDK-15: got renamed in a future release
-        'amount' => 'total_amount', // TILSDK-14: currently there is no object in the response, just the amount. at the moment it seems like, it the net amount.
     ];
 
     public function getBuyerExternalId(): string
@@ -63,18 +62,6 @@ class CreditNote extends AbstractModel implements HasBuyerFieldInterface
     {
         return [
             'lineItems' => static fn (string $key): ?array => ResponseHelper::getArray($data, $key, LineItem::class),
-            // TILSDK-14: currently there is no object in the response, just the amount. at the moment it seems like, it the net amount.
-            'amount' => static fn (string $key): Amount => (new Amount())->setNet(ResponseHelper::getInt($data, $key, false)),
         ];
-    }
-
-    protected function prepareValuesForGateway(array $data): array
-    {
-        if (isset($this->amount)) {
-            // TILSDK-14: currently there is no object in the response, just the amount. at the moment it seems like, it the net amount.
-            $data['amount'] = $this->amount->getNet();
-        }
-
-        return parent::prepareValuesForGateway($data);
     }
 }
