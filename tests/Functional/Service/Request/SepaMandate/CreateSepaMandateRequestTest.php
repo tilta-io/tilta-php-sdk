@@ -11,6 +11,11 @@ declare(strict_types=1);
 namespace Tilta\Sdk\Tests\Functional\Service\Request\SepaMandate;
 
 use DateTime;
+use Throwable;
+use Tilta\Sdk\Exception\GatewayException;
+use Tilta\Sdk\Exception\GatewayException\NotFoundException\BuyerNotFoundException;
+use Tilta\Sdk\Exception\GatewayException\SepaMandate\DuplicateSepaMandateException;
+use Tilta\Sdk\Exception\GatewayException\SepaMandate\InvalidIbanException;
 use Tilta\Sdk\Model\Request\SepaMandate\CreateSepaMandateRequestModel;
 use Tilta\Sdk\Model\Response\SepaMandate;
 use Tilta\Sdk\Service\Request\SepaMandate\CreateSepaMandateRequest;
@@ -49,6 +54,30 @@ class CreateSepaMandateRequestTest extends AbstractRequestTestCase
 
         static::assertInstanceOf(SepaMandate::class, $responseModel);
         static::assertEquals('iban in response', $responseModel->getIban(), 'the request service should set the iban from the response and not from the request-model if a iban is given in the response.');
+    }
+
+    /**
+     * @param class-string<Throwable> $expectedException
+     * @dataProvider exceptionDataProvider
+     */
+    public function testExpectException(array $responseData, string $expectedException, int $statusCode = 123): void
+    {
+        $exception = new GatewayException($statusCode, $responseData);
+        $client = $this->createMockedTiltaClientException($exception);
+
+        $this->expectException($expectedException);
+        $model = $this->createMock(CreateSepaMandateRequestModel::class);
+        $model->method('toArray')->willReturn([]);
+        (new CreateSepaMandateRequest($client))->execute($model);
+    }
+
+    public function exceptionDataProvider(): array
+    {
+        return [
+            [['message' => 'No Buyer found'], BuyerNotFoundException::class],
+            [['code' => 'CONFLICT'], DuplicateSepaMandateException::class],
+            [['message' => 'iban: iban is not valid'], InvalidIbanException::class, 400],
+        ];
     }
 
     public function dataProviderExpectedRequestModel(): array

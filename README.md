@@ -733,9 +733,12 @@ $items = $response->getItems()
 
 __Expected exceptions thrown by service__
 
-| 	                                                                                | 	                                                               |
-|----------------------------------------------------------------------------------|-----------------------------------------------------------------|
-| `\Tilta\Sdk\Exception\GatewayException\NotFoundException\BuyerNotFoundException` | if the given buyer does not exist.                              |
+| 	                                                                                 | 	                                                       |
+|-----------------------------------------------------------------------------------|---------------------------------------------------------|
+| `\Tilta\Sdk\Exception\GatewayException\NotFoundException\BuyerNotFoundException`  | if the given buyer does not exist.                      |
+| `\Tilta\Sdk\Exception\GatewayException\SepaMandate\DuplicateSepaMandateException` | if a SEPA mandate with the same Iban does already exist |
+| `\Tilta\Sdk\Exception\GatewayException\SepaMandate\InvalidIbanException`          | if the iban is not valid                                |
+
 
 #### GetSepaMandateListRequest
 
