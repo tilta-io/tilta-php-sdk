@@ -555,7 +555,16 @@ __Expected exceptions thrown by service__
 | Request model     | [\Tilta\Sdk\Model\Request\Invoice\CreateInvoiceRequestModel](src/Model/Request/Invoice/CreateInvoiceRequestModel.php) |
 | Response model    | [\Tilta\Sdk\Model\Invoice](src/Model/Invoice.php)                                                                     |
 
-Use this service to add create a new Invoice for (multiple) orders.
+Use this service to create a new invoice for (multiple) orders.
+
+**Please note:** In most cases, the `invoice_number` is the same as the `external_id`. The `invoice_number` is the
+official printed number on the invoice document, while the `external_id` is the internal identifier of the invoice in
+your system. You may submit the `invoice_number` as the `external_id` as well if you don't want to submit a separate
+number. 
+
+However, please remember that you always have to use the `external_id` in future requests as reference to the invoice.
+So if you are using the `invoice_number` as the `external_id`, you have to submit the "invoice number" as the 
+`external_id`.
 
 __Usage__
 
