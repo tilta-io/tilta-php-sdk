@@ -8,17 +8,26 @@
 
 declare(strict_types=1);
 
-namespace Tilta\Sdk\Model\Response\Order\PaymentTerm;
+namespace Tilta\Sdk\Model\Response;
 
-use Tilta\Sdk\Model\Response\AbstractResponseModel;
+use DateTime;
 
 /**
+ * @method string getStatus()
+ * @method DateTime getExpiresAt()
+ * @method string getCurrency()
  * @method int getTotalAmount()
  * @method int getAvailableAmount()
  * @method int getUsedAmount()
  */
-class PaymentTermFacility extends AbstractResponseModel
+class Facility extends AbstractResponseModel
 {
+    protected string $status;
+
+    protected DateTime $expiresAt;
+
+    protected string $currency;
+
     protected int $totalAmount;
 
     protected int $availableAmount;

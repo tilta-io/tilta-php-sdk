@@ -10,34 +10,15 @@ declare(strict_types=1);
 
 namespace Tilta\Sdk\Model\Response\Facility;
 
-use DateTime;
-use Tilta\Sdk\Model\Response\AbstractResponseModel;
+use Tilta\Sdk\Model\Response\Facility;
 
 /**
  * @method string getBuyerExternalId()
- * @method string getStatus()
  * @method int getPendingOrdersAmount()
- * @method DateTime getExpiresAt()
- * @method string getCurrency()
- * @method int getTotalAmount()
- * @method int getAvailableAmount()
- * @method int getUsedAmount()
  */
-class GetFacilityResponseModel extends AbstractResponseModel
+class GetFacilityResponseModel extends Facility
 {
-    protected string $buyerExternalId;
-
     protected int $pendingOrdersAmount;
 
-    protected string $status;
-
-    protected DateTime $expiresAt;
-
-    protected string $currency;
-
-    protected int $totalAmount;
-
-    protected int $availableAmount;
-
-    protected int $usedAmount;
+    protected string $buyerExternalId;
 }

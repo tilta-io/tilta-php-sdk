@@ -18,8 +18,9 @@ use Tilta\Sdk\Exception\GatewayException\NotFoundException\BuyerNotFoundExceptio
 use Tilta\Sdk\Exception\GatewayException\NotFoundException\MerchantNotFoundException;
 use Tilta\Sdk\Model\Order\Amount;
 use Tilta\Sdk\Model\Request\Order\GetPaymentTermsRequestModel;
+use Tilta\Sdk\Model\Response\Facility;
 use Tilta\Sdk\Model\Response\Order\GetPaymentTermsResponseModel;
-use Tilta\Sdk\Model\Response\Order\PaymentTerm\PaymentTermFacility;
+use Tilta\Sdk\Model\Response\Order\PaymentTerm\PaymentTerm;
 use Tilta\Sdk\Service\Request\Order\GetPaymentTermsRequest;
 use Tilta\Sdk\Tests\Functional\Service\Request\AbstractRequestTestCase;
 use Tilta\Sdk\Tests\Helper\BuyerHelper;
@@ -30,19 +31,39 @@ class GetPaymentTermsRequestTest extends AbstractRequestTestCase
     public function testGetPaymentTermsOffline(): void
     {
         $expectedResponse = [
-            'iban' => 'test-iban',
             'facility' => [
+                'status' => 10000,
+                'expires_at' => (new DateTime())->getTimestamp(),
+                'currency' => 'EUR',
                 'total_amount' => 10000,
                 'available_amount' => 5200,
                 'used_amount' => 4800,
             ],
-            'loan_products' => [
+            'payment_terms' => [
                 [
-                    'payments' => [
-                        [
-                            'payment_date' => (new DateTime())->setDate(2023, 5, 23)->format('U'),
-                            'payment_amount' => 6500,
-                        ],
+                    'payment_method' => 'CASH',
+                    'name' => 'Readable name',
+                    'due_date' => (new DateTime())->getTimestamp(),
+                    'amount' => [
+                        'fee' => 12,
+                        'fee_percentage' => 10,
+                        'currency' => 'EUR',
+                        'gross' => 1190,
+                        'net' => 1000,
+                        'tax' => 190,
+                    ],
+                ],
+                [
+                    'payment_method' => 'BNPL30',
+                    'name' => 'Readable name',
+                    'due_date' => (new DateTime())->getTimestamp(),
+                    'amount' => [
+                        'fee' => 12,
+                        'fee_percentage' => 10,
+                        'currency' => 'EUR',
+                        'gross' => 1190,
+                        'net' => 1000,
+                        'tax' => 190,
                     ],
                 ],
             ],
@@ -51,9 +72,12 @@ class GetPaymentTermsRequestTest extends AbstractRequestTestCase
 
         $response = $request->execute($this->createMock(GetPaymentTermsRequestModel::class));
         static::assertInstanceOf(GetPaymentTermsResponseModel::class, $response);
-        static::assertEquals('test-iban', $response->getIban());
-        static::assertInstanceOf(PaymentTermFacility::class, $response->getFacility());
-        static::assertIsArray($response->getLoanProducts());
+        static::assertInstanceOf(Facility::class, $response->getFacility());
+        static::assertIsArray($response->getPaymentTerms());
+        static::assertCount(2, $response->getPaymentTerms());
+        static::assertContainsOnlyInstancesOf(PaymentTerm::class, $response->getPaymentTerms());
+        static::assertEquals('CASH', $response->getPaymentTerms()[0]->getPaymentMethod());
+        static::assertEquals('BNPL30', $response->getPaymentTerms()[1]->getPaymentMethod());
     }
 
     public function testGetPaymentTermsOnline(): void
@@ -74,9 +98,9 @@ class GetPaymentTermsRequestTest extends AbstractRequestTestCase
 
         $response = $request->execute($model);
         static::assertInstanceOf(GetPaymentTermsResponseModel::class, $response);
-        static::assertNotNull($response->getIban());
-        static::assertInstanceOf(PaymentTermFacility::class, $response->getFacility());
-        static::assertIsArray($response->getLoanProducts());
+        static::assertInstanceOf(Facility::class, $response->getFacility());
+        static::assertIsArray($response->getPaymentTerms());
+        static::assertContainsOnlyInstancesOf(PaymentTerm::class, $response->getPaymentTerms());
     }
 
     /**

@@ -11,30 +11,27 @@ declare(strict_types=1);
 namespace Tilta\Sdk\Model\Response\Order;
 
 use Tilta\Sdk\Model\Response\AbstractResponseModel;
-use Tilta\Sdk\Model\Response\Order\PaymentTerm\LoanProduct;
-use Tilta\Sdk\Model\Response\Order\PaymentTerm\PaymentTermFacility;
+use Tilta\Sdk\Model\Response\Facility;
+use Tilta\Sdk\Model\Response\Order\PaymentTerm\PaymentTerm;
 use Tilta\Sdk\Util\ResponseHelper;
 
 /**
- * @method string getIban()
- * @method PaymentTermFacility getFacility()
- * @method LoanProduct[] getLoanProducts()
+ * @method Facility getFacility()
+ * @method PaymentTerm[] getPaymentTerms()
  */
 class GetPaymentTermsResponseModel extends AbstractResponseModel
 {
-    protected string $iban;
-
-    protected PaymentTermFacility $facility;
+    protected Facility $facility;
 
     /**
-     * @var LoanProduct[]
+     * @var PaymentTerm[]
      */
-    protected array $loanProducts = [];
+    protected array $paymentTerms = [];
 
     protected function prepareModelData(array $data): array
     {
         return [
-            'loanProducts' => static fn (string $key): ?array => ResponseHelper::getArray($data, $key, LoanProduct::class),
+            'paymentTerms' => static fn (string $key): ?array => ResponseHelper::getArray($data, $key, PaymentTerm::class),
         ];
     }
 }

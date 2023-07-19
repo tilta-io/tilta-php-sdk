@@ -21,35 +21,39 @@ class GetPaymentTermsResponseModelTest extends AbstractModelTestCase
         // note: We will not create a test case for each submodel, as this would result in unnecessary overhead since the models are small.
 
         $inputData = [
-            'iban' => 'test-iban',
             'facility' => [
+                'status' => 10000,
+                'expires_at' => (new DateTime())->setDate(2023, 1, 1)->getTimestamp(),
+                'currency' => 'EUR',
                 'total_amount' => 10000,
                 'available_amount' => 5200,
                 'used_amount' => 4800,
             ],
-            'loan_products' => [
+            'payment_terms' => [
                 [
-                    'payments' => [
-                        [
-                            'payment_date' => (new DateTime())->setDate(2023, 5, 23)->format('U'),
-                            'payment_amount' => 6500,
-                        ],
-                        [
-                            'payment_date' => (new DateTime())->setDate(2025, 9, 10)->format('U'),
-                            'payment_amount' => 9600,
-                        ],
+                    'payment_method' => 'CASH',
+                    'name' => 'Readable name',
+                    'due_date' => (new DateTime())->setDate(2023, 2, 1)->getTimestamp(),
+                    'amount' => [
+                        'fee' => 12,
+                        'fee_percentage' => 10,
+                        'currency' => 'EUR',
+                        'gross' => 1190,
+                        'net' => 1000,
+                        'tax' => 190,
                     ],
                 ],
                 [
-                    'payments' => [
-                        [
-                            'payment_date' => (new DateTime())->setDate(2021, 5, 23)->format('U'),
-                            'payment_amount' => 8460,
-                        ],
-                        [
-                            'payment_date' => (new DateTime())->setDate(1950, 9, 10)->format('U'),
-                            'payment_amount' => 8750,
-                        ],
+                    'payment_method' => 'BNPL30',
+                    'name' => 'Readable name',
+                    'due_date' => (new DateTime())->setDate(2023, 3, 1)->getTimestamp(),
+                    'amount' => [
+                        'fee' => 12,
+                        'fee_percentage' => 10,
+                        'currency' => 'EUR',
+                        'gross' => 1190,
+                        'net' => 1000,
+                        'tax' => 190,
                     ],
                 ],
             ],
