@@ -36,15 +36,12 @@ class ExceptionHandler
                 return new FacilityExceededException($requestModel->getBuyerExternalId(), ...self::getDefaultArgumentsForException($exception));
             }
 
-            if ($exception->getMessage() === 'No Buyer found') {
+            if (self::isEntityNotFoundException('Buyer', $exception->getMessage())) {
                 return new BuyerNotFoundException($requestModel->getBuyerExternalId(), ...self::getDefaultArgumentsForException($exception));
             }
         }
 
-        if ($requestModel instanceof HasMerchantFieldInterface && (
-            $exception->getMessage() === 'No Merchant found' ||
-            $exception->getMessage() === 'Merchant not found.'
-        )) {
+        if ($requestModel instanceof HasMerchantFieldInterface && self::isEntityNotFoundException('Merchant', $exception->getMessage())) {
             return new MerchantNotFoundException($requestModel->getMerchantExternalId(), ...self::getDefaultArgumentsForException($exception));
         }
 
@@ -53,7 +50,7 @@ class ExceptionHandler
         }
 
         if ($requestModel instanceof HasOrderIdFieldInterface) {
-            if ($exception->getMessage() === 'No Order found') {
+            if (self::isEntityNotFoundException('Order', $exception->getMessage())) {
                 return new OrderNotFoundException($requestModel->getOrderExternalId());
             }
 
@@ -64,11 +61,17 @@ class ExceptionHandler
             }
         }
 
-        if ($requestModel instanceof HasInvoiceIdFieldInterface && $exception->getMessage() === 'No Invoice found') {
+        if ($requestModel instanceof HasInvoiceIdFieldInterface && self::isEntityNotFoundException('Invoice', $exception->getMessage())) {
             return new InvoiceNotFoundException($requestModel->getInvoiceExternalId(), ...self::getDefaultArgumentsForException($exception));
         }
 
         return null;
+    }
+
+    private static function isEntityNotFoundException(string $entityName, string $message): bool
+    {
+        return preg_match('/No ' . $entityName . ' found\.?/', $message) ||
+            preg_match('/' . $entityName . ' not found\.?/', $message);
     }
 
     private static function getDefaultArgumentsForException(GatewayException $exception): array
