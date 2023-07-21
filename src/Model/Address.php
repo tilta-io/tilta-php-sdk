@@ -24,7 +24,7 @@ use Tilta\Sdk\Util\Validation;
  * @method $this setCity(string $city)
  * @method string getCountry()
  * @method $this setCountry(string $country)
- * @method $this setAdditional(string $additional)
+ * @method $this setAdditional(string|null $additional)
  * @method string|null getAdditional()
  */
 class Address extends AbstractModel
