@@ -65,6 +65,15 @@ class Buyer extends AbstractModel implements HasBuyerFieldInterface
         return $this->getExternalId();
     }
 
+    protected function prepareValuesForGateway(array $data): array
+    {
+        if (isset($data['customData']) && $data['customData'] === []) {
+            $data['customData'] = null;
+        }
+
+        return parent::prepareValuesForGateway($data);
+    }
+
     protected function prepareModelData(array $data): array
     {
         return [

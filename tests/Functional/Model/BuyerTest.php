@@ -29,7 +29,10 @@ class BuyerTest extends AbstractModelTestCase
             'incorporated_at' => 1686763038,
             'representatives' => [],
             'business_address' => ResponseHelper::PHPUNIT_OBJECT,
-            'custom_data' => [],
+            'custom_data' => [
+                'key1' => 'value1',
+                'key2' => 'value2',
+            ],
         ];
         $model = new Buyer($inputData);
 
