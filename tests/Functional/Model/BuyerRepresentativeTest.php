@@ -20,16 +20,7 @@ class BuyerRepresentativeTest extends AbstractModelTestCase
 {
     public function testFromAndToArray(): void
     {
-        $inputData = [
-            'salutation' => 'MR',
-            'first_name' => 'first name',
-            'last_name' => 'last name',
-            'birth_date' => 1686761444,
-            'email' => 'abcdef@egagaifg.de',
-            'phone' => '0113456789',
-            'address' => ResponseHelper::PHPUNIT_OBJECT,
-        ];
-        $model = (new BuyerRepresentative())->fromArray($inputData);
+        $model = $this->getValidModel();
 
         $this->assertEquals('MR', $model->getSalutation());
         $this->assertEquals('first name', $model->getFirstName());
@@ -42,12 +33,42 @@ class BuyerRepresentativeTest extends AbstractModelTestCase
         // unset address to skip validation
         $model->setAddress($this->createMock(Address::class));
 
-        $this->assertInputOutputModel($inputData, $model);
+        $this->assertInputOutputModel($this->getValidModelData(), $model);
     }
 
     public function testInvalidSalutation(): void
     {
+        $model = $this->getValidModel()
+            ->setValidateOnSet(true);
         $this->expectException(InvalidFieldValueException::class);
-        (new BuyerRepresentative())->setSalutation('invalid value')->toArray();
+        $model->setSalutation('invalidValue');
+    }
+
+    public function testValidSalutation(): void
+    {
+        $model = $this->getValidModel()
+            ->setValidateOnSet(true);
+        $model->setSalutation('MR');
+        static::assertEquals('MR', $model->getSalutation());
+        $model->setSalutation('MS');
+        static::assertEquals('MS', $model->getSalutation());
+    }
+
+    private function getValidModelData(): array
+    {
+        return [
+            'salutation' => 'MR',
+            'first_name' => 'first name',
+            'last_name' => 'last name',
+            'birth_date' => 1686761444,
+            'email' => 'abcdef@egagaifg.de',
+            'phone' => '0113456789',
+            'address' => ResponseHelper::PHPUNIT_OBJECT,
+        ];
+    }
+
+    private function getValidModel(): BuyerRepresentative
+    {
+        return (new BuyerRepresentative())->fromArray($this->getValidModelData());
     }
 }
