@@ -10,7 +10,7 @@ declare(strict_types=1);
 
 namespace Tilta\Sdk\Tests\Functional\Mock\Model;
 
-use DateTime;
+use DateTimeInterface;
 use Tilta\Sdk\Model\AbstractModel;
 use Tilta\Sdk\Util\ResponseHelper;
 
@@ -22,8 +22,8 @@ use Tilta\Sdk\Util\ResponseHelper;
  * @method string getStringValue()
  * @method string|null getNullableStringValue()
  * @method bool getBoolValue()
- * @method DateTime getDateBySeconds()
- * @method DateTime getNullableDateBySeconds()
+ * @method DateTimeInterface getDateBySeconds()
+ * @method DateTimeInterface getNullableDateBySeconds()
  * @method SimpleTestModel getObjectValue()
  * @method ArrayTestModel|null getNullableObjectValue()
  * @method array getSimpleArrayValue()
@@ -31,9 +31,9 @@ use Tilta\Sdk\Util\ResponseHelper;
  */
 class ArrayTestModel extends AbstractModel
 {
-    protected DateTime $dateBySeconds;
+    protected DateTimeInterface $dateBySeconds;
 
-    protected ?DateTime $nullableDateBySeconds = null;
+    protected ?DateTimeInterface $nullableDateBySeconds = null;
 
     protected int $intValue;
 

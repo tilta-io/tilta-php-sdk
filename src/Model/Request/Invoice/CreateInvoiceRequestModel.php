@@ -10,7 +10,7 @@ declare(strict_types=1);
 
 namespace Tilta\Sdk\Model\Request\Invoice;
 
-use DateTime;
+use DateTimeInterface;
 use Tilta\Sdk\Exception\Validation\InvalidFieldValueException;
 use Tilta\Sdk\Model\Address;
 use Tilta\Sdk\Model\Invoice;
@@ -22,7 +22,7 @@ use Tilta\Sdk\Model\Request\RequestModelInterface;
  * @method $this setInvoiceExternalId(string $invoiceExternalId)
  * @method $this setOrderExternalIds(string[] $orderExternalIds)
  * @method $this setInvoiceNumber(string $invoiceNumber)
- * @method $this setInvoicedAt(DateTime $invoicedAt)
+ * @method $this setInvoicedAt(DateTimeInterface $invoicedAt)
  * @method $this setAmount(Amount $amount)
  * @method $this setBillingAddress(Address $billingAddress)
  * @method $this setLineItems(LineItem[] $lineItems)

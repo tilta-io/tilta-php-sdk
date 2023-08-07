@@ -10,7 +10,7 @@ declare(strict_types=1);
 
 namespace Tilta\Sdk\Model\Request\CreditNote;
 
-use DateTime;
+use DateTimeInterface;
 use Tilta\Sdk\Exception\Validation\InvalidFieldException;
 use Tilta\Sdk\Exception\Validation\InvalidFieldValueException;
 use Tilta\Sdk\Model\Address;
@@ -23,7 +23,7 @@ use Tilta\Sdk\Model\Request\RequestModelInterface;
 /**
  * @method $this setCreditNoteExternalId(string $creditNoteExternalId)
  * @method $this setBuyerExternalId(string $buyerExternalId)
- * @method $this setInvoicedAt(DateTime $invoicedAt)
+ * @method $this setInvoicedAt(DateTimeInterface $invoicedAt)
  * @method $this setAmount(Amount $amount)
  * @method $this setCurrency(string $currency)
  * @method $this setBillingAddress(Address $billingAddress)

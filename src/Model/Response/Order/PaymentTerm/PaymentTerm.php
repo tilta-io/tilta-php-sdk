@@ -10,13 +10,13 @@ declare(strict_types=1);
 
 namespace Tilta\Sdk\Model\Response\Order\PaymentTerm;
 
-use DateTime;
+use DateTimeInterface;
 use Tilta\Sdk\Model\Response\AbstractResponseModel;
 
 /**
  * @method string getPaymentMethod()
  * @method string getName()
- * @method DateTime getDueDate()
+ * @method DateTimeInterface getDueDate()
  * @method PaymentTermAmount getAmount()
  */
 class PaymentTerm extends AbstractResponseModel
@@ -25,7 +25,7 @@ class PaymentTerm extends AbstractResponseModel
 
     protected string $name;
 
-    protected DateTime $dueDate;
+    protected DateTimeInterface $dueDate;
 
     protected PaymentTermAmount $amount;
 }

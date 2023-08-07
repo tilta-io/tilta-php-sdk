@@ -10,7 +10,7 @@ declare(strict_types=1);
 
 namespace Tilta\Sdk\Model;
 
-use DateTime;
+use DateTimeInterface;
 use Tilta\Sdk\Exception\Validation\InvalidFieldValueException;
 
 /**
@@ -20,8 +20,8 @@ use Tilta\Sdk\Exception\Validation\InvalidFieldValueException;
  * @method $this setFirstName(?string $firstName)
  * @method string|null getLastName()
  * @method $this setLastName(?string $lastName)
- * @method DateTime|null getBirthDate()
- * @method $this setBirthDate(?DateTime $birthDate)
+ * @method DateTimeInterface|null getBirthDate()
+ * @method $this setBirthDate(?DateTimeInterface $birthDate)
  * @method string|null getEmail()
  * @method $this setEmail(?string $email)
  * @method string|null getPhone()
@@ -37,7 +37,7 @@ class BuyerRepresentative extends AbstractModel
 
     protected ?string $lastName = null;
 
-    protected ?DateTime $birthDate = null;
+    protected ?DateTimeInterface $birthDate = null;
 
     protected ?string $email = null;
 

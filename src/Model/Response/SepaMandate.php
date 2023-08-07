@@ -10,12 +10,12 @@ declare(strict_types=1);
 
 namespace Tilta\Sdk\Model\Response;
 
-use DateTime;
+use DateTimeInterface;
 
 /**
  * @method string getMandateId()
  * @method string getIban()
- * @method DateTime getCreatedAt()
+ * @method DateTimeInterface getCreatedAt()
  */
 class SepaMandate extends AbstractResponseModel
 {
@@ -23,5 +23,5 @@ class SepaMandate extends AbstractResponseModel
 
     protected string $iban;
 
-    protected DateTime $createdAt;
+    protected DateTimeInterface $createdAt;
 }

@@ -205,7 +205,7 @@ class Validation
 
         $expectedType = self::mapType($expectedType);
 
-        if (class_exists($expectedType)) {
+        if (class_exists($expectedType) || interface_exists($expectedType)) {
             if (!is_object($value) || !$value instanceof $expectedType) {
                 throw new InvalidFieldValueException($typeErrorMessage);
             }

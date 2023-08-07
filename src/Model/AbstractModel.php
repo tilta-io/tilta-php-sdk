@@ -11,7 +11,7 @@ declare(strict_types=1);
 namespace Tilta\Sdk\Model;
 
 use BadMethodCallException;
-use DateTime;
+use DateTimeInterface;
 use ReflectionClass;
 use ReflectionNamedType;
 use ReflectionProperty;
@@ -92,7 +92,7 @@ abstract class AbstractModel
             if (!is_callable($customMappings[$propertyName] ?? null)) {
                 if (isset($customMappings[$propertyName])) {
                     $value = $customMappings[$propertyName];
-                } elseif (class_exists($type)) {
+                } elseif (class_exists($type) || interface_exists($type)) { // interface: date-time
                     // TODO implement little backdoor or unit-tests, that objects can be empty.
                     $value = ResponseHelper::getObject($data, $dataKey, $type, $this->_readOnly, false, $isNullable);
                 } else {
@@ -239,7 +239,7 @@ abstract class AbstractModel
     {
         if ($value instanceof self) {
             return $value->toArray();
-        } elseif ($value instanceof DateTime) {
+        } elseif ($value instanceof DateTimeInterface) {
             return $value->getTimestamp();
         } elseif (is_array($value)) {
             foreach ($value as $key => $_value) {

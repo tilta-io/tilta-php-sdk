@@ -10,7 +10,7 @@ declare(strict_types=1);
 
 namespace Tilta\Sdk\Model;
 
-use DateTime;
+use DateTimeInterface;
 use Tilta\Sdk\Model\Order\Amount;
 use Tilta\Sdk\Model\Order\LineItem;
 use Tilta\Sdk\Util\ResponseHelper;
@@ -19,7 +19,7 @@ use Tilta\Sdk\Util\ResponseHelper;
  * @method string getInvoiceExternalId()
  * @method string[] getOrderExternalIds()
  * @method string getInvoiceNumber()
- * @method DateTime getInvoicedAt()
+ * @method DateTimeInterface getInvoicedAt()
  * @method Amount getAmount()
  * @method Address getBillingAddress()
  * @method LineItem[] getLineItems()
@@ -40,7 +40,7 @@ class Invoice extends AbstractModel
 
     protected string $invoiceNumber;
 
-    protected DateTime $invoicedAt;
+    protected DateTimeInterface $invoicedAt;
 
     protected Amount $amount;
 

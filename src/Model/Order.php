@@ -10,14 +10,14 @@ declare(strict_types=1);
 
 namespace Tilta\Sdk\Model;
 
-use DateTime;
+use DateTimeInterface;
 use Tilta\Sdk\Model\Order\Amount;
 use Tilta\Sdk\Model\Order\LineItem;
 use Tilta\Sdk\Util\ResponseHelper;
 
 /**
  * @method string getStatus()
- * @method DateTime getOrderedAt()
+ * @method DateTimeInterface getOrderedAt()
  * @method string getPaymentMethod()
  * @method Amount getAmount()
  * @method string|null getComment()
@@ -38,7 +38,7 @@ class Order extends AbstractModel implements HasOrderIdFieldInterface, HasMercha
 
     protected string $merchantExternalId;
 
-    protected DateTime $orderedAt;
+    protected DateTimeInterface $orderedAt;
 
     protected string $paymentMethod;
 

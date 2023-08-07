@@ -10,11 +10,11 @@ declare(strict_types=1);
 
 namespace Tilta\Sdk\Model\Response;
 
-use DateTime;
+use DateTimeInterface;
 
 /**
  * @method string getStatus()
- * @method DateTime getExpiresAt()
+ * @method DateTimeInterface getExpiresAt()
  * @method string getCurrency()
  * @method int getTotalAmount()
  * @method int getAvailableAmount()
@@ -24,7 +24,7 @@ class Facility extends AbstractResponseModel
 {
     protected string $status;
 
-    protected DateTime $expiresAt;
+    protected DateTimeInterface $expiresAt;
 
     protected string $currency;
 

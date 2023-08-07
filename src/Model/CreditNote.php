@@ -10,14 +10,14 @@ declare(strict_types=1);
 
 namespace Tilta\Sdk\Model;
 
-use DateTime;
+use DateTimeInterface;
 use Tilta\Sdk\Model\Order\Amount;
 use Tilta\Sdk\Model\Order\LineItem;
 use Tilta\Sdk\Util\ResponseHelper;
 
 /**
  * @method string getCreditNoteExternalId()
- * @method DateTime getInvoicedAt()
+ * @method DateTimeInterface getInvoicedAt()
  * @method int getAmount()
  * @method string getCurrency()
  * @method Address getBillingAddress()
@@ -30,7 +30,7 @@ class CreditNote extends AbstractModel implements HasBuyerFieldInterface
 
     protected string $buyerExternalId;
 
-    protected DateTime $invoicedAt;
+    protected DateTimeInterface $invoicedAt;
 
     protected Amount $amount;
 

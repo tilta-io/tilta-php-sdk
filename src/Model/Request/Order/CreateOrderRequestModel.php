@@ -11,7 +11,7 @@ declare(strict_types=1);
 namespace Tilta\Sdk\Model\Request\Order;
 
 use BadMethodCallException;
-use DateTime;
+use DateTimeInterface;
 use Tilta\Sdk\Model\Address;
 use Tilta\Sdk\Model\Order;
 use Tilta\Sdk\Model\Order\Amount;
@@ -22,7 +22,7 @@ use Tilta\Sdk\Model\Request\RequestModelInterface;
  * @method $this setOrderExternalId(string $orderExternalId)
  * @method $this setBuyerExternalId(string $buyerExternalId)
  * @method $this setMerchantExternalId(string $merchantExternalId)
- * @method $this setOrderedAt(DateTime $orderedAt)
+ * @method $this setOrderedAt(DateTimeInterface $orderedAt)
  * @method $this setPaymentMethod(string $paymentMethod)
  * @method $this setAmount(Amount $amount)
  * @method $this setComment(?string $comment)

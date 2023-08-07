@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace Tilta\Sdk\Util;
 
 use DateTime;
+use DateTimeInterface;
 use InvalidArgumentException;
 use Tilta\Sdk\Exception\InvalidResponseException;
 use Tilta\Sdk\Model\AbstractModel;
@@ -104,9 +105,9 @@ class ResponseHelper
     }
 
     /**
-     * @return ($nullable is true ? DateTime|null : DateTime)
+     * @return ($nullable is true ? DateTimeInterface|null : DateTimeInterface)
      */
-    public static function getDateTime(array $data, string $key, string $format = 'Y-m-d H:i:s', bool $nullable = true): ?DateTime
+    public static function getDateTime(array $data, string $key, string $format = 'Y-m-d H:i:s', bool $nullable = true): ?DateTimeInterface
     {
         $value = self::getString($data, $key, $nullable);
         // added `!` to set time of object to midnight if no time-format is given
@@ -116,9 +117,9 @@ class ResponseHelper
     }
 
     /**
-     * @return ($nullable is true ? DateTime|null : DateTime)
+     * @return ($nullable is true ? DateTimeInterface|null : DateTimeInterface)
      */
-    public static function getDate(array $data, string $key, string $format = 'Y-m-d', bool $nullable = true): ?DateTime
+    public static function getDate(array $data, string $key, string $format = 'Y-m-d', bool $nullable = true): ?DateTimeInterface
     {
         return self::getDateTime($data, $key, $format, $nullable);
     }
@@ -130,7 +131,7 @@ class ResponseHelper
      */
     public static function getObject(array $data, string $key, string $class, bool $readOnly = true, bool $createEmptyObjectOnNull = false, bool $nullable = true)
     {
-        if ($class === DateTime::class) {
+        if ($class === DateTimeInterface::class) {
             /** @phpstan-ignore-next-line */
             return self::getDateTime($data, $key, 'U', $nullable); // U = default of gateway response
         }

@@ -10,15 +10,15 @@ declare(strict_types=1);
 
 namespace Tilta\Sdk\Model\Request\Buyer;
 
-use DateTime;
+use DateTimeInterface;
 use Tilta\Sdk\Model\Address;
 use Tilta\Sdk\Model\Buyer;
 use Tilta\Sdk\Model\BuyerRepresentative;
 use Tilta\Sdk\Model\Request\RequestModelInterface;
 
 /**
- * @method DateTime|null getRegisteredAt()
- * @method $this setRegisteredAt(?DateTime $registeredAt)
+ * @method DateTimeInterface|null getRegisteredAt()
+ * @method $this setRegisteredAt(?DateTimeInterface $registeredAt)
  * @method BuyerRepresentative[]|null getRepresentatives()
  * @method $this setRepresentatives(?BuyerRepresentative[] $representatives)
  * @method Address|null getBusinessAddress()

@@ -10,7 +10,7 @@ declare(strict_types=1);
 
 namespace Tilta\Sdk\Model;
 
-use DateTime;
+use DateTimeInterface;
 use Tilta\Sdk\Util\ResponseHelper;
 use Tilta\Sdk\Util\Validation;
 
@@ -23,10 +23,10 @@ use Tilta\Sdk\Util\Validation;
  * @method $this setLegalName(?string $legalName)
  * @method string|null getLegalForm()
  * @method $this setLegalForm(?string $legalForm)
- * @method DateTime getRegisteredAt()
- * @method $this setRegisteredAt(DateTime $registeredAt)
- * @method DateTime|null getIncorporatedAt()
- * @method $this setIncorporatedAt(?DateTime $incorporatedAt)
+ * @method DateTimeInterface getRegisteredAt()
+ * @method $this setRegisteredAt(DateTimeInterface $registeredAt)
+ * @method DateTimeInterface|null getIncorporatedAt()
+ * @method $this setIncorporatedAt(?DateTimeInterface $incorporatedAt)
  * @method BuyerRepresentative[] getRepresentatives()
  * @method $this setRepresentatives(BuyerRepresentative[] $representatives)
  * @method Address getBusinessAddress()
@@ -44,9 +44,9 @@ class Buyer extends AbstractModel implements HasBuyerFieldInterface
 
     protected ?string $legalForm = null;
 
-    protected ?DateTime $registeredAt = null;
+    protected ?DateTimeInterface $registeredAt = null;
 
-    protected ?DateTime $incorporatedAt = null;
+    protected ?DateTimeInterface $incorporatedAt = null;
 
     /**
      * @var BuyerRepresentative[]|null
