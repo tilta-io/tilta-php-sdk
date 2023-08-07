@@ -169,16 +169,25 @@ abstract class AbstractModel
         $this->_modelHasBeenValidated = true;
     }
 
+    /**
+     * @return $this
+     */
     public function enableValidateOnSet(): self
     {
         return $this->setValidateOnSet(true);
     }
 
+    /**
+     * @return $this
+     */
     public function disableValidateOnSet(): self
     {
         return $this->setValidateOnSet(false);
     }
 
+    /**
+     * @return $this
+     */
     public function setValidateOnSet(bool $flag): self
     {
         $this->_validateOnSet = $flag;
