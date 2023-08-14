@@ -28,7 +28,6 @@ class Invoice extends AbstractModel
 {
     protected static array $_additionalFieldMapping = [
         'invoiceExternalId' => 'external_id',
-        'billingAddress' => 'delivery_address', // TILLSDK-15: got renamed in a future release
     ];
 
     protected string $invoiceExternalId;

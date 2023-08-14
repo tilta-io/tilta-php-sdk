@@ -50,7 +50,7 @@ class InvoiceHelper extends AbstractHelper
                     'quantity' => 2,
                 ],
             ],
-            'delivery_address' => [
+            'billing_address' => [
                 'street' => 'street',
                 'house' => 'house-number',
                 'postcode' => '12345',

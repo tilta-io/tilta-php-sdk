@@ -42,7 +42,7 @@ class CreateInvoiceRequestModelTest extends AbstractModelTestCase
         static::assertValueShouldBeInData('invoice-number', $outputData, 'invoice_number');
         static::assertValueShouldBeInData(1688401332, $outputData, 'invoiced_at');
         static::assertValueShouldBeInData([], $outputData, 'amount');
-        static::assertValueShouldBeInData([], $outputData, 'delivery_address');
+        static::assertValueShouldBeInData([], $outputData, 'billing_address');
         static::assertValueShouldBeInData([[], [], []], $outputData, 'line_items');
     }
 }
