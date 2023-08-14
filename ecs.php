@@ -19,7 +19,7 @@ return static function (ECSConfig $ecsConfig): void {
         __DIR__ . '/tests'
     ]);
 
-    $ecsConfig->ruleWithConfiguration(HeaderCommentFixer::class, ['header' => 'Copyright (c) Tilta Fintech GmbH
+    $ecsConfig->ruleWithConfiguration(HeaderCommentFixer::class, ['header' => 'Copyright (c) WEBiDEA
 
 For the full copyright and license information, please view the LICENSE
 file that was distributed with this source code.', 'separate' => 'bottom', 'location' => 'after_open', 'comment_type' => 'comment']);
