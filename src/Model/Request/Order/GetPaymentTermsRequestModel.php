@@ -31,6 +31,7 @@ class GetPaymentTermsRequestModel extends AbstractRequestModel implements HasBuy
 
     protected static array $_additionalFieldMapping = [
         'buyerExternalId' => false, // got sent as path-parameter
+        'amount' => false,          // got mapped manually
     ];
 
     public function getBuyerExternalId(): string
@@ -43,5 +44,16 @@ class GetPaymentTermsRequestModel extends AbstractRequestModel implements HasBuy
     {
         /** @phpstan-ignore-next-line */
         return $this->__call(__FUNCTION__);
+    }
+
+    protected function prepareValuesForGateway(array $data): array
+    {
+        $data = parent::prepareValuesForGateway($data);
+        $data['net_amount'] = $this->amount->getNet();
+        $data['gross_amount'] = $this->amount->getGross();
+        $data['tax_amount'] = $this->amount->getTax();
+        $data['currency'] = $this->amount->getCurrency();
+
+        return $data;
     }
 }

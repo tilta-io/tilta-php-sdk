@@ -21,15 +21,25 @@ class GetPaymentTermsRequestModelTest extends AbstractModelTestCase
         $model = (new GetPaymentTermsRequestModel())
             ->setBuyerExternalId('buyer-id')
             ->setMerchantExternalId('merchant-id')
-            ->setAmount($this->createMock(Amount::class));
+            ->setAmount(
+                (new Amount())
+                    ->setGross(119)
+                    ->setNet(100)
+                    ->setTax(19)
+                    ->setCurrency('EUR')
+            );
 
         $data = $model->toArray();
 
         static::assertIsArray($data);
-        static::assertCount(2, $data);
+        static::assertCount(5, $data);
         static::assertArrayNotHasKey('buyer_external_id', $data, 'buyer-id should not by in the request-data');
         static::assertEquals('buyer-id', $model->getBuyerExternalId());
         static::assertValueShouldBeInData('merchant-id', $data, 'merchant_external_id');
-        static::assertValueShouldBeInData([], $data, 'amount');
+        static::assertArrayNotHasKey('amount', $data);
+        static::assertValueShouldBeInData(119, $data, 'gross_amount');
+        static::assertValueShouldBeInData(100, $data, 'net_amount');
+        static::assertValueShouldBeInData(19, $data, 'tax_amount');
+        static::assertValueShouldBeInData('EUR', $data, 'currency');
     }
 }
