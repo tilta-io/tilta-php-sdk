@@ -13,7 +13,7 @@ namespace Tilta\Sdk\Tests\Functional\Model\Request;
 use DateTime;
 use Tilta\Sdk\Exception\Validation\InvalidFieldException;
 use Tilta\Sdk\Model\Address;
-use Tilta\Sdk\Model\Order\Amount;
+use Tilta\Sdk\Model\Amount;
 use Tilta\Sdk\Model\Order\LineItem;
 use Tilta\Sdk\Model\Request\CreditNote\CreateCreditNoteRequestModel;
 use Tilta\Sdk\Tests\Functional\Model\AbstractModelTestCase;

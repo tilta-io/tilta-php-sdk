@@ -10,7 +10,7 @@ declare(strict_types=1);
 
 namespace Tilta\Sdk\Tests\Functional\Model\Request\Order;
 
-use Tilta\Sdk\Model\Order\Amount;
+use Tilta\Sdk\Model\Amount;
 use Tilta\Sdk\Model\Request\Order\GetPaymentTermsRequestModel;
 use Tilta\Sdk\Tests\Functional\Model\AbstractModelTestCase;
 

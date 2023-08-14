@@ -10,7 +10,7 @@ declare(strict_types=1);
 
 namespace Tilta\Sdk\Model\Response\Order\PaymentTerm;
 
-use Tilta\Sdk\Model\Order\Amount;
+use Tilta\Sdk\Model\Amount;
 
 /**
  * @method int getFee()

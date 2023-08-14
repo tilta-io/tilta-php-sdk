@@ -13,8 +13,8 @@ namespace Tilta\Sdk\Model\Request\Invoice;
 use DateTimeInterface;
 use Tilta\Sdk\Exception\Validation\InvalidFieldValueException;
 use Tilta\Sdk\Model\Address;
+use Tilta\Sdk\Model\Amount;
 use Tilta\Sdk\Model\Invoice;
-use Tilta\Sdk\Model\Order\Amount;
 use Tilta\Sdk\Model\Order\LineItem;
 use Tilta\Sdk\Model\Request\RequestModelInterface;
 

@@ -12,8 +12,8 @@ namespace Tilta\Sdk\Tests\Helper;
 
 use DateTime;
 use Tilta\Sdk\Model\Address;
+use Tilta\Sdk\Model\Amount;
 use Tilta\Sdk\Model\CreditNote;
-use Tilta\Sdk\Model\Order\Amount;
 use Tilta\Sdk\Model\Order\LineItem;
 use Tilta\Sdk\Model\Request\CreditNote\CreateCreditNoteRequestModel;
 

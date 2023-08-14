@@ -12,7 +12,7 @@ namespace Tilta\Sdk\Tests\Functional\Model\Request\Invoice;
 
 use DateTime;
 use Tilta\Sdk\Model\Address;
-use Tilta\Sdk\Model\Order\Amount;
+use Tilta\Sdk\Model\Amount;
 use Tilta\Sdk\Model\Order\LineItem;
 use Tilta\Sdk\Model\Request\Invoice\CreateInvoiceRequestModel;
 use Tilta\Sdk\Tests\Functional\Model\AbstractModelTestCase;

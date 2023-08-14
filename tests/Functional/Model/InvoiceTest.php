@@ -12,8 +12,8 @@ namespace Tilta\Sdk\Tests\Functional\Model;
 
 use DateTime;
 use Tilta\Sdk\Model\Address;
+use Tilta\Sdk\Model\Amount;
 use Tilta\Sdk\Model\Invoice;
-use Tilta\Sdk\Model\Order\Amount;
 use Tilta\Sdk\Model\Order\LineItem;
 
 class InvoiceTest extends AbstractModelTestCase

@@ -10,9 +10,9 @@ declare(strict_types=1);
 
 namespace Tilta\Sdk\Model\Request\Order;
 
+use Tilta\Sdk\Model\Amount;
 use Tilta\Sdk\Model\HasBuyerFieldInterface;
 use Tilta\Sdk\Model\HasMerchantFieldInterface;
-use Tilta\Sdk\Model\Order\Amount;
 use Tilta\Sdk\Model\Request\AbstractRequestModel;
 
 /**

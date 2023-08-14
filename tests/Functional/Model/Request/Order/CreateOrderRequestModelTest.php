@@ -13,7 +13,7 @@ namespace Tilta\Sdk\Tests\Functional\Model\Request\Order;
 use BadMethodCallException;
 use DateTime;
 use Tilta\Sdk\Model\Address;
-use Tilta\Sdk\Model\Order\Amount;
+use Tilta\Sdk\Model\Amount;
 use Tilta\Sdk\Model\Order\LineItem;
 use Tilta\Sdk\Model\Request\Order\CreateOrderRequestModel;
 use Tilta\Sdk\Tests\Functional\Model\AbstractModelTestCase;

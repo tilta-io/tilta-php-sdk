@@ -14,9 +14,9 @@ use DateTimeInterface;
 use Tilta\Sdk\Exception\Validation\InvalidFieldException;
 use Tilta\Sdk\Exception\Validation\InvalidFieldValueException;
 use Tilta\Sdk\Model\Address;
+use Tilta\Sdk\Model\Amount;
 use Tilta\Sdk\Model\CreditNote;
 use Tilta\Sdk\Model\HasBuyerFieldInterface;
-use Tilta\Sdk\Model\Order\Amount;
 use Tilta\Sdk\Model\Order\LineItem;
 use Tilta\Sdk\Model\Request\RequestModelInterface;
 

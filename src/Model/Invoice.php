@@ -11,7 +11,6 @@ declare(strict_types=1);
 namespace Tilta\Sdk\Model;
 
 use DateTimeInterface;
-use Tilta\Sdk\Model\Order\Amount;
 use Tilta\Sdk\Model\Order\LineItem;
 use Tilta\Sdk\Util\ResponseHelper;
 

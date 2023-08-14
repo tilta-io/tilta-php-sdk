@@ -8,9 +8,7 @@
 
 declare(strict_types=1);
 
-namespace Tilta\Sdk\Model\Order;
-
-use Tilta\Sdk\Model\AbstractModel;
+namespace Tilta\Sdk\Model;
 
 /**
  * @method string getCurrency()

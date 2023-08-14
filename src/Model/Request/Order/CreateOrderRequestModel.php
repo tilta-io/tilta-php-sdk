@@ -13,8 +13,8 @@ namespace Tilta\Sdk\Model\Request\Order;
 use BadMethodCallException;
 use DateTimeInterface;
 use Tilta\Sdk\Model\Address;
+use Tilta\Sdk\Model\Amount;
 use Tilta\Sdk\Model\Order;
-use Tilta\Sdk\Model\Order\Amount;
 use Tilta\Sdk\Model\Order\LineItem;
 use Tilta\Sdk\Model\Request\RequestModelInterface;
 

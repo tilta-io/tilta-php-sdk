@@ -314,7 +314,7 @@ $requestModel = (new \Tilta\Sdk\Model\Request\Order\CreateOrderRequestModel())
             ->setOrderExternalId('order-external-id')
             ->setBuyerExternalId('buyer-external-id')
             ->setMerchantExternalId('merchant-external-id')
-            ->setAmount(new \Tilta\Sdk\Model\Order\Amount())
+            ->setAmount(new \Tilta\Sdk\Model\Amount())
             ->setComment('order-comment')
             ->setOrderedAt((new DateTime()))
             ->setPaymentMethod(\Tilta\Sdk\Enum\PaymentMethodEnum::BNPL)
@@ -490,7 +490,7 @@ $requestService = new \Tilta\Sdk\Service\Request\Order\GetPaymentTermsRequest($c
 $requestModel = (new \Tilta\Sdk\Model\Request\Order\GetPaymentTermsRequestModel())
     ->setMerchantExternalId('merchant-external-id')
     ->setBuyerExternalId('buyer-external-id')
-    ->setAmount(new \Tilta\Sdk\Model\Order\Amount());
+    ->setAmount(new \Tilta\Sdk\Model\Amount());
     
 /** @var \Tilta\Sdk\Model\Response\Order\GetPaymentTermsResponseModel $response */
 $response = $requestService->execute($requestModel);
@@ -576,7 +576,7 @@ $requestModel = (new \Tilta\Sdk\Model\Request\Invoice\CreateInvoiceRequestModel(
     ->setInvoiceExternalId('invoice-external-id')
     ->setInvoiceNumber('invoice-number')
     ->setOrderExternalIds(['order-external-id-1', 'order-external-id-2']) // just provide an array with one value, if you create an invoice for a single order.
-    ->setAmount(new \Tilta\Sdk\Model\Order\Amount())
+    ->setAmount(new \Tilta\Sdk\Model\Amount())
     ->setBillingAddress(new \Tilta\Sdk\Model\Address())
     ->setLineItems([
       new \Tilta\Sdk\Model\Order\LineItem(),

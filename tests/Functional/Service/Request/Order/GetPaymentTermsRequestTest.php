@@ -16,7 +16,7 @@ use Tilta\Sdk\Exception\GatewayException;
 use Tilta\Sdk\Exception\GatewayException\Facility\FacilityExceededException;
 use Tilta\Sdk\Exception\GatewayException\NotFoundException\BuyerNotFoundException;
 use Tilta\Sdk\Exception\GatewayException\NotFoundException\MerchantNotFoundException;
-use Tilta\Sdk\Model\Order\Amount;
+use Tilta\Sdk\Model\Amount;
 use Tilta\Sdk\Model\Request\Order\GetPaymentTermsRequestModel;
 use Tilta\Sdk\Model\Response\Facility;
 use Tilta\Sdk\Model\Response\Order\GetPaymentTermsResponseModel;
