@@ -47,10 +47,13 @@ return static function (RectorConfig $rectorConfig): void {
         \Rector\TypeDeclaration\Rector\ClassMethod\ArrayShapeFromConstantArrayReturnRector::class,
         \Rector\Php73\Rector\FuncCall\JsonThrowOnErrorRector::class,
         \Rector\DeadCode\Rector\ClassMethod\RemoveUselessReturnTagRector::class => [
-            __DIR__.'/src/Util/ResponseHelper.php'
+            __DIR__ . '/src/Util/ResponseHelper.php'
         ],
         \Rector\TypeDeclaration\Rector\ClassMethod\ReturnAnnotationIncorrectNullableRector::class => [
-            __DIR__.'/src/Util/ResponseHelper.php'
+            __DIR__ . '/src/Util/ResponseHelper.php'
+        ],
+        \Rector\TypeDeclaration\Rector\ClassMethod\StrictArrayParamDimFetchRector::class => [
+            __DIR__ . '/tests/Functional/Util/ValidationTest.php'
         ]
     ]);
 
