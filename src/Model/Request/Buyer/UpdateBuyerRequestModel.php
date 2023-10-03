@@ -13,14 +13,14 @@ namespace Tilta\Sdk\Model\Request\Buyer;
 use DateTimeInterface;
 use Tilta\Sdk\Model\Address;
 use Tilta\Sdk\Model\Buyer;
-use Tilta\Sdk\Model\BuyerRepresentative;
+use Tilta\Sdk\Model\ContactPerson;
 use Tilta\Sdk\Model\Request\RequestModelInterface;
 
 /**
  * @method DateTimeInterface|null getRegisteredAt()
  * @method $this setRegisteredAt(?DateTimeInterface $registeredAt)
- * @method BuyerRepresentative[]|null getRepresentatives()
- * @method $this setRepresentatives(?BuyerRepresentative[] $representatives)
+ * @method ContactPerson[]|null getContactPersons()
+ * @method $this setContactPersons(?ContactPerson[] $contactPersons)
  * @method Address|null getBusinessAddress()
  * @method $this setBusinessAddress(?Address $businessAddress)
  * @method array|null getCustomData()
@@ -34,7 +34,7 @@ class UpdateBuyerRequestModel extends Buyer implements RequestModelInterface
         $this->setExternalId($externalMerchantId);
 
         $this->setCustomData(null);
-        $this->setRepresentatives(null);
+        $this->setContactPersons(null);
     }
 
     protected function prepareValuesForGateway(array $data): array
@@ -48,8 +48,8 @@ class UpdateBuyerRequestModel extends Buyer implements RequestModelInterface
     {
         $validations = parent::getFieldValidations();
 
-        $validations['representatives'] = '?' . $validations['representatives']; // do not unset validation, because type-validation in array
-        unset($validations['registeredAt'], $validations['businessAddress'], $validations['customData']);
+        // do not unset validation for contactPersons, because type-validation in array
+        unset($validations['registeredAt'], $validations['businessAddress'], $validations['customData'], $validations['legalName']);
 
         return $validations;
     }

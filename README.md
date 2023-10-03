@@ -189,11 +189,12 @@ $requestService = new \Tilta\Sdk\Service\Request\Buyer\CreateBuyerRequest($clien
 $requestModel = (new \Tilta\Sdk\Model\Buyer())
     ->setExternalId('EXTERNAL_MERCHANT_ID')
     ->setTradingName('Trading name')
-    ->setLegalForm('GMBH')
+    ->setLegalForm('DE_GMBH')
     ->setLegalName('Legal name')
+    ->setTaxId('DE123456')
     ->setRegisteredAt((new DateTime())->setDate(2000, 2, 12))
     ->setIncorporatedAt((new DateTime())->setDate(2002, 5, 30))
-    ->setRepresentatives(new \Tilta\Sdk\Model\BuyerRepresentative())
+    ->setContactPersons(new \Tilta\Sdk\Model\ContactPerson())
     ->setBusinessAddress(new \Tilta\Sdk\Model\Address())
     ->setCustomData([
         'custom-key' => 'custom-value1',
@@ -215,9 +216,9 @@ $response = $requestService->execute($requestModel); // true if successfully
 
 Use this service to update buyers data.
 
-You must not provide all buyers data, just these data, which you want to update. If you data of a sub-object (
-e.g. `representatives` or `businessAddress`), you have to provide all data, to prevent validation issues. This behaviour
-may change in the future.
+You must not provide all buyers data, just these data, which you want to update. If you want to update a sub-object (
+e.g. `contactPersons` or `businessAddress`), you have to provide all data (of the sub-object), to prevent validation
+issues. This behaviour may change in the future.
 
 __Usage__
 

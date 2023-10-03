@@ -13,7 +13,7 @@ namespace Tilta\Sdk\Tests\Functional\Model;
 use DateTime;
 use Tilta\Sdk\Exception\Validation\InvalidFieldValueException;
 use Tilta\Sdk\Model\Address;
-use Tilta\Sdk\Model\BuyerRepresentative;
+use Tilta\Sdk\Model\ContactPerson;
 use Tilta\Sdk\Util\ResponseHelper;
 
 class BuyerRepresentativeTest extends AbstractModelTestCase
@@ -67,8 +67,8 @@ class BuyerRepresentativeTest extends AbstractModelTestCase
         ];
     }
 
-    private function getValidModel(): BuyerRepresentative
+    private function getValidModel(): ContactPerson
     {
-        return (new BuyerRepresentative())->fromArray($this->getValidModelData());
+        return (new ContactPerson())->fromArray($this->getValidModelData());
     }
 }

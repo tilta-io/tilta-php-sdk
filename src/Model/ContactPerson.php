@@ -29,7 +29,7 @@ use Tilta\Sdk\Exception\Validation\InvalidFieldValueException;
  * @method Address|null getAddress()
  * @method $this setAddress(?Address $address)
  */
-class BuyerRepresentative extends AbstractModel
+class ContactPerson extends AbstractModel
 {
     protected ?string $salutation = null;
 

@@ -27,8 +27,9 @@ class BuyerTest extends AbstractModelTestCase
             'legal_form' => 'legal form',
             'registered_at' => 1686763038,
             'incorporated_at' => 1686763038,
-            'representatives' => [],
+            'contact_persons' => [],
             'business_address' => ResponseHelper::PHPUNIT_OBJECT,
+            'tax_id' => 'DE123456',
             'custom_data' => [
                 'key1' => 'value1',
                 'key2' => 'value2',
@@ -40,9 +41,10 @@ class BuyerTest extends AbstractModelTestCase
         self::assertEquals('trading name', $model->getTradingName());
         self::assertEquals('legal name', $model->getLegalName());
         self::assertEquals('legal form', $model->getLegalForm());
+        self::assertEquals('DE123456', $model->getTaxId());
         self::assertInstanceOf(DateTime::class, $model->getRegisteredAt());
         self::assertInstanceOf(DateTime::class, $model->getIncorporatedAt());
-        self::assertIsArray($model->getRepresentatives());
+        self::assertIsArray($model->getContactPersons());
 
         // set mock to skip validation
         $model->setBusinessAddress($this->createMock(Address::class));
@@ -61,11 +63,11 @@ class BuyerTest extends AbstractModelTestCase
         $model->fromArray($inputData);
     }
 
-    public function testRequiredFieldRepresentatives(): void
+    public function testRequiredFieldContactPersons(): void
     {
         // special case: UpdateBuyerRequestModel: we defined this field as required for the model `Buyer` with custom-validation-definition
         $inputData = $this->getRequiredFieldValues();
-        unset($inputData['representatives']);
+        unset($inputData['contact_persons']);
 
         $model = new Buyer();
         $this->expectException(InvalidResponseException::class);
@@ -87,7 +89,7 @@ class BuyerTest extends AbstractModelTestCase
     {
         return [
             'registered_at' => 1686763038,
-            'representatives' => [],
+            'contact_persons' => [],
             'business_address' => [],
         ];
     }

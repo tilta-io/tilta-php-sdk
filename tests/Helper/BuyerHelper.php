@@ -13,7 +13,7 @@ namespace Tilta\Sdk\Tests\Helper;
 use DateTime;
 use Tilta\Sdk\Model\Address;
 use Tilta\Sdk\Model\Buyer;
-use Tilta\Sdk\Model\BuyerRepresentative;
+use Tilta\Sdk\Model\ContactPerson;
 use Tilta\Sdk\Model\Request\Buyer\CreateBuyerRequestModel;
 use Tilta\Sdk\Model\Request\Facility\CreateFacilityRequestModel;
 use Tilta\Sdk\Service\Request\Buyer\CreateBuyerRequest;
@@ -49,11 +49,12 @@ class BuyerHelper extends AbstractHelper
         return $buyer
             ->setTradingName(sprintf('My Trading Name (Unit-Test %s) ', $externalId))
             ->setLegalName(sprintf('My Legal Name (Unit-Test %s) ', $externalId))
-            ->setLegalForm('GMBH')
+            ->setLegalForm('DE_GMBH')
+            ->setTaxId('DE123456')
             ->setRegisteredAt((new DateTime())->setTimestamp(time() - 3600))
             ->setIncorporatedAt((new DateTime())->setTimestamp(time() - 3600))
-            ->setRepresentatives([
-                (new BuyerRepresentative())
+            ->setContactPersons([
+                (new ContactPerson())
                     ->setSalutation('MR')
                     ->setFirstName('Firstname')
                     ->setLastName('Lastname')

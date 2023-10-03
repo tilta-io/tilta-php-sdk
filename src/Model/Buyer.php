@@ -19,18 +19,20 @@ use Tilta\Sdk\Util\Validation;
  * @method $this setExternalId(string $externalId)
  * @method string|null getTradingName()
  * @method $this setTradingName(?string $tradingName)
- * @method string|null getLegalName()
- * @method $this setLegalName(?string $legalName)
+ * @method string getLegalName()
+ * @method $this setLegalName(string $legalName)
  * @method string|null getLegalForm()
  * @method $this setLegalForm(?string $legalForm)
  * @method DateTimeInterface getRegisteredAt()
  * @method $this setRegisteredAt(DateTimeInterface $registeredAt)
  * @method DateTimeInterface|null getIncorporatedAt()
  * @method $this setIncorporatedAt(?DateTimeInterface $incorporatedAt)
- * @method BuyerRepresentative[] getRepresentatives()
- * @method $this setRepresentatives(BuyerRepresentative[] $representatives)
+ * @method ContactPerson[] getContactPersons()
+ * @method $this setContactPersons(ContactPerson[] $contactPersons)
  * @method Address getBusinessAddress()
  * @method $this setBusinessAddress(Address $businessAddress)
+ * @method string|null getTaxId()
+ * @method $this setTaxId(?string $taxId)
  * @method array getCustomData()
  * @method $this setCustomData(array $customData)
  */
@@ -40,7 +42,7 @@ class Buyer extends AbstractModel implements HasBuyerFieldInterface
 
     protected ?string $tradingName = null;
 
-    protected ?string $legalName = null;
+    protected ?string $legalName;
 
     protected ?string $legalForm = null;
 
@@ -49,13 +51,15 @@ class Buyer extends AbstractModel implements HasBuyerFieldInterface
     protected ?DateTimeInterface $incorporatedAt = null;
 
     /**
-     * @var BuyerRepresentative[]|null
+     * @var ContactPerson[]|null
      */
-    protected ?array $representatives = [];
+    protected ?array $contactPersons = [];
 
     protected ?Address $businessAddress = null;
 
     protected ?array $customData = [];
+
+    protected ?string $taxId = null;
 
     /**
      * @internal
@@ -77,19 +81,20 @@ class Buyer extends AbstractModel implements HasBuyerFieldInterface
     protected function prepareModelData(array $data): array
     {
         return [
-            'representatives' => static fn (string $key): array => ResponseHelper::getArray($data, $key, BuyerRepresentative::class) ?? [],
+            'contactPersons' => static fn (string $key): array => ResponseHelper::getArray($data, $key, ContactPerson::class) ?? [],
         ];
     }
 
     protected function getFieldValidations(): array
     {
         return [
-            'representatives' => BuyerRepresentative::class . '[]',
+            'contactPersons' => '?' . ContactPerson::class . '[]',
             // we added these validations, so we can remove the validation for UpdateBuyerRequest.
             // we are using IS_REQUIRED-flag for this, so we do not need to redefine the types again (defined as typed property)
             'customData' => Validation::IS_REQUIRED,
             'businessAddress' => Validation::IS_REQUIRED,
             'registeredAt' => Validation::IS_REQUIRED,
+            'legalName' => Validation::IS_REQUIRED,
         ];
     }
 }

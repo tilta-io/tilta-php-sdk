@@ -22,14 +22,15 @@ class UpdateBuyerRequestModelTest extends AbstractModelTestCase
         $data = $model->toArray();
 
         self::assertIsArray($data);
-        self::assertCount(8, $data);
+        self::assertCount(9, $data);
         self::assertArrayHasKey('trading_name', $data);
         self::assertArrayHasKey('legal_name', $data);
         self::assertArrayHasKey('legal_form', $data);
+        self::assertArrayHasKey('tax_id', $data);
         self::assertArrayHasKey('registered_at', $data);
         self::assertArrayHasKey('incorporated_at', $data);
-        self::assertArrayHasKey('representatives', $data);
-        self::assertIsArray($data['representatives']);
+        self::assertArrayHasKey('contact_persons', $data);
+        self::assertIsArray($data['contact_persons']);
         self::assertArrayHasKey('business_address', $data);
         self::assertIsArray($data['business_address']);
         self::assertArrayHasKey('custom_data', $data);
