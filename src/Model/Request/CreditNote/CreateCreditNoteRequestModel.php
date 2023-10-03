@@ -39,7 +39,6 @@ class CreateCreditNoteRequestModel extends CreditNote implements HasBuyerFieldIn
         'merchantExternalId' => false,
         'buyerExternalId' => false, // path parameter,
         'billingAddress' => 'delivery_address', // TILLSDK-15: got renamed in a future release
-        'amount' => 'total_amount', // TILSDK-14: currently there is no object in the response, just the amount. at the moment it seems like, it the net amount.
     ];
 
     public function getBuyerExternalId(): string
