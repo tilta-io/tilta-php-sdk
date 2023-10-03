@@ -35,7 +35,6 @@ class CreateCreditNoteRequestModel extends CreditNote implements HasBuyerFieldIn
 {
     protected static array $_additionalFieldMapping = [
         'creditNoteExternalId' => 'externalId', // from parent
-        'invoicedAt' => 'date', // TILLSDK-17: got renamed in a future release
         'merchantExternalId' => false,
         'buyerExternalId' => false, // path parameter,
         'billingAddress' => 'delivery_address', // TILLSDK-15: got renamed in a future release

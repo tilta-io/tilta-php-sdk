@@ -45,7 +45,6 @@ class CreditNote extends AbstractModel implements HasBuyerFieldInterface
 
     protected static array $_additionalFieldMapping = [
         'creditNoteExternalId' => 'external_id',
-        'invoicedAt' => 'date', // TILLSDK-17: got renamed in a future release
         'buyerExternalId' => 'buyer_id', // TILLSDK-17: got renamed in a future release
         'merchantExternalId' => 'merchant_id', // TILLSDK-17: got renamed in a future release
         'billingAddress' => 'delivery_address', // TILLSDK-15: got renamed in a future release
