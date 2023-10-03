@@ -26,14 +26,7 @@ class CreateCreditNoteRequestModelTest extends AbstractModelTestCase
             ->setCreditNoteExternalId('credit-note-external-id')
             ->setBuyerExternalId('buyer-external-id')
             ->setInvoicedAt((new DateTime())->setTimestamp(1688402371))
-            ->setCurrency('EUR')
-            ->setAmount(
-                (new Amount())
-                    ->setGross((int) round(900 * 1.19, 0))
-                    ->setNet(900)
-                    ->setTax((int) round(900 * 1.19, 0) - 900)
-                    ->setCurrency('EUR')
-            )
+            ->setAmount($this->createMock(Amount::class))
             ->setBillingAddress($this->createMock(Address::class))
             ->setLineItems([
                 $this->createMock(LineItem::class),
@@ -45,15 +38,12 @@ class CreateCreditNoteRequestModelTest extends AbstractModelTestCase
 
         $outputData = $model->toArray();
         static::assertIsArray($outputData);
-        static::assertCount(7, $outputData);
+        static::assertCount(6, $outputData);
         static::assertArrayNotHasKey('buyer_external_id', $outputData);
-        static::assertArrayNotHasKey('buyer_id', $outputData);
-        static::assertArrayNotHasKey('merchant_id', $outputData);
-        static::assertArrayNotHasKey('platform_id', $outputData);
         static::assertValueShouldBeInData('credit-note-external-id', $outputData, 'external_id');
-        static::assertValueShouldBeInData(1688402371, $outputData, 'date');
-        static::assertValueShouldBeInData('EUR', $outputData, 'currency');
-        static::assertValueShouldBeInData([], $outputData, 'delivery_address');
+        static::assertValueShouldBeInData(1688402371, $outputData, 'invoiced_at');
+        static::assertValueShouldBeInData([], $outputData, 'billing_address');
+        static::assertValueShouldBeInData([], $outputData, 'amount');
         static::assertValueShouldBeInData([[], [], [], []], $outputData, 'line_items');
         static::assertValueShouldBeInData(['order-external-id-1', 'order-external-id-2'], $outputData, 'order_external_ids');
     }

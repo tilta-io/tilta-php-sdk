@@ -23,10 +23,15 @@ class CreditNoteHelper extends AbstractHelper
     {
         return (new CreditNote())->fromArray([
             'external_id' => $creditNoteExternalId,
-            'date' => 1688402226,
-            'total_amount' => 100,
-            'currency' => 'EUR',
-            'delivery_address' => [
+            'invoiced_at' => 1688402226,
+            'order_external_ids' => ['order-1', 'order-2'],
+            'amount' => [
+                'gross' => 119,
+                'net' => 100,
+                'tax' => 19,
+                'currency' => 'EUR',
+            ],
+            'billing_address' => [
                 'street' => 'string',
                 'house' => 'string',
                 'postcode' => '12345',
@@ -52,9 +57,6 @@ class CreditNoteHelper extends AbstractHelper
                     'quantity' => 1,
                 ],
             ],
-            //"platform_id" => '0', // TODO don't know what this parameter is.
-            'buyer_id' => 'buyer-external-id',
-            'merchant_id' => 'merchant-external-id',
         ]);
     }
 
@@ -64,7 +66,6 @@ class CreditNoteHelper extends AbstractHelper
             ->setCreditNoteExternalId('credit-note-external-id')
             ->setBuyerExternalId('buyer-external-id')
             ->setInvoicedAt((new DateTime())->setTimestamp(1688402371))
-            ->setCurrency('EUR')
             ->setAmount(
                 (new Amount())
                     ->setGross(119)

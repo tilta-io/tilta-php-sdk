@@ -679,18 +679,17 @@ __Usage__
 $requestService = new \Tilta\Sdk\Service\Request\CreditNote\CreateCreditNoteRequest($client);
 
 $requestModel = (new \Tilta\Sdk\Model\Request\CreditNote\CreateCreditNoteRequestModel())
-            ->setCreditNoteExternalId('credit-note-external-id')
-            ->setBuyerExternalId('buyer-external-id')
-            ->setInvoicedAt(new DateTime())
-            ->setCurrency('EUR')
-            ->setAmount(900)
-            ->setBillingAddress(new \Tilta\Sdk\Model\Address())
-            ->setLineItems([
-                new \Tilta\Sdk\Model\Order\LineItem(),
-                new \Tilta\Sdk\Model\Order\LineItem(),
-                new \Tilta\Sdk\Model\Order\LineItem(),
-            ])
-            ->setOrderExternalIds(['order-external-id-1', 'order-external-id-2']); // just provide an array with one value, if you create a credit-node for a single order.
+    ->setCreditNoteExternalId('credit-note-external-id')
+    ->setBuyerExternalId('buyer-external-id')
+    ->setInvoicedAt(new DateTime())
+    ->setAmount(new \Tilta\Sdk\Model\Amount())
+    ->setBillingAddress(new \Tilta\Sdk\Model\Address())
+    ->setLineItems([
+        new \Tilta\Sdk\Model\Order\LineItem(),
+        new \Tilta\Sdk\Model\Order\LineItem(),
+        new \Tilta\Sdk\Model\Order\LineItem(),
+    ])
+    ->setOrderExternalIds(['order-external-id-1', 'order-external-id-2']); // just provide an array with one value, if you create a credit-node for a single order.
     
 /** @var \Tilta\Sdk\Model\CreditNote $response */
 $response = $requestService->execute($requestModel);

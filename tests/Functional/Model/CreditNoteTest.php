@@ -23,26 +23,21 @@ class CreditNoteTest extends AbstractModelTestCase
     {
         $inputData = [
             'external_id' => 'credit-note-external-id',
-            'date' => 1688402226,
-            'total_amount' => 900,
+            'invoiced_at' => 1688402226,
+            'amount' => ResponseHelper::PHPUNIT_OBJECT,
             'currency' => 'EUR',
-            'delivery_address' => ResponseHelper::PHPUNIT_OBJECT,
+            'billing_address' => ResponseHelper::PHPUNIT_OBJECT,
             'line_items' => [
                 ResponseHelper::PHPUNIT_OBJECT,
                 ResponseHelper::PHPUNIT_OBJECT,
                 ResponseHelper::PHPUNIT_OBJECT,
             ],
-            //"platform_id" => '0', // TODO don't know what this parameter is.
-            'buyer_id' => 'buyer-external-id',
-            'merchant_id' => 'merchant-external-id',
         ];
 
         $model = (new CreditNote())->fromArray($inputData);
         static::assertEquals('credit-note-external-id', $model->getCreditNoteExternalId());
-        static::assertEquals('buyer-external-id', $model->getBuyerExternalId());
         static::assertInstanceOf(DateTime::class, $model->getInvoicedAt());
         static::assertEquals(1688402226, $model->getInvoicedAt()->getTimestamp());
-        static::assertEquals('EUR', $model->getCurrency());
         static::assertInstanceOf(Address::class, $model->getBillingAddress());
         static::assertInstanceOf(Amount::class, $model->getAmount());
         static::assertIsArray($model->getLineItems());

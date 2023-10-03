@@ -18,22 +18,16 @@ use Tilta\Sdk\Util\ResponseHelper;
  * @method string getCreditNoteExternalId()
  * @method DateTimeInterface getInvoicedAt()
  * @method Amount getAmount()
- * @method string getCurrency()
  * @method Address getBillingAddress()
  * @method LineItem[] getLineItems()
- * @method string getMerchantExternalId()
  */
-class CreditNote extends AbstractModel implements HasBuyerFieldInterface
+class CreditNote extends AbstractModel
 {
     protected string $creditNoteExternalId;
-
-    protected string $buyerExternalId;
 
     protected DateTimeInterface $invoicedAt;
 
     protected Amount $amount;
-
-    protected string $currency;
 
     protected Address $billingAddress;
 
@@ -41,20 +35,9 @@ class CreditNote extends AbstractModel implements HasBuyerFieldInterface
 
     protected array $orderExternalIds;
 
-    protected string $merchantExternalId;
-
     protected static array $_additionalFieldMapping = [
         'creditNoteExternalId' => 'external_id',
-        'buyerExternalId' => 'buyer_id', // TILLSDK-17: got renamed in a future release
-        'merchantExternalId' => 'merchant_id', // TILLSDK-17: got renamed in a future release
-        'billingAddress' => 'delivery_address', // TILLSDK-15: got renamed in a future release
     ];
-
-    public function getBuyerExternalId(): string
-    {
-        /** @phpstan-ignore-next-line */
-        return $this->__call(__FUNCTION__);
-    }
 
     protected function prepareModelData(array $data): array
     {

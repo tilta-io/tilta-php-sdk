@@ -11,7 +11,6 @@ declare(strict_types=1);
 namespace Tilta\Sdk\Model\Request\CreditNote;
 
 use DateTimeInterface;
-use Tilta\Sdk\Exception\Validation\InvalidFieldException;
 use Tilta\Sdk\Exception\Validation\InvalidFieldValueException;
 use Tilta\Sdk\Model\Address;
 use Tilta\Sdk\Model\Amount;
@@ -25,7 +24,6 @@ use Tilta\Sdk\Model\Request\RequestModelInterface;
  * @method $this setBuyerExternalId(string $buyerExternalId)
  * @method $this setInvoicedAt(DateTimeInterface $invoicedAt)
  * @method $this setAmount(Amount $amount)
- * @method $this setCurrency(string $currency)
  * @method $this setBillingAddress(Address $billingAddress)
  * @method string[] getOrderExternalIds()
  * @method $this setOrderExternalIds(string[] $orderExternalIds)
@@ -35,31 +33,15 @@ class CreateCreditNoteRequestModel extends CreditNote implements HasBuyerFieldIn
 {
     protected static array $_additionalFieldMapping = [
         'creditNoteExternalId' => 'externalId', // from parent
-        'merchantExternalId' => false,
-        'buyerExternalId' => false, // path parameter,
-        'billingAddress' => 'delivery_address', // TILLSDK-15: got renamed in a future release
+        'buyerExternalId' => false, // path parameter
     ];
+
+    protected string $buyerExternalId;
 
     public function getBuyerExternalId(): string
     {
         /** @phpstan-ignore-next-line */
         return $this->__call(__FUNCTION__);
-    }
-
-    /**
-     * @internal do not use!
-     */
-    public function getMerchantExternalId(): string
-    {
-        throw new InvalidFieldException('merchantExternalId', $this);
-    }
-
-    /**
-     * @internal do not use!
-     */
-    public function setMerchantExternalId(string $merchantExternalId): string
-    {
-        throw new InvalidFieldException('merchantExternalId', $this);
     }
 
     protected function getFieldValidations(): array

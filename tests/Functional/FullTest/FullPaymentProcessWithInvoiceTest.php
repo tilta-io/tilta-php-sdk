@@ -30,7 +30,7 @@ class FullPaymentProcessWithInvoiceTest extends AbstractFullPaymentProcessTestCa
     {
         $requestModel = (new CreateInvoiceRequestModel())
             ->setInvoiceExternalId(self::$invoiceExternalId)
-            ->setInvoiceNumber(self::$invoiceExternalId . '-number') // TODO clarify what the different between invoice_external_id & invoice_number is
+            ->setInvoiceNumber(self::$invoiceExternalId . '-number')
             ->setOrderExternalIds([self::$orderExternalId])
             ->setAmount(self::$orderToBePlaced->getAmount())
             ->setLineItems(self::$orderToBePlaced->getLineItems())
@@ -65,7 +65,6 @@ class FullPaymentProcessWithInvoiceTest extends AbstractFullPaymentProcessTestCa
             ->setOrderExternalIds([self::$orderExternalId])
             ->setLineItems(self::$orderToBePlaced->getLineItems())
             ->setAmount(self::$orderToBePlaced->getAmount())
-            ->setCurrency(self::$orderToBePlaced->getAmount()->getCurrency())
             ->setBuyerExternalId(self::$orderToBePlaced->getBuyerExternalId());
 
         if (($address = self::$orderToBePlaced->getDeliveryAddress()) instanceof Address) {

@@ -24,10 +24,14 @@ class CreateCreditNoteRequestTest extends AbstractRequestTestCase
     {
         $client = $this->createMockedTiltaClientResponse([
             'external_id' => 'credit-note-external-id',
-            'date' => 1688402226,
-            'total_amount' => 100,
-            'currency' => 'EUR',
-            'delivery_address' => [
+            'invoiced_at' => 1688402226,
+            'amount' => [
+                'gross' => 119,
+                'net' => 100,
+                'tax' => 19,
+                'currency' => 'EUR',
+            ],
+            'billing_address' => [
                 'street' => 'string',
                 'house' => 'string',
                 'postcode' => '12345',
@@ -53,8 +57,6 @@ class CreateCreditNoteRequestTest extends AbstractRequestTestCase
                     'quantity' => 1,
                 ],
             ],
-            'buyer_id' => 'buyer-external-id',
-            'merchant_id' => 'merchant-external-id',
         ]);
 
         $responseModel = (new CreateCreditNoteRequest($client))->execute($this->createMock(CreateCreditNoteRequestModel::class));

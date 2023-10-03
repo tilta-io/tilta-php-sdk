@@ -14,8 +14,5 @@ use Tilta\Sdk\Exception\GatewayException;
 
 class InvalidRequestException extends GatewayException
 {
-    public function getTiltaCode(): string
-    {
-        return 'INVALID_REQUEST';
-    }
+    protected static string $defaultErrorCode = 'INVALID_REQUEST';
 }
