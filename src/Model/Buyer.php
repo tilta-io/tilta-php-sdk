@@ -42,7 +42,7 @@ class Buyer extends AbstractModel implements HasBuyerFieldInterface
 
     protected ?string $tradingName = null;
 
-    protected ?string $legalName;
+    protected ?string $legalName = null;
 
     protected ?string $legalForm = null;
 
