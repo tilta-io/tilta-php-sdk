@@ -53,12 +53,12 @@ class TiltaClient
     /**
      * @var string
      */
-    public const SANDBOX_BASE_URL = 'https://api.tilta-stage.io/v' . self::API_VERSION . '/';
+    public const SANDBOX_API_DOMAIN = 'api.tilta-sandbox.io';
 
     /**
      * @var string
      */
-    public const PRODUCTION_BASE_URL = 'https://api.tilta.io/v' . self::API_VERSION . '/';
+    public const PRODUCTION_API_DOMAIN = 'api.tilta.io';
 
     private ?string $apiBaseUrl;
 
@@ -70,7 +70,16 @@ class TiltaClient
     {
         $this->authToken = $authToken;
         $this->sandbox = $isSandbox;
-        $this->apiBaseUrl = $isSandbox ? self::SANDBOX_BASE_URL : self::PRODUCTION_BASE_URL;
+
+        if (!empty($_ENV['TILTA_SDK_API_DOMAIN'])) {
+            $apiDomain = $_ENV['TILTA_SDK_API_DOMAIN'];
+        } elseif ($isSandbox) {
+            $apiDomain = self::SANDBOX_API_DOMAIN;
+        } else {
+            $apiDomain = self::PRODUCTION_API_DOMAIN;
+        }
+
+        $this->apiBaseUrl = sprintf('https://%s/v%s/', $apiDomain, self::API_VERSION);
     }
 
     public function setAuthToken(string $authToken): self
