@@ -28,5 +28,8 @@ class Amount extends AbstractModel
 
     protected int $net;
 
-    protected int $tax;
+    /**
+     * value is not required on API endpoints. we set it to 0, because NULL would me 0.
+     */
+    protected ?int $tax = 0;
 }
