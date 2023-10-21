@@ -81,6 +81,11 @@ abstract class AbstractRequest
                 $exception = ExceptionHandler::mapException($exception, $requestModel) ?? $exception;
             }
 
+            $alternativeResponse = $this->getResponseModelForException($requestModel, $exception);
+            if ($alternativeResponse !== null) {
+                return $alternativeResponse;
+            }
+
             $this->processFailed($requestModel, $exception);
             throw $exception;
         }
@@ -126,5 +131,14 @@ abstract class AbstractRequest
     protected function isAuthorisationRequired($requestModel): bool
     {
         return true;
+    }
+
+    /**
+     * @param T_RequestModel $requestModel
+     * @return T_ResponseModel|null
+     */
+    protected function getResponseModelForException($requestModel, Exception $exception)
+    {
+        return null;
     }
 }

@@ -772,6 +772,44 @@ __Expected exceptions thrown by service__
 |----------------------------------------------------------------------------------|------------------------------------|
 | `\Tilta\Sdk\Exception\GatewayException\NotFoundException\BuyerNotFoundException` | if the given buyer does not exist. |
 
+#### GetLegalFormsRequest
+
+| 	                 | 	                                                                                                                   |
+|-------------------|---------------------------------------------------------------------------------------------------------------------|
+| Api documentation | [Link](https://docs.tilta.io/reference/get_v1-legal-forms-country-code)                                             |
+| Request service   | [\Tilta\Sdk\Service\Request\Util\GetLegalFormsRequest](src/Service/Request/Util/GetLegalFormsRequest.php)           |
+| Request model     | [\Tilta\Sdk\Model\Request\Util\GetLegalFormsRequestModel](src/Model/Request/Util/GetLegalFormsRequestModel.php)     |
+| Response model    | [\Tilta\Sdk\Model\Response\Util\GetLegalFormsResponseModel](src/Model/Response/Util/GetLegalFormsResponseModel.php) |
+
+Use this service to fetch all legal forms, which would be available for given country.
+
+__Usage__
+
+```php
+/** @var \Tilta\Sdk\HttpClient\TiltaClient $client */
+$requestService = new \Tilta\Sdk\Service\Request\Util\GetLegalFormsRequest($client);
+
+// DE = requested country
+$requestModel = (new \Tilta\Sdk\Model\Request\Util\GetLegalFormsRequestModel('DE'));
+    
+/** @var \Tilta\Sdk\Model\Response\Util\GetLegalFormsResponseModel $response */
+$response = $requestService->execute($requestModel);
+
+/* $items would be key-value pairs:
+ *  e.g. [
+ *      'DE_GMBH' => 'Gesellschaft mit beschränkter Haftung',
+ *      'DE_AG' => 'Aktiengesellschaft'
+ * ]
+ */
+$items = $response->getItems();
+$response->getDisplayName('DE'); // = Gesellschaft mit beschränkter Haftung
+```
+
+__Expected exceptions thrown by service__
+
+**Please note:** This service will handle automatically the error if the country code is unknown/invalid. It will return
+empty item-list.
+
 ### Additional features
 
 #### Logging
