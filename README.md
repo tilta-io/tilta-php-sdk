@@ -103,7 +103,7 @@ __Usage__
 $tokenRequestService = new \Tilta\Sdk\Service\Request\Buyer\GetBuyerAuthTokenRequest($client);
 
 $requestModel = new \Tilta\Sdk\Model\Request\Buyer\GetBuyerAuthTokenRequestModel('EXTERNAL-MERCHANT-ID');
-    
+
 /** @var \Tilta\Sdk\Model\Response\Buyer\GetBuyerAuthTokenResponseModel */
 $responseModel = $tokenRequestService->execute($requestModel);
 $accessToken = $responseModel->getBuyerAuthToken();
@@ -127,7 +127,7 @@ __Usage__
 $tokenRequestService = new \Tilta\Sdk\Service\Request\Buyer\GetBuyerDetailsRequest($client);
 
 $requestModel = new \Tilta\Sdk\Model\Request\Buyer\GetBuyerDetailsRequestModel('EXTERNAL-MERCHANT-ID');
-    
+
 /** @var \Tilta\Sdk\Model\Buyer */
 $responseModel = $tokenRequestService->execute($requestModel);
 $externalId = $responseModel->getExternalId();
@@ -156,7 +156,7 @@ $requestModel = (new \Tilta\Sdk\Model\Request\Buyer\GetBuyersListRequestModel())
     // optional parameters
     ->setLimit(10)
     ->setOffset(0);
-    
+
 /** @var \Tilta\Sdk\Model\Response\Buyer\GetBuyersListResponseModel */
 $responseModel = $tokenRequestService->execute($requestModel);
 $limit = $responseModel->getLimit();
@@ -200,7 +200,7 @@ $requestModel = (new \Tilta\Sdk\Model\Buyer())
         'custom-key' => 'custom-value1',
         'custom-key2' => 'custom-value2'
     ]);
-    
+
 /** @var boolean $response */
 $response = $requestService->execute($requestModel); // true if successfully
 ```
@@ -233,7 +233,7 @@ $requestModel = (new \Tilta\Sdk\Model\Request\Buyer\UpdateBuyerRequestModel('EXT
         'custom-key' => 'custom-value1',
         'custom-key2' => 'custom-value2'
     ]);
-    
+
 /** @var boolean $response */
 $response = $requestService->execute($requestModel); // true if successfully
 ```
@@ -256,7 +256,7 @@ __Usage__
 $requestService = new \Tilta\Sdk\Service\Request\Facility\CreateFacilityRequest($client);
 
 $requestModel = (new \Tilta\Sdk\Model\Request\Facility\CreateFacilityRequestModel('EXTERNAL_MERCHANT_ID'));
-    
+
 /** @var boolean $response */
 $response = $requestService->execute($requestModel); // true if successfully
 ```
@@ -279,7 +279,7 @@ __Usage__
 $requestService = new \Tilta\Sdk\Service\Request\Facility\GetFacilityRequest($client);
 
 $requestModel = (new \Tilta\Sdk\Model\Request\Facility\GetFacilityRequestModel('EXTERNAL_MERCHANT_ID'));
-    
+
 /** @var \Tilta\Sdk\Model\Response\Facility\GetFacilityResponseModel $response */
 $response = $requestService->execute($requestModel);
 $response->getBuyerExternalId();
@@ -325,7 +325,7 @@ $requestModel = (new \Tilta\Sdk\Model\Request\Order\CreateOrderRequestModel())
                 new \Tilta\Sdk\Model\Order\LineItem(),
                 new \Tilta\Sdk\Model\Order\LineItem(),
             ]);
-    
+
 /** @var \Tilta\Sdk\Model\Order $response */
 $response = $requestService->execute($requestModel);
 $orderStatus = $response->getStatus();
@@ -359,7 +359,7 @@ __Usage__
 $requestService = new \Tilta\Sdk\Service\Request\Order\GetOrderDetailsRequest($client);
 
 $requestModel = (new \Tilta\Sdk\Model\Request\Order\GetOrderDetailsRequestModel('order-external-id'));
-    
+
 /** @var \Tilta\Sdk\Model\Order $response */
 $response = $requestService->execute($requestModel);
 $externalId = $response->getOrderExternalId();
@@ -396,7 +396,7 @@ $requestModel = (new \Tilta\Sdk\Model\Request\Order\GetOrderListRequestModel())
     ->setLimit(50)
     ->setMerchantExternalId('merchant-external-id')
     ->setPaymentMethod(\Tilta\Sdk\Enum\PaymentMethodEnum::BNPL);
-    
+
 /** @var \Tilta\Sdk\Model\Response\Order\GetOrderListResponseModel $response */
 $response = $requestService->execute($requestModel);
 $totalItemCount = $response->getTotal();
@@ -425,7 +425,7 @@ __Usage__
 $requestService = new \Tilta\Sdk\Service\Request\Order\CancelOrderRequest($client);
 
 $requestModel = (new \Tilta\Sdk\Model\Request\Order\CancelOrderRequestModel('order-external-id'));
-    
+
 /** @var \Tilta\Sdk\Model\Order $response */
 $response = $requestService->execute($requestModel);
 $externalId = $response->getOrderExternalId();
@@ -458,7 +458,7 @@ __Usage__
 $requestService = new \Tilta\Sdk\Service\Request\Order\GetOrderListForBuyerRequest($client);
 
 $requestModel = (new \Tilta\Sdk\Model\Request\Order\GetOrderListForBuyerRequestModel('buyer-external-id'));
-    
+
 /** @var \Tilta\Sdk\Model\Response\Order\GetOrderListForBuyerResponseModel $response */
 $response = $requestService->execute($requestModel);
 /** @var \Tilta\Sdk\Model\Order[] $items */
@@ -533,7 +533,7 @@ $requestModel = (new \Tilta\Sdk\Model\Request\Order\AddOrdersToBuyerRequestModel
         new \Tilta\Sdk\Model\Request\Order\AddOrdersToBuyer\ExistingOrder('oder-id-3')
     ])
     ->addOrderItem(new \Tilta\Sdk\Model\Request\Order\AddOrdersToBuyer\ExistingOrder('oder-id-4'));
-    
+
 /** @var \Tilta\Sdk\Model\Response\Order\AddOrdersToBuyerResponseModel $response */
 $response = $requestService->execute($requestModel);
 /** @var \Tilta\Sdk\Model\Order[] $items */
@@ -585,7 +585,7 @@ $requestModel = (new \Tilta\Sdk\Model\Request\Invoice\CreateInvoiceRequestModel(
       new \Tilta\Sdk\Model\Order\LineItem(),
       new \Tilta\Sdk\Model\Order\LineItem(),
     ]);
-    
+
 /** @var \Tilta\Sdk\Model\Invoice $response */
 $response = $requestService->execute($requestModel);
 ```
@@ -615,7 +615,7 @@ __Usage__
 $requestService = new \Tilta\Sdk\Service\Request\Invoice\GetInvoiceRequest($client);
 
 $requestModel = (new \Tilta\Sdk\Model\Request\Invoice\GetInvoiceRequestModel('invoice-external-id'));
-    
+
 /** @var \Tilta\Sdk\Model\Invoice $response */
 $response = $requestService->execute($requestModel);
 ```
@@ -648,7 +648,7 @@ $requestModel = (new \Tilta\Sdk\Model\Request\Invoice\GetInvoiceListRequestModel
     ->setOffset(150)
     ->setLimit(50)
     ->setMerchantExternalId('merchant-external-id');
-    
+
 /** @var \Tilta\Sdk\Model\Response\Invoice\GetInvoiceListResponseModel $response */
 $response = $requestService->execute($requestModel);
 $totalItemCount = $response->getTotal();
@@ -691,7 +691,7 @@ $requestModel = (new \Tilta\Sdk\Model\Request\CreditNote\CreateCreditNoteRequest
         new \Tilta\Sdk\Model\Order\LineItem(),
     ])
     ->setOrderExternalIds(['order-external-id-1', 'order-external-id-2']); // just provide an array with one value, if you create a credit-node for a single order.
-    
+
 /** @var \Tilta\Sdk\Model\CreditNote $response */
 $response = $requestService->execute($requestModel);
 ```
@@ -724,7 +724,7 @@ $requestModel = (new \Tilta\Sdk\Model\Request\SepaMandate\GetSepaMandateListRequ
     // optional for pagination:
     ->setOffset(150)
     ->setLimit(50)
-    
+
 /** @var \Tilta\Sdk\Model\Response\SepaMandate\GetSepaMandateListResponseModel $response */
 $response = $requestService->execute($requestModel);
 /** @var \Tilta\Sdk\Model\Response\SepaMandate[] $items */
@@ -759,7 +759,7 @@ $requestService = new \Tilta\Sdk\Service\Request\SepaMandate\CreateSepaMandateRe
 
 $requestModel = (new \Tilta\Sdk\Model\Request\SepaMandate\CreateSepaMandateRequestModel('buyer-external-id'))
     ->setIban('DE123456789987654')
-    
+
 /** @var \Tilta\Sdk\Model\Response\SepaMandate $response */
 $response = $requestService->execute($requestModel);
 $response->getIban();
@@ -791,7 +791,7 @@ $requestService = new \Tilta\Sdk\Service\Request\Util\GetLegalFormsRequest($clie
 
 // DE = requested country
 $requestModel = (new \Tilta\Sdk\Model\Request\Util\GetLegalFormsRequestModel('DE'));
-    
+
 /** @var \Tilta\Sdk\Model\Response\Util\GetLegalFormsResponseModel $response */
 $response = $requestService->execute($requestModel);
 
@@ -837,6 +837,6 @@ $handlerError = new \Monolog\Handler\StreamHandler('/path/to/your/log-file.error
 $logger->pushHandler($handlerError);
 
 \Tilta\Sdk\Util\Logging::setPsr3Logger($logger);
-// call this if you want to log the request-headers too 
+// call this if you want to log the request-headers too
 \Tilta\Sdk\Util\Logging::setLogHeaders(true);
 ```
