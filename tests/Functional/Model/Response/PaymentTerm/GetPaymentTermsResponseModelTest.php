@@ -8,10 +8,10 @@
 
 declare(strict_types=1);
 
-namespace Tilta\Sdk\Tests\Functional\Model\Response\Order;
+namespace Tilta\Sdk\Tests\Functional\Model\Response;
 
 use DateTime;
-use Tilta\Sdk\Model\Response\Order\GetPaymentTermsResponseModel;
+use Tilta\Sdk\Model\Response\PaymentTerm\GetPaymentTermsResponseModel;
 use Tilta\Sdk\Tests\Functional\Model\AbstractModelTestCase;
 
 class GetPaymentTermsResponseModelTest extends AbstractModelTestCase
@@ -39,8 +39,6 @@ class GetPaymentTermsResponseModelTest extends AbstractModelTestCase
                         'fee_percentage' => 10,
                         'currency' => 'EUR',
                         'gross' => 1190,
-                        'net' => 1000,
-                        'tax' => 190,
                     ],
                 ],
                 [
@@ -52,8 +50,6 @@ class GetPaymentTermsResponseModelTest extends AbstractModelTestCase
                         'fee_percentage' => 10,
                         'currency' => 'EUR',
                         'gross' => 1190,
-                        'net' => 1000,
-                        'tax' => 190,
                     ],
                 ],
             ],

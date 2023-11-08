@@ -19,10 +19,10 @@ use Tilta\Sdk\Exception\GatewayException\NotFoundException\MerchantNotFoundExcep
 use Tilta\Sdk\Model\Order;
 use Tilta\Sdk\Model\Request\Order\AddOrdersToBuyer\ExistingOrder;
 use Tilta\Sdk\Model\Request\Order\AddOrdersToBuyerRequestModel;
-use Tilta\Sdk\Model\Request\Order\GetPaymentTermsRequestModel;
+use Tilta\Sdk\Model\Request\PaymentTerm\GetPaymentTermsRequestModel;
 use Tilta\Sdk\Model\Response\Order\AddOrdersToBuyerResponseModel;
 use Tilta\Sdk\Service\Request\Order\AddOrdersToBuyerRequest;
-use Tilta\Sdk\Service\Request\Order\GetPaymentTermsRequest;
+use Tilta\Sdk\Service\Request\PaymentTerm\GetPaymentTermsRequest;
 use Tilta\Sdk\Tests\Functional\Service\Request\AbstractRequestTestCase;
 use Tilta\Sdk\Tests\Helper\BuyerHelper;
 use Tilta\Sdk\Tests\Helper\OrderHelper;

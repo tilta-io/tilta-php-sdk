@@ -8,7 +8,7 @@
 
 declare(strict_types=1);
 
-namespace Tilta\Sdk\Model\Response\Order\PaymentTerm;
+namespace Tilta\Sdk\Model\Response\PaymentTerm;
 
 use DateTimeInterface;
 use Tilta\Sdk\Model\Response\AbstractResponseModel;

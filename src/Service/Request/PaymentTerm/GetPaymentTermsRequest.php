@@ -8,10 +8,10 @@
 
 declare(strict_types=1);
 
-namespace Tilta\Sdk\Service\Request\Order;
+namespace Tilta\Sdk\Service\Request\PaymentTerm;
 
-use Tilta\Sdk\Model\Request\Order\GetPaymentTermsRequestModel;
-use Tilta\Sdk\Model\Response\Order\GetPaymentTermsResponseModel;
+use Tilta\Sdk\Model\Request\PaymentTerm\GetPaymentTermsRequestModel;
+use Tilta\Sdk\Model\Response\PaymentTerm\GetPaymentTermsResponseModel;
 use Tilta\Sdk\Service\Request\AbstractRequest;
 
 /**
@@ -21,7 +21,7 @@ class GetPaymentTermsRequest extends AbstractRequest
 {
     protected function getPath($requestModel): string
     {
-        return 'buyers/' . $requestModel->getBuyerExternalId() . '/orders/paymentterms';
+        return 'buyers/' . $requestModel->getBuyerExternalId() . '/payment_terms';
     }
 
     protected function processSuccess($requestModel, array $responseData): GetPaymentTermsResponseModel

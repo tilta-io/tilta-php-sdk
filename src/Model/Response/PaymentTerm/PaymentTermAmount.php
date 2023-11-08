@@ -8,17 +8,23 @@
 
 declare(strict_types=1);
 
-namespace Tilta\Sdk\Model\Response\Order\PaymentTerm;
+namespace Tilta\Sdk\Model\Response\PaymentTerm;
 
-use Tilta\Sdk\Model\Amount;
+use Tilta\Sdk\Model\Response\AbstractResponseModel;
 
 /**
  * @method int getFee()
  * @method int getFeePercentage()
+ * @method int getGross()
+ * @method string getCurrency()
  */
-class PaymentTermAmount extends Amount
+class PaymentTermAmount extends AbstractResponseModel
 {
     protected int $fee;
 
     protected int $feePercentage;
+
+    protected int $gross;
+
+    protected string $currency;
 }

@@ -473,12 +473,12 @@ __Expected exceptions thrown by service__
 
 #### GetPaymentTermsRequest
 
-| 	                 | 	                                                                                                                         |
-|-------------------|---------------------------------------------------------------------------------------------------------------------------|
-| Api documentation | [Link](https://docs.tilta.io/reference/post_v1-buyers-external-id-orders-paymentterms)                                    |
-| Request service   | [\Tilta\Sdk\Service\Request\Order\GetPaymentTermsRequest](src/Service/Request/Order/GetPaymentTermsRequest.php)           |
-| Request model     | [\Tilta\Sdk\Model\Request\Order\GetPaymentTermsRequestModel](src/Model/Request/Order/GetPaymentTermsRequestModel.php)     |
-| Response model    | [\Tilta\Sdk\Model\Response\Order\GetPaymentTermsResponseModel](src/Model/Response/Order/GetPaymentTermsResponseModel.php) |
+| 	                 | 	                                                                                                                                     |
+|-------------------|---------------------------------------------------------------------------------------------------------------------------------------|
+| Api documentation | [Link](https://docs.tilta.io/reference/get_v1-buyers-external-id-payment-terms)                                                       |
+| Request service   | [\Tilta\Sdk\Service\Request\PaymentTerm\GetPaymentTermsRequest](src/Service/Request/PaymentTerm/GetPaymentTermsRequest.php)           |
+| Request model     | [\Tilta\Sdk\Model\Request\PaymentTerm\GetPaymentTermsRequestModel](src/Model/Request/PaymentTerm/GetPaymentTermsRequestModel.php)     |
+| Response model    | [\Tilta\Sdk\Model\Response\PaymentTerm\GetPaymentTermsResponseModel](src/Model/Response/PaymentTerm/GetPaymentTermsResponseModel.php) |
 
 Use this service to get the payment terms for an order, which would/may be placed.
 
@@ -486,14 +486,14 @@ __Usage__
 
 ```php
 /** @var \Tilta\Sdk\HttpClient\TiltaClient $client */
-$requestService = new \Tilta\Sdk\Service\Request\Order\GetPaymentTermsRequest($client);
+$requestService = new \Tilta\Sdk\Service\Request\GetPaymentTermsRequest($client);
 
-$requestModel = (new \Tilta\Sdk\Model\Request\Order\GetPaymentTermsRequestModel())
+$requestModel = (new \Tilta\Sdk\Model\Request\PaymentTerm\GetPaymentTermsRequestModel())
     ->setMerchantExternalId('merchant-external-id')
     ->setBuyerExternalId('buyer-external-id')
     ->setAmount(new \Tilta\Sdk\Model\Amount());
-    
-/** @var \Tilta\Sdk\Model\Response\Order\GetPaymentTermsResponseModel $response */
+
+/** @var \Tilta\Sdk\Model\Response\PaymentTerm\GetPaymentTermsResponseModel $response */
 $response = $requestService->execute($requestModel);
 ```
 

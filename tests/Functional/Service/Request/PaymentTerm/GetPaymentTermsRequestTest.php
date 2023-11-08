@@ -8,7 +8,7 @@
 
 declare(strict_types=1);
 
-namespace Tilta\Sdk\Tests\Functional\Service\Request\Order;
+namespace Tilta\Sdk\Tests\Functional\Service\Request\PaymentTerm;
 
 use DateTime;
 use Throwable;
@@ -17,11 +17,11 @@ use Tilta\Sdk\Exception\GatewayException\Facility\FacilityExceededException;
 use Tilta\Sdk\Exception\GatewayException\NotFoundException\BuyerNotFoundException;
 use Tilta\Sdk\Exception\GatewayException\NotFoundException\MerchantNotFoundException;
 use Tilta\Sdk\Model\Amount;
-use Tilta\Sdk\Model\Request\Order\GetPaymentTermsRequestModel;
+use Tilta\Sdk\Model\Request\PaymentTerm\GetPaymentTermsRequestModel;
 use Tilta\Sdk\Model\Response\Facility;
-use Tilta\Sdk\Model\Response\Order\GetPaymentTermsResponseModel;
-use Tilta\Sdk\Model\Response\Order\PaymentTerm\PaymentTerm;
-use Tilta\Sdk\Service\Request\Order\GetPaymentTermsRequest;
+use Tilta\Sdk\Model\Response\PaymentTerm\GetPaymentTermsResponseModel;
+use Tilta\Sdk\Model\Response\PaymentTerm\PaymentTerm;
+use Tilta\Sdk\Service\Request\PaymentTerm\GetPaymentTermsRequest;
 use Tilta\Sdk\Tests\Functional\Service\Request\AbstractRequestTestCase;
 use Tilta\Sdk\Tests\Helper\BuyerHelper;
 use Tilta\Sdk\Tests\Helper\TiltaClientHelper;
@@ -49,8 +49,6 @@ class GetPaymentTermsRequestTest extends AbstractRequestTestCase
                         'fee_percentage' => 10,
                         'currency' => 'EUR',
                         'gross' => 1190,
-                        'net' => 1000,
-                        'tax' => 190,
                     ],
                 ],
                 [
@@ -62,8 +60,6 @@ class GetPaymentTermsRequestTest extends AbstractRequestTestCase
                         'fee_percentage' => 10,
                         'currency' => 'EUR',
                         'gross' => 1190,
-                        'net' => 1000,
-                        'tax' => 190,
                     ],
                 ],
             ],

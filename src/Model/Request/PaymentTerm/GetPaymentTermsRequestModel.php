@@ -8,7 +8,7 @@
 
 declare(strict_types=1);
 
-namespace Tilta\Sdk\Model\Request\Order;
+namespace Tilta\Sdk\Model\Request\PaymentTerm;
 
 use Tilta\Sdk\Model\Amount;
 use Tilta\Sdk\Model\HasBuyerFieldInterface;
@@ -49,9 +49,7 @@ class GetPaymentTermsRequestModel extends AbstractRequestModel implements HasBuy
     protected function prepareValuesForGateway(array $data): array
     {
         $data = parent::prepareValuesForGateway($data);
-        $data['net_amount'] = $this->amount->getNet();
         $data['gross_amount'] = $this->amount->getGross();
-        $data['tax_amount'] = $this->amount->getTax();
         $data['currency'] = $this->amount->getCurrency();
 
         return $data;

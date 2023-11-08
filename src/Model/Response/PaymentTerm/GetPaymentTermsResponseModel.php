@@ -8,11 +8,10 @@
 
 declare(strict_types=1);
 
-namespace Tilta\Sdk\Model\Response\Order;
+namespace Tilta\Sdk\Model\Response\PaymentTerm;
 
 use Tilta\Sdk\Model\Response\AbstractResponseModel;
 use Tilta\Sdk\Model\Response\Facility;
-use Tilta\Sdk\Model\Response\Order\PaymentTerm\PaymentTerm;
 use Tilta\Sdk\Util\ResponseHelper;
 
 /**
