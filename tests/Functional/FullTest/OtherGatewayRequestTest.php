@@ -16,7 +16,7 @@ use Tilta\Sdk\Model\Request\Buyer\CreateBuyerRequestModel;
 use Tilta\Sdk\Model\Request\SepaMandate\CreateSepaMandateRequestModel;
 use Tilta\Sdk\Model\Request\SepaMandate\GetSepaMandateListRequestModel;
 use Tilta\Sdk\Model\Response\SepaMandate;
-use Tilta\Sdk\Model\REsponse\SepaMandate\GetSepaMandateListResponseModel;
+use Tilta\Sdk\Model\Response\SepaMandate\GetSepaMandateListResponseModel;
 use Tilta\Sdk\Service\Request\Buyer\CreateBuyerRequest;
 use Tilta\Sdk\Service\Request\SepaMandate\CreateSepaMandateRequest;
 use Tilta\Sdk\Service\Request\SepaMandate\GetSepaMandateListRequest;

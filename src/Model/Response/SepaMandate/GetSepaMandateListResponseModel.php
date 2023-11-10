@@ -8,7 +8,7 @@
 
 declare(strict_types=1);
 
-namespace Tilta\Sdk\Model\REsponse\SepaMandate;
+namespace Tilta\Sdk\Model\Response\SepaMandate;
 
 use Tilta\Sdk\Model\Response\ListResponseModel;
 use Tilta\Sdk\Model\Response\SepaMandate;

@@ -11,7 +11,7 @@ declare(strict_types=1);
 namespace Tilta\Sdk\Tests\Functional\Model\Response\SepaMandate;
 
 use Tilta\Sdk\Model\Response\SepaMandate;
-use Tilta\Sdk\Model\REsponse\SepaMandate\GetSepaMandateListResponseModel;
+use Tilta\Sdk\Model\Response\SepaMandate\GetSepaMandateListResponseModel;
 use Tilta\Sdk\Tests\Functional\Model\AbstractModelTestCase;
 use Tilta\Sdk\Util\ResponseHelper;
 

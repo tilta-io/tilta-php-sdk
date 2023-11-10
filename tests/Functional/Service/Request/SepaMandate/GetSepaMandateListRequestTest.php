@@ -12,7 +12,7 @@ namespace Tilta\Sdk\Tests\Functional\Service\Request\SepaMandate;
 
 use Tilta\Sdk\Model\Request\SepaMandate\GetSepaMandateListRequestModel;
 use Tilta\Sdk\Model\Response\SepaMandate;
-use Tilta\Sdk\Model\REsponse\SepaMandate\GetSepaMandateListResponseModel;
+use Tilta\Sdk\Model\Response\SepaMandate\GetSepaMandateListResponseModel;
 use Tilta\Sdk\Service\Request\SepaMandate\GetSepaMandateListRequest;
 use Tilta\Sdk\Tests\Functional\Service\Request\AbstractRequestTestCase;
 

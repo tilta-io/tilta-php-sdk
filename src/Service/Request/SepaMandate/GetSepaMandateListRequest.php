@@ -11,7 +11,7 @@ declare(strict_types=1);
 namespace Tilta\Sdk\Service\Request\SepaMandate;
 
 use Tilta\Sdk\Model\Request\SepaMandate\GetSepaMandateListRequestModel;
-use Tilta\Sdk\Model\REsponse\SepaMandate\GetSepaMandateListResponseModel;
+use Tilta\Sdk\Model\Response\SepaMandate\GetSepaMandateListResponseModel;
 use Tilta\Sdk\Service\Request\AbstractRequest;
 
 /**
