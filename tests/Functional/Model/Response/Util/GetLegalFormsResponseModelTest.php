@@ -22,15 +22,15 @@ class GetLegalFormsResponseModelTest extends AbstractModelTestCase
         $model->fromArray([
             [
                 'name' => 'ABC',
-                'displayName' => 'name 1',
+                'display_name' => 'name 1',
             ],
             [
                 'name' => 'DEF',
-                'displayName' => 'name 2',
+                'display_name' => 'name 2',
             ],
             [
                 'name' => 'GHI',
-                'displayName' => 'name 3',
+                'display_name' => 'name 3',
             ],
         ]);
 
@@ -58,15 +58,15 @@ class GetLegalFormsResponseModelTest extends AbstractModelTestCase
         $model->fromArray([
             [
                 '_name' => 'ABC',
-                '*displayName' => 'name 1',
+                '*display_name' => 'name 1',
             ],
             [
                 'name_' => 'DEF',
-                'displayName_' => 'name 2',
+                'display_name_' => 'name 2',
             ],
             [
                 'name*' => 'GHI',
-                '*displayName' => 'name 3',
+                '*display_name' => 'name 3',
             ],
         ]);
     }

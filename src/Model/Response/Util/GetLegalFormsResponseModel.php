@@ -32,11 +32,11 @@ class GetLegalFormsResponseModel extends AbstractResponseModel
         }
 
         foreach ($data as $item) {
-            if (!isset($item['name'], $item['displayName'])) {
-                throw new InvalidResponseException('An list with item-keys `name`, `displayName` was expected. Got keys: ' . implode(', ', array_keys($item)));
+            if (!isset($item['name'], $item['display_name'])) {
+                throw new InvalidResponseException('An list with item-keys `name`, `display_name` was expected. Got keys: ' . implode(', ', array_keys($item)));
             }
 
-            $this->items[$item['name']] = $item['displayName'];
+            $this->items[$item['name']] = $item['display_name'];
         }
 
         return $this;

@@ -24,9 +24,9 @@ class GetLegalFormsRequestTest extends AbstractRequestTestCase
     {
         $client = $this->createMock(TiltaClient::class);
         $client->method('request')->willReturn([
-            ['name' => 'ABC', 'displayName' => 'name 1'],
-            ['name' => 'DEF', 'displayName' => 'name 2'],
-            ['name' => 'GHI', 'displayName' => 'name 3'],
+            ['name' => 'ABC', 'display_name' => 'name 1'],
+            ['name' => 'DEF', 'display_name' => 'name 2'],
+            ['name' => 'GHI', 'display_name' => 'name 3'],
         ]);
         $service = new GetLegalFormsRequest($client);
 
