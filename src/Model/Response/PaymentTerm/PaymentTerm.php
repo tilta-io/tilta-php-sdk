@@ -15,6 +15,7 @@ use Tilta\Sdk\Model\Response\AbstractResponseModel;
 
 /**
  * @method string getPaymentMethod()
+ * @method string getPaymentTerm()
  * @method string getName()
  * @method DateTimeInterface getDueDate()
  * @method PaymentTermAmount getAmount()
@@ -22,6 +23,8 @@ use Tilta\Sdk\Model\Response\AbstractResponseModel;
 class PaymentTerm extends AbstractResponseModel
 {
     protected string $paymentMethod;
+
+    protected string $paymentTerm;
 
     protected string $name;
 

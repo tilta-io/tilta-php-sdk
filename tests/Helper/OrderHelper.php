@@ -13,6 +13,7 @@ namespace Tilta\Sdk\Tests\Helper;
 use DateTime;
 use Tilta\Sdk\Enum\OrderStatusEnum;
 use Tilta\Sdk\Enum\PaymentMethodEnum;
+use Tilta\Sdk\Enum\PaymentTermEnum;
 use Tilta\Sdk\Model\Address;
 use Tilta\Sdk\Model\Amount;
 use Tilta\Sdk\Model\Order;
@@ -29,6 +30,8 @@ class OrderHelper extends AbstractHelper
             ->setBuyerExternalId($buyerExternalId)
             ->setOrderedAt(new DateTime())
             ->setComment('test order from phpunit (sdk)')
+            ->setPaymentMethod(PaymentMethodEnum::TRANSFER)
+            ->setPaymentTerm(PaymentTermEnum::BNPL30)
             ->setDeliveryAddress(
                 (new Address())
                     ->setStreet('street name')
@@ -61,8 +64,7 @@ class OrderHelper extends AbstractHelper
                     ->setTax(190)
                     ->setNet(1000)
                     ->setGross(1190)
-            )
-            ->setPaymentMethod(PaymentMethodEnum::BNPL);
+            );
     }
 
     /**

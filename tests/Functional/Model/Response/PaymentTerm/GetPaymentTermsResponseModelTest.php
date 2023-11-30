@@ -11,6 +11,8 @@ declare(strict_types=1);
 namespace Tilta\Sdk\Tests\Functional\Model\Response;
 
 use DateTime;
+use Tilta\Sdk\Enum\PaymentMethodEnum;
+use Tilta\Sdk\Enum\PaymentTermEnum;
 use Tilta\Sdk\Model\Response\PaymentTerm\GetPaymentTermsResponseModel;
 use Tilta\Sdk\Tests\Functional\Model\AbstractModelTestCase;
 
@@ -31,7 +33,8 @@ class GetPaymentTermsResponseModelTest extends AbstractModelTestCase
             ],
             'payment_terms' => [
                 [
-                    'payment_method' => 'CASH',
+                    'payment_method' => PaymentMethodEnum::CASH,
+                    'payment_term' => PaymentTermEnum::BNPL30,
                     'name' => 'Readable name',
                     'due_date' => (new DateTime())->setDate(2023, 2, 1)->getTimestamp(),
                     'amount' => [
@@ -42,7 +45,8 @@ class GetPaymentTermsResponseModelTest extends AbstractModelTestCase
                     ],
                 ],
                 [
-                    'payment_method' => 'BNPL30',
+                    'payment_method' => PaymentMethodEnum::TRANSFER,
+                    'payment_term' => PaymentTermEnum::BNPL7,
                     'name' => 'Readable name',
                     'due_date' => (new DateTime())->setDate(2023, 3, 1)->getTimestamp(),
                     'amount' => [

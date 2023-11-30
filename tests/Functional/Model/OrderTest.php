@@ -28,6 +28,7 @@ class OrderTest extends AbstractModelTest
             'merchant_external_id' => 'merchant-external-id',
             'ordered_at' => (new DateTime())->setDate(2023, 05, 25)->getTimestamp(),
             'payment_method' => 'payment-method',
+            'payment_term' => 'payment-term',
             'amount' => ResponseHelper::PHPUNIT_OBJECT,
             'comment' => 'order-comment',
             'delivery_address' => ResponseHelper::PHPUNIT_OBJECT,
@@ -48,6 +49,7 @@ class OrderTest extends AbstractModelTest
         static::assertEquals(05, (int) $model->getOrderedAt()->format('m'));
         static::assertEquals(25, (int) $model->getOrderedAt()->format('d'));
         static::assertEquals('payment-method', $model->getPaymentMethod());
+        static::assertEquals('payment-term', $model->getPaymentTerm());
         static::assertInstanceOf(Amount::class, $model->getAmount());
         static::assertEquals('order-comment', $model->getComment());
         static::assertInstanceOf(Address::class, $model->getDeliveryAddress());

@@ -30,5 +30,5 @@ final class PaymentMethodEnum
     /**
      * @var string
      */
-    public const BNPL = 'BNPL30';
+    public const DEBIT = 'DEBIT';
 }

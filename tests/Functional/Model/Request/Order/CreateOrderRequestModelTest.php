@@ -30,6 +30,7 @@ class CreateOrderRequestModelTest extends AbstractModelTestCase
             ->setComment('order-comment')
             ->setOrderedAt((new DateTime())->setDate(2023, 2, 5))
             ->setPaymentMethod('payment-method')
+            ->setPaymentTerm('payment-term')
             ->setDeliveryAddress($this->createMock(Address::class))
             ->setLineItems([
                 $this->createMock(LineItem::class),
@@ -43,9 +44,11 @@ class CreateOrderRequestModelTest extends AbstractModelTestCase
         static::assertValueShouldBeInData('order-external-id', $data, 'external_id');
         static::assertValueShouldBeInData('buyer-external-id', $data, 'buyer_external_id');
         static::assertValueShouldBeInData('merchant-external-id', $data, 'merchant_external_id');
-        static::assertValueShouldBeInData((new DateTime())->setDate(2023, 2, 5)->getTimestamp(), $data, 'ordered_at');
         static::assertValueShouldBeInData([], $data, 'amount'); // object is mocked
         static::assertValueShouldBeInData('order-comment', $data, 'comment');
+        static::assertValueShouldBeInData((new DateTime())->setDate(2023, 2, 5)->getTimestamp(), $data, 'ordered_at');
+        static::assertValueShouldBeInData('payment-method', $data, 'payment_method');
+        static::assertValueShouldBeInData('payment-term', $data, 'payment_term');
         static::assertValueShouldBeInData([], $data, 'delivery_address'); // object is mocked
         static::assertArrayHasKey('line_items', $data);
         static::assertIsArray($data['line_items']);

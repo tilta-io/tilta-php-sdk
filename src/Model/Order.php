@@ -18,6 +18,7 @@ use Tilta\Sdk\Util\ResponseHelper;
  * @method string getStatus()
  * @method DateTimeInterface getOrderedAt()
  * @method string getPaymentMethod()
+ * @method string getPaymentTerm()
  * @method Amount getAmount()
  * @method string|null getComment()
  * @method Address|null getDeliveryAddress()
@@ -40,6 +41,8 @@ class Order extends AbstractModel implements HasOrderIdFieldInterface, HasMercha
     protected DateTimeInterface $orderedAt;
 
     protected string $paymentMethod;
+
+    protected string $paymentTerm;
 
     protected Amount $amount;
 

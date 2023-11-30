@@ -12,6 +12,8 @@ namespace Tilta\Sdk\Tests\Functional\Service\Request\PaymentTerm;
 
 use DateTime;
 use Throwable;
+use Tilta\Sdk\Enum\PaymentMethodEnum;
+use Tilta\Sdk\Enum\PaymentTermEnum;
 use Tilta\Sdk\Exception\GatewayException;
 use Tilta\Sdk\Exception\GatewayException\Facility\FacilityExceededException;
 use Tilta\Sdk\Exception\GatewayException\NotFoundException\BuyerNotFoundException;
@@ -41,7 +43,8 @@ class GetPaymentTermsRequestTest extends AbstractRequestTestCase
             ],
             'payment_terms' => [
                 [
-                    'payment_method' => 'CASH',
+                    'payment_method' => PaymentMethodEnum::CASH,
+                    'payment_term' => PaymentTermEnum::BNPL30,
                     'name' => 'Readable name',
                     'due_date' => (new DateTime())->getTimestamp(),
                     'amount' => [
@@ -52,7 +55,8 @@ class GetPaymentTermsRequestTest extends AbstractRequestTestCase
                     ],
                 ],
                 [
-                    'payment_method' => 'BNPL30',
+                    'payment_method' => PaymentMethodEnum::TRANSFER,
+                    'payment_term' => PaymentTermEnum::BNPL7,
                     'name' => 'Readable name',
                     'due_date' => (new DateTime())->getTimestamp(),
                     'amount' => [
@@ -72,8 +76,10 @@ class GetPaymentTermsRequestTest extends AbstractRequestTestCase
         static::assertIsArray($response->getPaymentTerms());
         static::assertCount(2, $response->getPaymentTerms());
         static::assertContainsOnlyInstancesOf(PaymentTerm::class, $response->getPaymentTerms());
-        static::assertEquals('CASH', $response->getPaymentTerms()[0]->getPaymentMethod());
-        static::assertEquals('BNPL30', $response->getPaymentTerms()[1]->getPaymentMethod());
+        static::assertEquals(PaymentMethodEnum::CASH, $response->getPaymentTerms()[0]->getPaymentMethod());
+        static::assertEquals(PaymentTermEnum::BNPL30, $response->getPaymentTerms()[0]->getPaymentTerm());
+        static::assertEquals(PaymentMethodEnum::TRANSFER, $response->getPaymentTerms()[1]->getPaymentMethod());
+        static::assertEquals(PaymentTermEnum::BNPL7, $response->getPaymentTerms()[1]->getPaymentTerm());
     }
 
     public function testGetPaymentTermsOnline(): void

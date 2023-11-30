@@ -24,6 +24,7 @@ use Tilta\Sdk\Model\Request\RequestModelInterface;
  * @method $this setMerchantExternalId(string $merchantExternalId)
  * @method $this setOrderedAt(DateTimeInterface $orderedAt)
  * @method $this setPaymentMethod(string $paymentMethod)
+ * @method $this setPaymentTerm(string $paymentTerm)
  * @method $this setAmount(Amount $amount)
  * @method $this setComment(?string $comment)
  * @method $this setDeliveryAddress(?Address $deliveryAddress)

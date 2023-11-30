@@ -111,6 +111,10 @@ class AbstractFullPaymentProcessTestCase extends TestCase
         $responseModel = (new GetPaymentTermsRequest(self::$client))->execute($requestModel);
         static::assertInstanceOf(GetPaymentTermsResponseModel::class, $responseModel);
         static::assertGreaterThan(self::$orderToBePlaced->getAmount()->getGross(), $responseModel->getFacility()->getAvailableAmount(), 'facility is not greater than order amount. so order can not be placed.');
+
+        static::assertTrue($responseModel->getPaymentTerms() !== [], 'at least on payment term was expected.');
+        self::$orderToBePlaced->setPaymentMethod($responseModel->getPaymentTerms()[0]->getPaymentMethod());
+        self::$orderToBePlaced->setPaymentTerm($responseModel->getPaymentTerms()[0]->getPaymentTerm());
     }
 
     /**

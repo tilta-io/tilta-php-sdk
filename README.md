@@ -294,7 +294,7 @@ __Expected exceptions thrown by service__
 | `\Tilta\Sdk\Exception\GatewayException\Facility\NoActiveFacilityFoundException` | if the buyer does not have an active facility |
 | `Tilta\Sdk\Exception\GatewayException\NotFoundException\BuyerNotFoundException` | if the buyer does not exist.                  |
 
-#### CreateOrderRequestModel
+#### CreateOrderRequest
 
 | 	                 | 	                                                                                                             |
 |-------------------|---------------------------------------------------------------------------------------------------------------|
@@ -318,7 +318,8 @@ $requestModel = (new \Tilta\Sdk\Model\Request\Order\CreateOrderRequestModel())
             ->setAmount(new \Tilta\Sdk\Model\Amount())
             ->setComment('order-comment')
             ->setOrderedAt((new DateTime()))
-            ->setPaymentMethod(\Tilta\Sdk\Enum\PaymentMethodEnum::BNPL)
+            ->setPaymentMethod(\Tilta\Sdk\Enum\PaymentMethodEnum::TRANSFER)
+            ->setPaymentTerm(\Tilta\Sdk\Enum\PaymentTermEnum::BNPL30)
             ->setDeliveryAddress(new \Tilta\Sdk\Model\Address()))
             ->setLineItems([
                 new \Tilta\Sdk\Model\Order\LineItem(),
@@ -394,8 +395,10 @@ $requestModel = (new \Tilta\Sdk\Model\Request\Order\GetOrderListRequestModel())
     // optional for pagination:
     ->setOffset(150)
     ->setLimit(50)
+    // optional search-parameters
     ->setMerchantExternalId('merchant-external-id')
-    ->setPaymentMethod(\Tilta\Sdk\Enum\PaymentMethodEnum::BNPL);
+    ->setPaymentMethod(\Tilta\Sdk\Enum\PaymentMethodEnum::TRANSFER)
+    ->setPaymentTerm(\Tilta\Sdk\Enum\PaymentTermEnum::BNPL30);
 
 /** @var \Tilta\Sdk\Model\Response\Order\GetOrderListResponseModel $response */
 $response = $requestService->execute($requestModel);

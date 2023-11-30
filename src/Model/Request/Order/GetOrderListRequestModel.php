@@ -16,11 +16,15 @@ use Tilta\Sdk\Model\Request\ListRequestModel;
 /**
  * @method string|null getPaymentMethod()
  * @method $this setPaymentMethod(?string $paymentMethod)
+ * @method string|null getPaymentTerm()
+ * @method $this setPaymentTerm(?string $paymentTerm)
  * @method $this setMerchantExternalId(?string $merchantExternalId)
  */
 class GetOrderListRequestModel extends ListRequestModel implements HasMerchantFieldInterface
 {
     protected ?string $paymentMethod = null;
+
+    protected ?string $paymentTerm = null;
 
     protected ?string $merchantExternalId = null;
 
