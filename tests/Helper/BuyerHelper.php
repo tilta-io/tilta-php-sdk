@@ -60,7 +60,7 @@ class BuyerHelper extends AbstractHelper
                     ->setLastName('Lastname')
                     ->setBirthDate((new DateTime())->setDate(2000, 1, 1))
                     ->setEmail('cto@of-company.net')
-                    ->setPhone('0123456789')
+                    ->setPhone('+491741123334')
                     ->setAddress($address),
             ])
             ->setBusinessAddress($address)
