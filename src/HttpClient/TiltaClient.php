@@ -126,7 +126,7 @@ class TiltaClient
         } elseif ($method === self::METHOD_POST) {
             // The gateway always needs a body (also if no data got send), if the content-type is application/json.
             curl_setopt($ch, CURLOPT_POSTFIELDS, '{}');
-        } elseif ($data !== [] && $method === self::METHOD_GET) {
+        } elseif ($data !== [] && $method === self::METHOD_GET) { // @phpstan-ignore-line
             $url .= '?' . http_build_query($data);
         }
 
