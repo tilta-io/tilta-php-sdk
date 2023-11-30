@@ -10,13 +10,15 @@ declare(strict_types=1);
 
 namespace Tilta\Sdk\Tests\Helper;
 
+use Ramsey\Uuid\Uuid;
+
 abstract class AbstractHelper
 {
     private static array $prefixCache = [];
 
     public static function createUniqueExternalId(string $testName, string $prefixCacheKey = null): string
     {
-        $key = 'ut_' . $testName . '_' . uniqid();
+        $key = 'ut_' . $testName . '_' . Uuid::uuid4()->toString();
 
         if ($prefixCacheKey !== null) {
             if (!isset(self::$prefixCache[$prefixCacheKey])) {

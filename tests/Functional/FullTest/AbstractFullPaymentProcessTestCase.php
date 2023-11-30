@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace Tilta\Sdk\Tests\Functional\FullTest;
 
 use PHPUnit\Framework\TestCase;
+use Ramsey\Uuid\Uuid;
 use Tilta\Sdk\HttpClient\TiltaClient;
 use Tilta\Sdk\Model\Buyer;
 use Tilta\Sdk\Model\Order;
@@ -52,7 +53,7 @@ class AbstractFullPaymentProcessTestCase extends TestCase
 
     public static function setUpBeforeClass(): void
     {
-        $prefixCacheKey = uniqid();
+        $prefixCacheKey = Uuid::uuid4()->toString();
         self::$buyerExternalId = BuyerHelper::createUniqueExternalId('full-test', $prefixCacheKey);
         self::$orderExternalId = OrderHelper::createUniqueExternalId('full-test', $prefixCacheKey);
         self::$invoiceExternalId = InvoiceHelper::createUniqueExternalId('full-test', $prefixCacheKey);

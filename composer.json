@@ -28,7 +28,8 @@
 		"rector/rector": "^0.17",
 		"symplify/easy-coding-standard": "11.3.*",
 		"monolog/monolog": ">=2.9",
-		"jasny/phpdoc-parser": "^1.0"
+		"jasny/phpdoc-parser": "^1.0",
+		"ramsey/uuid": "^3.9 || ^4.7"
     },
 	"suggest": {
 		"psr/log": "If a PSR-3 Logger is installed, you can enable logging for all tilta api requests. You can use all loggers which also implement PSR-3. e.g. monolog/monolog"

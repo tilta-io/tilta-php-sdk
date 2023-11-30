@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace Tilta\Sdk\Tests\Functional\FullTest;
 
 use PHPUnit\Framework\TestCase;
+use Ramsey\Uuid\Uuid;
 use Tilta\Sdk\HttpClient\TiltaClient;
 use Tilta\Sdk\Model\Request\Buyer\CreateBuyerRequestModel;
 use Tilta\Sdk\Model\Request\SepaMandate\CreateSepaMandateRequestModel;
@@ -33,7 +34,7 @@ class OtherGatewayRequestTest extends TestCase
     {
         self::$client = TiltaClientHelper::getClient();
 
-        $prefixCacheKey = uniqid();
+        $prefixCacheKey = Uuid::uuid4()->toString();
         self::$buyerExternalId = BuyerHelper::createUniqueExternalId('other-tests', $prefixCacheKey);
     }
 
