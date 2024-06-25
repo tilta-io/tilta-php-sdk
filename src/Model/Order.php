@@ -12,6 +12,7 @@ namespace Tilta\Sdk\Model;
 
 use DateTimeInterface;
 use Tilta\Sdk\Model\Order\LineItem;
+use Tilta\Sdk\Model\Request\CustomDataTrait;
 use Tilta\Sdk\Util\ResponseHelper;
 
 /**
@@ -26,6 +27,8 @@ use Tilta\Sdk\Util\ResponseHelper;
  */
 class Order extends AbstractModel implements HasOrderIdFieldInterface, HasMerchantFieldInterface, HasBuyerFieldInterface
 {
+    use CustomDataTrait;
+
     protected static array $_additionalFieldMapping = [
         'orderExternalId' => 'external_id',
     ];
@@ -85,5 +88,14 @@ class Order extends AbstractModel implements HasOrderIdFieldInterface, HasMercha
         return [
             'lineItems' => ResponseHelper::getArray($data, 'line_items', LineItem::class),
         ];
+    }
+
+    protected function prepareValuesForGateway(array $data): array
+    {
+        if (isset($data['customData']) && $data['customData'] === []) {
+            $data['customData'] = null;
+        }
+
+        return parent::prepareValuesForGateway($data);
     }
 }

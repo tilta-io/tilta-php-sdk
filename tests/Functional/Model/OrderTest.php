@@ -15,6 +15,7 @@ use Tilta\Sdk\Model\Address;
 use Tilta\Sdk\Model\Amount;
 use Tilta\Sdk\Model\Order;
 use Tilta\Sdk\Model\Order\LineItem;
+use Tilta\Sdk\Tests\Helper\OrderHelper;
 use Tilta\Sdk\Util\ResponseHelper;
 
 class OrderTest extends AbstractModelTest
@@ -37,6 +38,10 @@ class OrderTest extends AbstractModelTest
                 ResponseHelper::PHPUNIT_OBJECT,
                 ResponseHelper::PHPUNIT_OBJECT,
             ],
+            'custom_data' => [
+                'field_1' => 'value_1',
+                'field_2' => 'value_2',
+            ],
         ];
 
         $model = (new Order())->fromArray($inputData);
@@ -55,8 +60,20 @@ class OrderTest extends AbstractModelTest
         static::assertInstanceOf(Address::class, $model->getDeliveryAddress());
         static::assertIsArray($model->getLineItems());
         static::assertCount(3, $model->getLineItems());
-        foreach ($model->getLineItems() as $item) {
-            static::assertInstanceOf(LineItem::class, $item);
-        }
+        static::assertContainsOnlyInstancesOf(LineItem::class, $model->getLineItems());
+        static::assertEquals([
+            'field_1' => 'value_1',
+            'field_2' => 'value_2',
+        ], $model->getCustomData());
+    }
+
+    public function testCustomDataIsNullIfEmpty(): void
+    {
+        $order = OrderHelper::createValidOrder('test', 'Test');
+        $order->setCustomData([]);
+
+        $data = $order->toArray();
+        self::assertArrayHasKey('custom_data', $data);
+        self::assertNull($data['custom_data']);
     }
 }

@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace Tilta\Sdk\Model;
 
 use DateTimeInterface;
+use Tilta\Sdk\Model\Request\CustomDataTrait;
 use Tilta\Sdk\Util\ResponseHelper;
 use Tilta\Sdk\Util\Validation;
 
@@ -33,11 +34,11 @@ use Tilta\Sdk\Util\Validation;
  * @method $this setBusinessAddress(Address $businessAddress)
  * @method string|null getTaxId()
  * @method $this setTaxId(?string $taxId)
- * @method array getCustomData()
- * @method $this setCustomData(array $customData)
  */
 class Buyer extends AbstractModel implements HasBuyerFieldInterface
 {
+    use CustomDataTrait;
+
     protected string $externalId;
 
     protected ?string $tradingName = null;
@@ -56,8 +57,6 @@ class Buyer extends AbstractModel implements HasBuyerFieldInterface
     protected ?array $contactPersons = [];
 
     protected ?Address $businessAddress = null;
-
-    protected ?array $customData = [];
 
     protected ?string $taxId = null;
 

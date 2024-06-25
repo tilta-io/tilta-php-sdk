@@ -6,6 +6,7 @@ use PhpCsFixer\Fixer\ClassNotation\ProtectedToPrivateFixer;
 use PhpCsFixer\Fixer\Comment\HeaderCommentFixer;
 use PhpCsFixer\Fixer\Operator\NotOperatorWithSpaceFixer;
 use PhpCsFixer\Fixer\Operator\NotOperatorWithSuccessorSpaceFixer;
+use PhpCsFixer\Fixer\PhpUnit\PhpUnitTestAnnotationFixer;
 use Symplify\CodingStandard\Fixer\ArrayNotation\ArrayListItemNewlineFixer;
 use Symplify\CodingStandard\Fixer\ArrayNotation\ArrayOpenerAndCloserNewlineFixer;
 use Symplify\EasyCodingStandard\Config\ECSConfig;
@@ -46,6 +47,7 @@ file that was distributed with this source code.', 'separate' => 'bottom', 'loca
         NotOperatorWithSpaceFixer::class,
         NotOperatorWithSuccessorSpaceFixer::class,
         AssignmentInConditionSniff::class,
+        PhpUnitTestAnnotationFixer::class,
         ArrayListItemNewlineFixer::class => [
             __DIR__ . '/tests/Functional/Util/ResponseHelperTest.php',
             __DIR__ . '/tests/Functional/Service/*'

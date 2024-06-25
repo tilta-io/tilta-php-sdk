@@ -815,6 +815,104 @@ __Expected exceptions thrown by service__
 **Please note:** This service will handle automatically the error if the country code is unknown/invalid. It will return
 empty item-list.
 
+#### CreateCustomDataAttributeRequest
+
+| 	                 | 	                                                                                                                                                         |
+|-------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Api documentation | [Link](https://docs.tilta.io/reference/post_v1-orders-custom-data)                                                                                        |
+| Request service   | [\Tilta\Sdk\Service\Request\Order\CustomData\CreateCustomDataAttributeRequest](src/Service/Request/Order/CustomData/CreateCustomDataAttributeRequest.php) |
+| Request model     | [\Tilta\Sdk\Model\Order\CustomDataAttribute](src/Model/Order/CustomDataAttribute.php)                                                                     |
+| Response model    | [\Tilta\Sdk\Model\Order\CustomDataAttribute](src/Model/Order/CustomDataAttribute.php)                                                                     |
+
+Use this service to create custom data fields for orders.
+
+__Usage__
+
+```php
+/** @var \Tilta\Sdk\HttpClient\TiltaClient $client */
+$requestService = new \Tilta\Sdk\Service\Request\Order\CustomData\CreateCustomDataAttributeRequest($client);
+
+$requestModel = (new \Tilta\Sdk\Model\Order\CustomDataAttribute())
+    ->setName('field-name')
+    ->setDataType(\Tilta\Sdk\Model\Order\CustomDataAttribute::DATA_TYPE_STRING)
+    ->setDescription('description of the field'); // optional
+
+/** @var \Tilta\Sdk\Model\Order\CustomDataAttribute $response */
+$response = $requestService->execute($requestModel);
+$response->getName();
+$response->getDataType();
+$response->getDescription();
+```
+
+__Expected exceptions thrown by service__
+
+| 	                                                         | 	                                                 |
+|-----------------------------------------------------------|---------------------------------------------------|
+| `\Tilta\Sdk\Exception\GatewayException\ConflictException` | if a field with the same name does already exist. |
+
+#### CreateCustomDataAttributeRequest
+
+| 	                 | 	                                                                                                                                                               |
+|-------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Api documentation | [Link](https://docs.tilta.io/reference/post_v1-orders-custom-data-name)                                                                                         |
+| Request service   | [\Tilta\Sdk\Service\Request\Order\CustomData\UpdateCustomDataAttributeRequest](src/Service/Request/Order/CustomData/UpdateCustomDataAttributeRequest.php)       |
+| Request model     | [\Tilta\Sdk\Model\Request\Order\CustomData\UpdateCustomDataAttributeRequestModel](src/Model/Request/Order/CustomData/UpdateCustomDataAttributeRequestModel.php) |
+| Response model    | [\Tilta\Sdk\Model\Order\CustomDataAttribute](src/Model/Order/CustomDataAttribute.php)                                                                           |
+
+Use this service to update a custom data field of orders.
+
+__Usage__
+
+```php
+/** @var \Tilta\Sdk\HttpClient\TiltaClient $client */
+$requestService = new \Tilta\Sdk\Service\Request\Order\CustomData\UpdateCustomDataAttributeRequest($client);
+
+$requestModel = (new \Tilta\Sdk\Model\Request\Order\CustomData\UpdateCustomDataAttributeRequestModel())
+    ->setName('field-name')
+    ->setDataType(\Tilta\Sdk\Model\Order\CustomDataAttribute::DATA_TYPE_STRING)
+    ->setDescription('description of the field'); // optional
+
+/** @var \Tilta\Sdk\Model\Order\CustomDataAttribute $response */
+$response = $requestService->execute($requestModel);
+$response->getName();
+$response->getDataType();
+$response->getDescription();
+```
+
+__Expected exceptions thrown by service__
+
+| 	                                                         | 	                                                 |
+|-----------------------------------------------------------|---------------------------------------------------|
+| `\Tilta\Sdk\Exception\GatewayException\ConflictException` | if a field with the same name does already exist. |
+
+#### GetCustomDataAttributeListRequest
+
+| 	                 | 	                                                                                                                                                                 |
+|-------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Api documentation | [Link](https://docs.tilta.io/reference/get_v1-orders-custom-data)                                                                                                 |
+| Request service   | [\Tilta\Sdk\Service\Request\Order\CustomData\GetCustomDataAttributeListRequest](src/Service/Request/Order/CustomData/GetCustomDataAttributeListRequest.php)       |
+| Request model     | [\Tilta\Sdk\Model\Request\Order\CustomData\GetCustomDataAttributeListRequestModel](src/Model/Request/Order/CustomData/GetCustomDataAttributeListRequestModel.php) |
+| Response model    | [\Tilta\Sdk\Model\Response\Order\CustomData\GetCustomDataAttributeListResponse](src/Model/Response/Order/CustomData/GetCustomDataAttributeListResponse.php)       |
+
+Use this service to get all available custom-data fields.
+
+__Usage__
+
+```php
+/** @var \Tilta\Sdk\HttpClient\TiltaClient $client */
+$requestService = new \Tilta\Sdk\Service\Request\Order\CustomData\GetCustomDataAttributeListRequest($client);
+
+$requestModel = (new \Tilta\Sdk\Model\Request\Order\CustomData\GetCustomDataAttributeListRequestModel())
+    ->setLimit(100) // optional
+    ->setOffset(0); // optional
+    
+/** @var \Tilta\Sdk\Model\Response\Order\CustomData\GetCustomDataAttributeListResponse $response */
+$response = $requestService->execute($requestModel);
+$response->getTotal();
+/** @var \Tilta\Sdk\Model\Order\CustomDataAttribute $items */
+$items = $response->getItems();
+```
+
 ### Additional features
 
 #### Logging

@@ -12,6 +12,7 @@ namespace Tilta\Sdk\Util;
 
 use Tilta\Sdk\Enum\OrderStatusEnum;
 use Tilta\Sdk\Exception\GatewayException;
+use Tilta\Sdk\Exception\GatewayException\ConflictException;
 use Tilta\Sdk\Exception\GatewayException\Facility\FacilityExceededException;
 use Tilta\Sdk\Exception\GatewayException\Facility\NoActiveFacilityFoundException;
 use Tilta\Sdk\Exception\GatewayException\NotFoundException\BuyerNotFoundException;
@@ -63,6 +64,10 @@ class ExceptionHandler
 
         if ($requestModel instanceof HasInvoiceIdFieldInterface && self::isEntityNotFoundException('Invoice', $exception->getMessage())) {
             return new InvoiceNotFoundException($requestModel->getInvoiceExternalId(), ...self::getDefaultArgumentsForException($exception));
+        }
+
+        if ($exception->getTiltaCode() === 'CONFLICT') {
+            return new ConflictException(...self::getDefaultArgumentsForException($exception));
         }
 
         return null;

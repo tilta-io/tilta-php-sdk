@@ -17,7 +17,7 @@ class ListRequestModelTest extends AbstractModelTestCase
 {
     public function testToArray(): void
     {
-        $data = (new ListRequestModel())
+        $data = $this->getModelInstance()
             ->setLimit(500)
             ->setOffset(2)
             ->toArray();
@@ -30,7 +30,7 @@ class ListRequestModelTest extends AbstractModelTestCase
 
     public function testNotGivenValues(): void
     {
-        $data = (new ListRequestModel())->toArray();
+        $data = $this->getModelInstance()->toArray();
 
         static::assertIsArray($data);
         static::assertCount(0, $data, 'if no query params has been given, the request-data should be empty');
@@ -38,12 +38,17 @@ class ListRequestModelTest extends AbstractModelTestCase
 
     public function testOneGivenValue(): void
     {
-        $data = (new ListRequestModel())
+        $data = $this->getModelInstance()
             ->setLimit(100)
             ->toArray();
 
         static::assertIsArray($data);
         static::assertCount(1, $data);
         static::assertValueShouldBeInData(100, $data, 'limit');
+    }
+
+    protected function getModelInstance(): ListRequestModel
+    {
+        return new ListRequestModel();
     }
 }
