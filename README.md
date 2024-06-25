@@ -342,6 +342,38 @@ __Expected exceptions thrown by service__
 | `\Tilta\Sdk\Exception\GatewayException\Facility\FacilityExceededException`          | if the buyer have an active facility but the order would exceed the limit. |
 | `\Tilta\Sdk\Exception\GatewayException\NotFoundException\MerchantNotFoundException` | if the provided merchant does not exist.                                   |
 
+#### GetCheckoutLinkRequest
+
+| 	                 | 	                                                                                                                 |
+|-------------------|-------------------------------------------------------------------------------------------------------------------|
+| Api documentation | [Link](https://docs.tilta.io/reference/get_v1-orders-external-id-checkout-link)                                   |
+| Request service   | [\Tilta\Sdk\Service\Request\Order\GetCheckoutLinkRequest](src/Service/Request/Order/GetCheckoutLinkRequest.php)   |
+| Request model     | [\Tilta\Sdk\Model\Request\Order\GetCheckoutLinkRequestModel](src/Model/Request/Order/GetCheckoutLinkRequestModel.php) |
+| Response model    | [\Tilta\Sdk\Model\Response\Order\GetCheckoutLinkResponse](src/Model/Response/Order/GetCheckoutLinkResponse.php)   |                                |
+
+Use this service to create a new order for a buyer.
+
+__Usage__
+
+```php
+/** @var \Tilta\Sdk\HttpClient\TiltaClient $client */
+$requestService = new \Tilta\Sdk\Service\Request\Order\GetCheckoutLinkRequest($client);
+
+$requestModel = (new \Tilta\Sdk\Model\Request\Order\GetCheckoutLinkRequestModel())
+            ->setOrderExternalId('order-external-id');
+
+/** @var \Tilta\Sdk\Model\Response\Order\GetCheckoutLinkResponse $response */
+$response = $requestService->execute($requestModel);
+$orderStatus = $response->getStatus();
+[...]
+```
+
+__Expected exceptions thrown by service__
+
+| 	                                                                                | 	                            |
+|----------------------------------------------------------------------------------|------------------------------|
+| `\Tilta\Sdk\Exception\GatewayException\NotFoundException\OrderNotFoundException` | if the order does not exist. |
+
 #### CreateOrderDraftRequest
 
 | 	                 | 	                                                                                                                       |
