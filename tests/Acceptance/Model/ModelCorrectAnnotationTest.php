@@ -117,7 +117,7 @@ class ModelCorrectAnnotationTest extends TestCase
 
         return array_filter(
             $meta['methods'] ?? [],
-            static fn ($methodName) => preg_match('/^(get|set)(.*)/', $methodName),
+            static fn ($methodName): bool => (bool) preg_match('/^(get|set)(.*)/', $methodName),
             ARRAY_FILTER_USE_KEY
         );
     }
