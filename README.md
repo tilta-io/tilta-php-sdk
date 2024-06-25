@@ -342,6 +342,51 @@ __Expected exceptions thrown by service__
 | `\Tilta\Sdk\Exception\GatewayException\Facility\FacilityExceededException`          | if the buyer have an active facility but the order would exceed the limit. |
 | `\Tilta\Sdk\Exception\GatewayException\NotFoundException\MerchantNotFoundException` | if the provided merchant does not exist.                                   |
 
+#### CreateOrderDraftRequest
+
+| 	                 | 	                                                                                                                       |
+|-------------------|-------------------------------------------------------------------------------------------------------------------------|
+| Api documentation | [Link](https://docs.tilta.io/reference/post_v1-orders-draft)                                                            |
+| Request service   | [\Tilta\Sdk\Service\Request\Order\CreateOrderDraftRequest](src/Service/Request/Order/CreateOrderDraftRequest.php)       |
+| Request model     | [\Tilta\Sdk\Model\Request\Order\CreateOrderDraftRequestModel](src/Model/Request/Order/CreateOrderDraftRequestModel.php) |
+| Response model    | [\Tilta\Sdk\Model\Order](src/Model/Order.php)                                                                           |
+
+Use this service to create a new order in draft state for a buyer.
+
+__Usage__
+
+```php
+/** @var \Tilta\Sdk\HttpClient\TiltaClient $client */
+$requestService = new \Tilta\Sdk\Service\Request\Order\CreateOrderDraftRequest($client);
+
+$requestModel = (new \Tilta\Sdk\Model\Request\Order\CreateOrderDraftRequestModel())
+            ->setOrderExternalId('order-external-id')
+            ->setBuyerExternalId('buyer-external-id')
+            ->setMerchantExternalId('merchant-external-id')
+            ->setAmount(new \Tilta\Sdk\Model\Amount())
+            ->setComment('order-comment')
+            ->setLineItems([
+                new \Tilta\Sdk\Model\Order\LineItem(),
+                new \Tilta\Sdk\Model\Order\LineItem(),
+                new \Tilta\Sdk\Model\Order\LineItem(),
+            ]);
+
+/** @var \Tilta\Sdk\Model\Order $response */
+$response = $requestService->execute($requestModel);
+$orderStatus = $response->getStatus(); // will be "DRAFT"
+[...]
+```
+
+__Expected exceptions thrown by service__
+
+| 	                                                                                   | 	                                                                          |
+|-------------------------------------------------------------------------------------|----------------------------------------------------------------------------|
+| `\Tilta\Sdk\Exception\GatewayException\NotFoundException\BuyerNotFoundException`    | if the buyer does not exist.                                               |
+| `\Tilta\Sdk\Exception\GatewayException\Facility\NoActiveFacilityFoundException`     | if the buyer does not have an active facility.                             |
+| `\Tilta\Sdk\Exception\GatewayException\Facility\FacilityExceededException`          | if the buyer have an active facility but the order would exceed the limit. |
+| `\Tilta\Sdk\Exception\GatewayException\NotFoundException\MerchantNotFoundException` | if the provided merchant does not exist.                                   |
+
+
 #### GetOrderDetailsRequest
 
 | 	                 | 	                                                                                                                     |

@@ -18,6 +18,7 @@ use Tilta\Sdk\Model\Address;
 use Tilta\Sdk\Model\Amount;
 use Tilta\Sdk\Model\Order;
 use Tilta\Sdk\Model\Order\LineItem;
+use Tilta\Sdk\Model\Request\Order\CreateOrderDraftRequestModel;
 use Tilta\Sdk\Model\Request\Order\CreateOrderRequestModel;
 
 class OrderHelper extends AbstractHelper
@@ -84,5 +85,38 @@ class OrderHelper extends AbstractHelper
     public static function createUniqueExternalId(string $testName, string $prefixCacheKey = null): string
     {
         return parent::createUniqueExternalId($testName, $prefixCacheKey) . '-order';
+    }
+
+    public static function createValidDraft(string $orderExternalId, string $buyerExternalId): CreateOrderDraftRequestModel
+    {
+        return (new CreateOrderDraftRequestModel())
+            ->setOrderExternalId($orderExternalId)
+            ->setBuyerExternalId($buyerExternalId)
+            ->setMerchantExternalId(TiltaClientHelper::getMerchantId())
+            ->setAmount(
+                (new Amount())
+                    ->setCurrency('EUR')
+                    ->setTax(190)
+                    ->setNet(1000)
+                    ->setGross(1190)
+            )
+            ->setComment('draft order from phpunit (sdk)')
+            ->setLineItems([
+                (new LineItem())
+                    ->setName('Line Item 1')
+                    ->setQuantity(2)
+                    ->setCategory('unknown category')
+                    ->setCurrency('EUR')
+                    ->setDescription('product description')
+                    ->setPrice(25),
+
+                (new LineItem())
+                    ->setName('Line Item 2')
+                    ->setQuantity(1)
+                    ->setCategory('another unknown category')
+                    ->setCurrency('EUR')
+                    ->setDescription('another product description')
+                    ->setPrice(75),
+            ]);
     }
 }
