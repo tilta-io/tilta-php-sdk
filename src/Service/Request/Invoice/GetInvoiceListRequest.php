@@ -21,6 +21,10 @@ class GetInvoiceListRequest extends AbstractRequest
 {
     protected function getPath($requestModel): string
     {
+        if (!empty($requestModel->getBuyerExternalId())) {
+            return 'buyers/' . $requestModel->getBuyerExternalId() . '/invoices';
+        }
+
         return 'invoices';
     }
 
