@@ -111,7 +111,7 @@ abstract class AbstractModel
                             $value = ResponseHelper::getString($data, $dataKey, $isNullable);
                             break;
                         case 'array':
-                            $value = ResponseHelper::getArray($data, $dataKey) ?? [];
+                            $value = ResponseHelper::getArray($data, $dataKey) ?: null;
                             break;
                     }
                 }
