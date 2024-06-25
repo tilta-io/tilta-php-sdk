@@ -26,16 +26,7 @@ class GetBuyerDetailsRequestTest extends AbstractRequestTestCase
         $this->requestService = new GetBuyerDetailsRequest(TiltaClientHelper::getClient());
     }
 
-    public function testGetToken(): void
-    {
-        // buyer has been created via platform. Tests will fail, if buyer got deleted
-        // TODO create company by request
-        $buyerExternalId = 'test-company';
-
-        $response = $this->requestService->execute(new GetBuyerDetailsRequestModel($buyerExternalId));
-
-        $this->assertNotNull($response->getExternalId());
-    }
+    // we wont test the get-buyer request, because it is already tested with the unit-test CreateBuyerRequestTest
 
     public function testGetBuyerNotFound(): void
     {
