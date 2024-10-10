@@ -18,16 +18,10 @@ use Tilta\Sdk\Model\Request\ListRequestModel;
  */
 class GetSepaMandateListRequestModel extends ListRequestModel implements HasBuyerFieldInterface
 {
-    protected string $buyerExternalId;
-
-    protected static array $_additionalFieldMapping = [
-        'buyerExternalId' => false,
-    ];
-
-    public function __construct(string $buyerExternalId)
-    {
+    public function __construct(
+        protected string $buyerExternalId
+    ) {
         parent::__construct();
-        $this->buyerExternalId = $buyerExternalId;
     }
 
     public function getBuyerExternalId(): string

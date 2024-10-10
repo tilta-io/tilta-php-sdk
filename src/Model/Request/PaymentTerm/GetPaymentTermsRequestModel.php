@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace Tilta\Sdk\Model\Request\PaymentTerm;
 
+use Tilta\Sdk\Attributes\ApiField\DefaultField;
 use Tilta\Sdk\Model\Amount;
 use Tilta\Sdk\Model\HasBuyerFieldInterface;
 use Tilta\Sdk\Model\HasMerchantFieldInterface;
@@ -25,14 +26,10 @@ class GetPaymentTermsRequestModel extends AbstractRequestModel implements HasBuy
 {
     protected string $buyerExternalId;
 
+    #[DefaultField]
     protected string $merchantExternalId;
 
     protected Amount $amount;
-
-    protected static array $_additionalFieldMapping = [
-        'buyerExternalId' => false, // got sent as path-parameter
-        'amount' => false,          // got mapped manually
-    ];
 
     public function getBuyerExternalId(): string
     {
@@ -46,9 +43,9 @@ class GetPaymentTermsRequestModel extends AbstractRequestModel implements HasBuy
         return $this->__call(__FUNCTION__);
     }
 
-    protected function prepareValuesForGateway(array $data): array
+    protected function _toArray(): array
     {
-        $data = parent::prepareValuesForGateway($data);
+        $data = parent::_toArray();
         $data['gross_amount'] = $this->amount->getGross();
         $data['currency'] = $this->amount->getCurrency();
 

@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace Tilta\Sdk\Model\Response;
 
 use DateTimeInterface;
+use Tilta\Sdk\Attributes\ApiField\DefaultField;
 
 /**
  * @method string getMandateId()
@@ -19,9 +20,12 @@ use DateTimeInterface;
  */
 class SepaMandate extends AbstractResponseModel
 {
+    #[DefaultField]
     protected string $mandateId;
 
+    #[DefaultField]
     protected string $iban;
 
+    #[DefaultField]
     protected DateTimeInterface $createdAt;
 }

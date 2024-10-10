@@ -39,11 +39,10 @@ class AmountTest extends AbstractModelTestCase
         $model->setCurrency('EUR');
 
         $data = $model->toArray();
-        static::assertCount(4, $data);
+        static::assertCount(3, $data);
         static::assertInputOutputModel($data, $model);
         static::assertValueShouldBeInData(100, $data, 'net');
         static::assertValueShouldBeInData(200, $data, 'gross');
-        static::assertValueShouldBeInData(0, $data, 'tax');
         static::assertValueShouldBeInData('EUR', $data, 'currency');
     }
 

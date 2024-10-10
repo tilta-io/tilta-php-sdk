@@ -13,6 +13,14 @@ namespace Tilta\Sdk\Util;
 use DateTime;
 use DateTimeInterface;
 use InvalidArgumentException;
+use LogicException;
+use ReflectionNamedType;
+use ReflectionProperty;
+use RuntimeException;
+use Tilta\Sdk\Attributes\ApiField\DateTimeField;
+use Tilta\Sdk\Attributes\ApiField\DefaultField;
+use Tilta\Sdk\Attributes\ApiField\ListField;
+use Tilta\Sdk\Attributes\ApiField\ObjectField;
 use Tilta\Sdk\Exception\InvalidResponseException;
 use Tilta\Sdk\Model\AbstractModel;
 
@@ -27,72 +35,77 @@ class ResponseHelper
      */
     public const PHPUNIT_OBJECT = ['___PHPUNIT___'];
 
-    /**
-     * @return ($nullable is true ? mixed|null : mixed)
-     */
-    public static function getValue(array $data, string $key, bool $nullable = true)
+    public static function getValue(array $data, ReflectionProperty $property, DefaultField $definition): mixed
     {
-        return $data[$key] ?? self::throwIfNotNullable($data, $key, $nullable);
-    }
-
-    /**
-     * @return ($nullable is true ? string|null : string)
-     */
-    public static function getString(array $data, string $key, bool $nullable = true): ?string
-    {
-        $value = self::getValue($data, $key, $nullable);
-
-        return is_string($value) || is_numeric($value) ? (string) $value : self::throwIfNotNullable($data, $key, $nullable);
-    }
-
-    /**
-     * @return ($nullable is true ? int|null : int)
-     */
-    public static function getInt(array $data, string $key, bool $nullable = true): ?int
-    {
-        $value = self::getValue($data, $key, $nullable);
-
-        return is_numeric($value) ? (int) $value : self::throwIfNotNullable($data, $key, $nullable);
-    }
-
-    /**
-     * @return ($nullable is true ? float|null : float)
-     */
-    public static function getFloat(array $data, string $key, bool $nullable = true): ?float
-    {
-        $value = self::getValue($data, $key, $nullable);
-
-        return is_numeric($value) ? (float) $value : self::throwIfNotNullable($data, $key, $nullable);
-    }
-
-    public static function getBoolean(array $data, string $key): ?bool
-    {
-        $value = self::getValue($data, $key, true);
-
-        if (is_numeric($value)) {
-            return (int) $value === 1;
+        if (!$property->getType() instanceof ReflectionNamedType) {
+            throw new RuntimeException('unknown property type');
         }
 
-        if (is_bool($value)) {
-            return $value;
+        $isNullable = $property->getType()->allowsNull();
+        $type = $property->getType()->getName();
+
+        $rawValue = $data[$definition->getApiField($property)] ?? null;
+
+        if (class_exists($type) || interface_exists($type)) { // interface: date-time
+            // TODO implement little backdoor or unit-tests, that objects can be empty.
+            $value = self::getObject($rawValue, $type, $definition);
+        } elseif ($type === 'array') {
+            $value = self::getArray($rawValue, $definition);
+        } else {
+            $value = match ($type) {
+                'int' => self::getInt($rawValue),
+                'float' => self::getFloat($rawValue),
+                'bool', 'boolean' => self::getBoolean($rawValue),
+                'string' => self::getString($rawValue),
+                default => null,
+            };
         }
 
-        return false;
+        return $value ?? self::throwIfNotNullable($data, $property->getName(), $isNullable);
     }
 
-    /**
-     * @return ($nullable is true ? array|null : array)
-     */
-    public static function getArray(array $data, string $key = null, string $itemClass = null, bool $itemReadOnly = true, bool $nullable = true): ?array
+    private static function getString(mixed $rawData): ?string
     {
-        if ($itemClass !== null && !is_subclass_of($itemClass, AbstractModel::class)) {
-            throw new InvalidArgumentException('argument `$itemClass` needs to be a subclass of ' . AbstractModel::class);
+        return is_string($rawData) || is_numeric($rawData) ? (string) $rawData : null;
+    }
+
+    private static function getInt(mixed $rawData): ?int
+    {
+        return is_numeric($rawData) ? (int) $rawData : null;
+    }
+
+    private static function getFloat(mixed $rawData): ?float
+    {
+        return is_numeric($rawData) ? (float) $rawData : null;
+    }
+
+    private static function getBoolean(mixed $rawData): ?bool
+    {
+        if (is_numeric($rawData)) {
+            return (int) $rawData === 1;
         }
 
-        $value = $key !== null ? self::getValue($data, $key, $nullable) : $data;
+        if (is_bool($rawData)) {
+            return $rawData;
+        }
 
-        $values = is_array($value) ? $value : null;
-        if ($values !== null && $itemClass !== null) {
+        return $rawData !== null ? false : null;
+    }
+
+    private static function getArray(mixed $rawValue, DefaultField $definition, bool $itemReadOnly = true): ?array
+    {
+        $itemClass = $definition instanceof ListField ? $definition->getExpectedItemClass() : null;
+
+        $values = is_array($rawValue) ? $rawValue : null;
+        if ($itemClass === null) {
+            return $values;
+        }
+
+        if ($values !== null) {
+            if (!is_subclass_of($itemClass, AbstractModel::class)) {
+                throw new LogicException('invalid expected item class');
+            }
+
             foreach ($values as $i => $e) {
                 $values[$i] = new $itemClass([], $itemReadOnly);
                 if ($e !== self::PHPUNIT_OBJECT) {
@@ -104,56 +117,44 @@ class ResponseHelper
         return $values;
     }
 
-    /**
-     * @return ($nullable is true ? DateTimeInterface|null : DateTimeInterface)
-     */
-    public static function getDateTime(array $data, string $key, string $format = 'Y-m-d H:i:s', bool $nullable = true): ?DateTimeInterface
+    private static function getDateTime(mixed $rawData, DefaultField $fieldDefinition): ?DateTimeInterface
     {
-        $value = self::getString($data, $key, $nullable);
-        // added `!` to set time of object to midnight if no time-format is given
-        $return = $value ? DateTime::createFromFormat('!' . $format, $value) : null;
+        $format = $fieldDefinition instanceof DateTimeField ? $fieldDefinition->getFormat() : DateTimeField::DEFAULT_FORMAT;
 
-        return $return ?: self::throwIfNotNullable($data, $key, $nullable);
-    }
+        $value = self::getString($rawData);
 
-    /**
-     * @return ($nullable is true ? DateTimeInterface|null : DateTimeInterface)
-     */
-    public static function getDate(array $data, string $key, string $format = 'Y-m-d', bool $nullable = true): ?DateTimeInterface
-    {
-        return self::getDateTime($data, $key, $format, $nullable);
+        // add `!` to set time of object to midnight if no time-format is given
+        $format = str_starts_with($format, '!') ? $format : '!' . $format;
+
+        return $value ? DateTime::createFromFormat($format, $value) ?: null : null;
     }
 
     /**
      * @template T
      * @param class-string<T> $class the class to instantiate
-     * @return ($nullable is true ? T|null : T)
      */
-    public static function getObject(array $data, string $key, string $class, bool $readOnly = true, bool $createEmptyObjectOnNull = false, bool $nullable = true)
+    private static function getObject(mixed $rawData, string $class, DefaultField $fieldDefinition): ?object
     {
-        if ($class === DateTimeInterface::class) {
+        if ($class === DateTimeInterface::class || $class === DateTime::class) {
             /** @phpstan-ignore-next-line */
-            return self::getDateTime($data, $key, 'U', $nullable); // U = default of gateway response
+            return self::getDateTime($rawData, $fieldDefinition);
         }
-
-        $value = self::getValue($data, $key, true);
 
         if (!is_subclass_of($class, AbstractModel::class)) {
             throw new InvalidArgumentException('argument `$class` needs to be a subclass of ' . AbstractModel::class);
         }
 
-        $instance = new $class([], $readOnly);
-        if (is_array($value)) {
-            if ($value !== self::PHPUNIT_OBJECT) {
-                $instance->fromArray($value);
+        $isReadonly = $fieldDefinition instanceof ObjectField ? $fieldDefinition->isResponseIsReadOnly() : true;
+        $instance = new $class([], $isReadonly);
+        if (is_array($rawData)) {
+            if ($rawData !== self::PHPUNIT_OBJECT) {
+                $instance->fromArray($rawData);
             }
 
             return $instance;
-        } elseif ($createEmptyObjectOnNull) {
-            return $instance;
         }
 
-        return self::throwIfNotNullable($data, $key, $nullable);
+        return null;
     }
 
     /**

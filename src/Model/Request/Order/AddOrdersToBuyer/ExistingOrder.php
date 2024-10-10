@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace Tilta\Sdk\Model\Request\Order\AddOrdersToBuyer;
 
 use BadMethodCallException;
+use Tilta\Sdk\Attributes\ApiField\DefaultField;
 use Tilta\Sdk\Model\Order;
 use Tilta\Sdk\Model\Request\Order\AddOrdersToBuyerRequestModel;
 
@@ -18,10 +19,8 @@ class ExistingOrder extends Order
 {
     protected string $buyerExternalId = '';
 
-    protected static array $_additionalFieldMapping = [
-        'orderExternalId' => 'external_id', // from parent
-        'buyerExternalId' => false,
-    ];
+    #[DefaultField(apiField: 'external_id')]
+    protected string $orderExternalId;
 
     /**
      * @internal do not use!

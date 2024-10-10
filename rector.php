@@ -35,7 +35,7 @@ return static function (RectorConfig $rectorConfig): void {
         SetList::TYPE_DECLARATION,
         SetList::CODING_STYLE,
         SetList::DEAD_CODE,
-        LevelSetList::UP_TO_PHP_74,
+        LevelSetList::UP_TO_PHP_80,
         //SetList::PHP_74,
     ]);
 
@@ -50,7 +50,9 @@ return static function (RectorConfig $rectorConfig): void {
         ],
         \Rector\TypeDeclaration\Rector\ClassMethod\StrictArrayParamDimFetchRector::class => [
             __DIR__ . '/tests/Functional/Util/ValidationTest.php'
-        ]
+        ],
+        \Rector\Php74\Rector\Property\RestoreDefaultNullToNullableTypePropertyRector::class,
+        \Rector\TypeDeclaration\Rector\ClassMethod\AddParamTypeBasedOnPHPUnitDataProviderRector::class,
     ]);
 
     $rectorConfig->phpstanConfig(__DIR__ . '/phpstan.neon');

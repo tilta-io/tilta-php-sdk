@@ -39,16 +39,16 @@ class BuyerHelper extends AbstractHelper
         }
 
         $address = (new Address())
-            ->setStreet('Teststreet')
-            ->setHouseNumber('123')
-            ->setPostcode('12345')
-            ->setCity('Testcity')
+            ->setStreet('Linienstrasse')
+            ->setHouseNumber('222')
+            ->setPostcode('10119')
+            ->setCity('Berlin')
             ->setCountry('DE')
             ->setAdditional('room 200');
 
         return $buyer
-            ->setTradingName(sprintf('My Trading Name (Unit-Test %s) ', $externalId))
-            ->setLegalName(sprintf('My Legal Name (Unit-Test %s) ', $externalId))
+            ->setTradingName('Ultramarathon GmbH')
+            ->setLegalName('Ultramarathon GmbH')
             ->setLegalForm('DE_GMBH')
             ->setTaxId('DE123456')
             ->setRegisteredAt((new DateTime())->setTimestamp(time() - 3600))

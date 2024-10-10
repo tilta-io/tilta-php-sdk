@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace Tilta\Sdk\Model\Response\SepaMandate;
 
+use Tilta\Sdk\Attributes\ApiField\ListField;
 use Tilta\Sdk\Model\Response\ListResponseModel;
 use Tilta\Sdk\Model\Response\SepaMandate;
 
@@ -18,8 +19,6 @@ use Tilta\Sdk\Model\Response\SepaMandate;
  */
 class GetSepaMandateListResponseModel extends ListResponseModel
 {
-    public function __construct(array $data = [])
-    {
-        parent::__construct(SepaMandate::class, $data);
-    }
+    #[ListField(expectedItemClass: SepaMandate::class)]
+    protected array $items = [];
 }

@@ -62,18 +62,13 @@ class TiltaClient
 
     private ?string $apiBaseUrl;
 
-    private ?string $authToken;
-
-    private bool $sandbox;
-
-    public function __construct(string $authToken = null, bool $isSandbox = false)
-    {
-        $this->authToken = $authToken;
-        $this->sandbox = $isSandbox;
-
+    public function __construct(
+        private ?string $authToken = null,
+        private bool $sandbox = false
+    ) {
         if (!empty($_ENV['TILTA_SDK_API_DOMAIN'])) {
             $apiDomain = $_ENV['TILTA_SDK_API_DOMAIN'];
-        } elseif ($isSandbox) {
+        } elseif ($sandbox) {
             $apiDomain = self::SANDBOX_API_DOMAIN;
         } else {
             $apiDomain = self::PRODUCTION_API_DOMAIN;
@@ -134,6 +129,7 @@ class TiltaClient
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_SSLVERSION, CURL_SSLVERSION_TLSv1_2);
 
+        /** @var mixed $response */
         $response = curl_exec($ch);
 
         // log request
@@ -176,19 +172,16 @@ class TiltaClient
         return $this->sandbox;
     }
 
-    /**
-     * @param mixed $response
-     */
-    private function logRequestResponse(string $url, string $method, array $requestHeaders, array $data, $response, array $curlInfo): void
+    private function logRequestResponse(string $url, string $method, array $requestHeaders, array $data, mixed $response, array $curlInfo): void
     {
         try {
             if (is_string($response)) {
-                if (strpos($response, '{') === 0) {
+                if (str_starts_with($response, '{')) {
                     $response = json_decode($response, true, 512, JSON_INVALID_UTF8_IGNORE | JSON_OBJECT_AS_ARRAY);
                 }
             } elseif (is_object($response)) {
                 // response should never be an object - just to be safe.
-                $response = method_exists($response, '__toString') ? (string) $response : get_class($response);
+                $response = method_exists($response, '__toString') ? (string) $response : $response::class;
             }
 
             $logContext = [
@@ -211,7 +204,7 @@ class TiltaClient
             } else {
                 Logging::debug('API Request', $logContext);
             }
-        } catch (Exception $exception) {
+        } catch (Exception) {
             // do nothing - just to make sure that logging does not break the response
         }
     }

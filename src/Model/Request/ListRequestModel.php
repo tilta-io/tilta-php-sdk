@@ -10,6 +10,8 @@ declare(strict_types=1);
 
 namespace Tilta\Sdk\Model\Request;
 
+use Tilta\Sdk\Attributes\ApiField\DefaultField;
+
 /**
  * @method int|null getLimit()
  * @method $this setLimit(?int $limit)
@@ -18,8 +20,10 @@ namespace Tilta\Sdk\Model\Request;
  */
 class ListRequestModel extends AbstractRequestModel
 {
+    #[DefaultField]
     protected ?int $limit = null;
 
+    #[DefaultField]
     protected ?int $offset = null;
 
     protected function _toArray(): array

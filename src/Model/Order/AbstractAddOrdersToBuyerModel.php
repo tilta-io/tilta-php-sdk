@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace Tilta\Sdk\Model\Order;
 
+use Tilta\Sdk\Attributes\ApiField\ListField;
 use Tilta\Sdk\Model\AbstractModel;
 use Tilta\Sdk\Model\Order;
 
@@ -18,13 +19,13 @@ use Tilta\Sdk\Model\Order;
  */
 abstract class AbstractAddOrdersToBuyerModel extends AbstractModel
 {
-    /**
-     * @var Order[]
-     */
+    #[ListField(expectedItemClass: Order::class)]
     protected array $items = [];
 
-    protected function prepareValuesForGateway(array $data): array
+    protected function _toArray(): array
     {
-        return $data['items'];
+        $data = parent::_toArray();
+
+        return $data['items'] ?? [];
     }
 }

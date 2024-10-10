@@ -28,13 +28,11 @@ use Tilta\Sdk\Util\ExceptionHandler;
  */
 abstract class AbstractRequest
 {
-    protected ?TiltaClient $client;
-
     protected static bool $allowEmptyResponse = false;
 
-    public function __construct(TiltaClient $client = null)
-    {
-        $this->client = $client;
+    public function __construct(
+        protected ?TiltaClient $client = null
+    ) {
     }
 
     final public function setClient(TiltaClient $client): void

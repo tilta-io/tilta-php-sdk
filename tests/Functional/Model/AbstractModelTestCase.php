@@ -20,7 +20,7 @@ abstract class AbstractModelTestCase extends TestCase
     protected function createMock(string $originalClassName): MockObject
     {
         $mock = parent::createMock($originalClassName);
-        if (strpos($originalClassName, 'Tilta\Sdk\Model\\') === 0) {
+        if (str_starts_with($originalClassName, 'Tilta\Sdk\Model\\')) {
             $mock->method('toArray')->willReturn([]);
             $mock->method('validateFields');
         }
@@ -39,10 +39,7 @@ abstract class AbstractModelTestCase extends TestCase
         static::assertEquals($inputData, $outputData);
     }
 
-    /**
-     * @param mixed $expected
-     */
-    protected static function assertValueShouldBeInData($expected, array $data, string $key): void
+    protected static function assertValueShouldBeInData(mixed $expected, array $data, string $key): void
     {
         static::assertArrayHasKey($key, $data);
         static::assertEquals($expected, $data[$key]);

@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace Tilta\Sdk\Model\Request\Order;
 
+use Tilta\Sdk\Attributes\ApiField\DefaultField;
 use Tilta\Sdk\Model\HasBuyerFieldInterface;
 use Tilta\Sdk\Model\Request\AbstractRequestModel;
 
@@ -18,12 +19,11 @@ use Tilta\Sdk\Model\Request\AbstractRequestModel;
  */
 class GetOrderListForBuyerRequestModel extends AbstractRequestModel implements HasBuyerFieldInterface
 {
-    protected string $buyerExternalId;
-
-    public function __construct(string $buyerExternalId)
-    {
+    public function __construct(
+        #[DefaultField]
+        protected string $buyerExternalId
+    ) {
         parent::__construct();
-        $this->buyerExternalId = $buyerExternalId;
     }
 
     public function toArray(): array

@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace Tilta\Sdk\Tests\Functional\Mock\Model;
 
+use Tilta\Sdk\Attributes\ApiField\DefaultField;
 use Tilta\Sdk\Model\AbstractModel;
 
 /**
@@ -17,9 +18,6 @@ use Tilta\Sdk\Model\AbstractModel;
  */
 class ArrayTestModelFieldMapping extends AbstractModel
 {
-    protected static array $_additionalFieldMapping = [
-        'fieldRenamedInSdk' => 'field_which_is_not_in_sdk',
-    ];
-
+    #[DefaultField(apiField: 'field_which_is_not_in_sdk')]
     protected string $fieldRenamedInSdk;
 }

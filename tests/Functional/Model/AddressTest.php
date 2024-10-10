@@ -18,13 +18,13 @@ class AddressTest extends AbstractModelTestCase
     public function testInvalidCountryToShort(): void
     {
         $this->expectException(InvalidFieldValueException::class);
-        (new Address())->setCountry('t')->toArray();
+        (new Address())->setCountry('t');
     }
 
     public function testInvalidCountryToLong(): void
     {
         $this->expectException(InvalidFieldValueException::class);
-        (new Address())->setCountry('to long value')->toArray();
+        (new Address())->setCountry('to long value');
     }
 
     public function testFromAndToArray(): void

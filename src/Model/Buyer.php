@@ -11,8 +11,9 @@ declare(strict_types=1);
 namespace Tilta\Sdk\Model;
 
 use DateTimeInterface;
-use Tilta\Sdk\Util\ResponseHelper;
-use Tilta\Sdk\Util\Validation;
+use Tilta\Sdk\Attributes\ApiField\DefaultField;
+use Tilta\Sdk\Attributes\ApiField\ListField;
+use Tilta\Sdk\Attributes\Validation\Required;
 
 /**
  * @method string getExternalId()
@@ -38,28 +39,39 @@ use Tilta\Sdk\Util\Validation;
  */
 class Buyer extends AbstractModel implements HasBuyerFieldInterface
 {
+    #[DefaultField]
     protected string $externalId;
 
-    protected ?string $tradingName = null;
+    #[DefaultField]
+    protected ?string $tradingName;
 
-    protected ?string $legalName = null;
+    #[DefaultField]
+    #[Required]
+    protected ?string $legalName;
 
-    protected ?string $legalForm = null;
+    #[DefaultField]
+    protected ?string $legalForm;
 
-    protected ?DateTimeInterface $registeredAt = null;
+    #[DefaultField]
+    #[Required]
+    protected ?DateTimeInterface $registeredAt;
 
-    protected ?DateTimeInterface $incorporatedAt = null;
+    #[DefaultField]
+    protected ?DateTimeInterface $incorporatedAt;
 
-    /**
-     * @var ContactPerson[]|null
-     */
+    #[ListField(expectedItemClass: ContactPerson::class)]
     protected ?array $contactPersons = [];
 
-    protected ?Address $businessAddress = null;
+    #[DefaultField]
+    #[Required]
+    protected ?Address $businessAddress;
 
+    #[ListField]
+    #[Required]
     protected ?array $customData = [];
 
-    protected ?string $taxId = null;
+    #[DefaultField]
+    protected ?string $taxId;
 
     /**
      * @internal
@@ -67,34 +79,5 @@ class Buyer extends AbstractModel implements HasBuyerFieldInterface
     public function getBuyerExternalId(): string
     {
         return $this->getExternalId();
-    }
-
-    protected function prepareValuesForGateway(array $data): array
-    {
-        if (isset($data['customData']) && $data['customData'] === []) {
-            $data['customData'] = null;
-        }
-
-        return parent::prepareValuesForGateway($data);
-    }
-
-    protected function prepareModelData(array $data): array
-    {
-        return [
-            'contactPersons' => static fn (string $key): array => ResponseHelper::getArray($data, $key, ContactPerson::class) ?? [],
-        ];
-    }
-
-    protected function getFieldValidations(): array
-    {
-        return [
-            'contactPersons' => '?' . ContactPerson::class . '[]',
-            // we added these validations, so we can remove the validation for UpdateBuyerRequest.
-            // we are using IS_REQUIRED-flag for this, so we do not need to redefine the types again (defined as typed property)
-            'customData' => Validation::IS_REQUIRED,
-            'businessAddress' => Validation::IS_REQUIRED,
-            'registeredAt' => Validation::IS_REQUIRED,
-            'legalName' => Validation::IS_REQUIRED,
-        ];
     }
 }

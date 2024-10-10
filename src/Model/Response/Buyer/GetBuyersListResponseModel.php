@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace Tilta\Sdk\Model\Response\Buyer;
 
+use Tilta\Sdk\Attributes\ApiField\ListField;
 use Tilta\Sdk\Model\Buyer;
 use Tilta\Sdk\Model\Response\ListResponseModel;
 
@@ -18,8 +19,6 @@ use Tilta\Sdk\Model\Response\ListResponseModel;
  */
 class GetBuyersListResponseModel extends ListResponseModel
 {
-    public function __construct(array $data = [])
-    {
-        parent::__construct(Buyer::class, $data);
-    }
+    #[ListField(expectedItemClass: Buyer::class)]
+    protected array $items = [];
 }

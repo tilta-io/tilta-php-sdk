@@ -64,7 +64,7 @@ abstract class AbstractRequestTestCase extends TestCase
     protected function createMock(string $originalClassName): MockObject
     {
         $mock = parent::createMock($originalClassName);
-        if (strpos($originalClassName, 'Tilta\Sdk\Model\\') === 0) {
+        if (str_starts_with($originalClassName, 'Tilta\Sdk\Model\\')) {
             $mock->method('toArray')->willReturn([]);
             $mock->method('validateFields');
         }

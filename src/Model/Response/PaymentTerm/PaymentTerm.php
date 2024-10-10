@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace Tilta\Sdk\Model\Response\PaymentTerm;
 
 use DateTimeInterface;
+use Tilta\Sdk\Attributes\ApiField\DefaultField;
 use Tilta\Sdk\Model\Response\AbstractResponseModel;
 
 /**
@@ -22,13 +23,18 @@ use Tilta\Sdk\Model\Response\AbstractResponseModel;
  */
 class PaymentTerm extends AbstractResponseModel
 {
+    #[DefaultField]
     protected string $paymentMethod;
 
+    #[DefaultField]
     protected string $paymentTerm;
 
+    #[DefaultField]
     protected string $name;
 
+    #[DefaultField]
     protected DateTimeInterface $dueDate;
 
+    #[DefaultField]
     protected PaymentTermAmount $amount;
 }

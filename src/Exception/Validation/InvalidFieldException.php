@@ -18,7 +18,7 @@ class InvalidFieldException extends TiltaException
     public function __construct(string $fieldName, AbstractModel $object)
     {
         parent::__construct(
-            sprintf('The field %s does not exist on object %s.', $fieldName, get_class($object)),
+            sprintf('The field %s does not exist on object %s.', $fieldName, $object::class),
             'VALIDATION_ERROR'
         );
     }

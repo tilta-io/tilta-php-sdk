@@ -14,12 +14,10 @@ use Tilta\Sdk\Model\HasBuyerFieldInterface;
 
 abstract class AbstractBuyerRequestModel extends AbstractRequestModel implements HasBuyerFieldInterface
 {
-    protected string $externalBuyerId;
-
-    public function __construct(string $externalBuyerId)
-    {
+    public function __construct(
+        protected string $externalBuyerId
+    ) {
         parent::__construct();
-        $this->externalBuyerId = $externalBuyerId;
     }
 
     public function getBuyerExternalId(): string

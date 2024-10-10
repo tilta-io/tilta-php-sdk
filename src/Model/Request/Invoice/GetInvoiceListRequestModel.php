@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace Tilta\Sdk\Model\Request\Invoice;
 
+use Tilta\Sdk\Attributes\ApiField\DefaultField;
 use Tilta\Sdk\Model\HasMerchantFieldInterface;
 use Tilta\Sdk\Model\Request\ListRequestModel;
 
@@ -18,6 +19,7 @@ use Tilta\Sdk\Model\Request\ListRequestModel;
  */
 class GetInvoiceListRequestModel extends ListRequestModel implements HasMerchantFieldInterface
 {
+    #[DefaultField]
     protected ?string $merchantExternalId = null;
 
     public function getMerchantExternalId(): string

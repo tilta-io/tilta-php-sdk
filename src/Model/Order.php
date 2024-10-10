@@ -11,8 +11,9 @@ declare(strict_types=1);
 namespace Tilta\Sdk\Model;
 
 use DateTimeInterface;
+use Tilta\Sdk\Attributes\ApiField\DefaultField;
+use Tilta\Sdk\Attributes\ApiField\ListField;
 use Tilta\Sdk\Model\Order\LineItem;
-use Tilta\Sdk\Util\ResponseHelper;
 
 /**
  * @method string getStatus()
@@ -26,33 +27,37 @@ use Tilta\Sdk\Util\ResponseHelper;
  */
 class Order extends AbstractModel implements HasOrderIdFieldInterface, HasMerchantFieldInterface, HasBuyerFieldInterface
 {
-    protected static array $_additionalFieldMapping = [
-        'orderExternalId' => 'external_id',
-    ];
-
+    #[DefaultField(apiField: 'external_id')]
     protected string $orderExternalId;
 
+    #[DefaultField]
     protected string $status;
 
+    #[DefaultField]
     protected string $buyerExternalId;
 
+    #[DefaultField]
     protected string $merchantExternalId;
 
+    #[DefaultField]
     protected DateTimeInterface $orderedAt;
 
+    #[DefaultField]
     protected string $paymentMethod;
 
+    #[DefaultField]
     protected string $paymentTerm;
 
+    #[DefaultField]
     protected Amount $amount;
 
+    #[DefaultField]
     protected ?string $comment = null;
 
+    #[DefaultField]
     protected ?Address $deliveryAddress = null;
 
-    /**
-     * @var LineItem[]
-     */
+    #[ListField(expectedItemClass: LineItem::class)]
     protected array $lineItems = [];
 
     public function getOrderExternalId(): string
@@ -71,19 +76,5 @@ class Order extends AbstractModel implements HasOrderIdFieldInterface, HasMercha
     {
         /** @phpstan-ignore-next-line */
         return $this->__call(__FUNCTION__);
-    }
-
-    protected function getFieldValidations(): array
-    {
-        return [
-            'lineItems' => LineItem::class . '[]',
-        ];
-    }
-
-    protected function prepareModelData(array $data): array
-    {
-        return [
-            'lineItems' => ResponseHelper::getArray($data, 'line_items', LineItem::class),
-        ];
     }
 }

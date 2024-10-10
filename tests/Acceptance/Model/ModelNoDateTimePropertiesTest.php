@@ -40,7 +40,7 @@ class ModelNoDateTimePropertiesTest extends TestCase
         $data = [];
         foreach ($this->getModelClasses() as $class) {
             $properties = (new ReflectionClass($class))->getProperties();
-            $properties = array_filter($properties, static fn (ReflectionProperty $property): bool => $property->class === $class && $property->isProtected() && strpos($property->getName(), '_') !== 0);
+            $properties = array_filter($properties, static fn (ReflectionProperty $property): bool => $property->class === $class && $property->isProtected() && !str_starts_with($property->getName(), '_'));
 
             $data = [
                 ...$data,
