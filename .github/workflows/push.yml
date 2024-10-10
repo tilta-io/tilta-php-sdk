@@ -36,6 +36,7 @@ jobs:
                     TILTA_API_TOKEN: ${{ secrets.TILTA_API_TOKEN }}
                     TILTA_MERCHANT_ID: ${{ secrets.TILTA_MERCHANT_ID }}
                     TILTA_TEST_BUYER: ${{ secrets.TILTA_TEST_BUYER }}
+                    TILTA_SDK_API_DOMAIN: ${{ secrets.TILTA_SDK_API_DOMAIN }}
 
 
 

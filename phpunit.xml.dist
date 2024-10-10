@@ -19,7 +19,7 @@
         <!--<env name="TILTA_API_TOKEN" value="// INSERT YOUR TILTA API TOKEN HERE \\" force="true" />-->
         <!--<env name="TILTA_MERCHANT_ID" value="// INSERT YOUR MERCHANT-ID HERE \\" force="true" />-->
         <!--<env name="TILTA_TEST_BUYER" value="// INSERT A VALID BUYER_EXTERNAL_ID WITH FACILITY HERE \\" force="true" />-->
-        <env name="TILTA_SDK_API_DOMAIN" value="api.tilta-stage.io" force="true" />
+        <env name="TILTA_SDK_API_DOMAIN" value="api.tilta-stage.io" />
     </php>
 
     <!--
