@@ -10,16 +10,14 @@ declare(strict_types=1);
 
 namespace Tilta\Sdk\Model\Response\Order;
 
-use Tilta\Sdk\Model\Order;
 use Tilta\Sdk\Model\Order\AbstractAddOrdersToBuyerModel;
-use Tilta\Sdk\Util\ResponseHelper;
 
 class AddOrdersToBuyerResponseModel extends AbstractAddOrdersToBuyerModel
 {
-    protected function prepareModelData(array $data): array
+    public function fromArray(array $data): self
     {
-        return [
-            'items' => static fn ($key): ?array => ResponseHelper::getArray($data, null, Order::class),
-        ];
+        return parent::fromArray([
+            'items' => $data,
+        ]);
     }
 }

@@ -11,7 +11,8 @@ declare(strict_types=1);
 namespace Tilta\Sdk\Model;
 
 use DateTimeInterface;
-use Tilta\Sdk\Exception\Validation\InvalidFieldValueException;
+use Tilta\Sdk\Attributes\ApiField\DefaultField;
+use Tilta\Sdk\Attributes\Validation\Enum;
 
 /**
  * @method string|null getSalutation()
@@ -31,33 +32,25 @@ use Tilta\Sdk\Exception\Validation\InvalidFieldValueException;
  */
 class ContactPerson extends AbstractModel
 {
+    #[DefaultField]
+    #[Enum(['MR', 'MS'])]
     protected ?string $salutation = null;
 
+    #[DefaultField]
     protected ?string $firstName = null;
 
+    #[DefaultField]
     protected ?string $lastName = null;
 
+    #[DefaultField]
     protected ?DateTimeInterface $birthDate = null;
 
+    #[DefaultField]
     protected ?string $email = null;
 
+    #[DefaultField]
     protected ?string $phone = null;
 
+    #[DefaultField]
     protected ?Address $address = null;
-
-    protected function getFieldValidations(): array
-    {
-        $validation = parent::getFieldValidations();
-
-        $validation['salutation'] = static function ($value) use ($validation) {
-            $allowedValues = ['MR', 'MS'];
-            if (!in_array($value, $allowedValues, true)) {
-                throw new InvalidFieldValueException('salutation has to be one of ' . implode(' or ', $allowedValues));
-            }
-
-            return $validation['salutation'] ?? null;
-        };
-
-        return $validation;
-    }
 }

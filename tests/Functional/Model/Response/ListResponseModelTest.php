@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace Tilta\Sdk\Tests\Functional\Model\Response;
 
+use Tilta\Sdk\Attributes\ApiField\ListField;
 use Tilta\Sdk\Model\Response\ListResponseModel;
 use Tilta\Sdk\Tests\Functional\Mock\Model\SimpleTestModel;
 use Tilta\Sdk\Tests\Functional\Model\AbstractModelTestCase;
@@ -18,22 +19,21 @@ class ListResponseModelTest extends AbstractModelTestCase
 {
     public function testToArray(): void
     {
-        $model = (new ListResponseModel(SimpleTestModel::class, [
+        $model = (new class([
             'limit' => 500,
             'offset' => 2,
             'total' => 4000,
-            'items' => [
-                [
-                    'field_value' => 'value 1',
-                ],
-                [
-                    'field_value' => 'value 2',
-                ],
-                [
-                    'field_value' => 'value 3',
-                ],
-            ],
-        ]));
+            'items' => [[
+                'field_value' => 'value 1',
+            ], [
+                'field_value' => 'value 2',
+            ], [
+                'field_value' => 'value 3',
+            ], ],
+        ]) extends ListResponseModel {
+            #[ListField(expectedItemClass: SimpleTestModel::class)]
+            protected array $items;
+        });
 
         $this->assertIsArray($model->getItems());
         $this->assertCount(3, $model->getItems());

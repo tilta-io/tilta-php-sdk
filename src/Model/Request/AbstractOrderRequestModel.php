@@ -17,12 +17,10 @@ use Tilta\Sdk\Model\HasOrderIdFieldInterface;
  */
 abstract class AbstractOrderRequestModel extends AbstractRequestModel implements HasOrderIdFieldInterface
 {
-    protected string $orderExternalId;
-
-    public function __construct(string $externalId)
-    {
+    public function __construct(
+        protected string $orderExternalId
+    ) {
         parent::__construct();
-        $this->orderExternalId = $externalId;
     }
 
     public function getOrderExternalId(): string

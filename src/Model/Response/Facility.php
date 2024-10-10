@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace Tilta\Sdk\Model\Response;
 
 use DateTimeInterface;
+use Tilta\Sdk\Attributes\ApiField\DefaultField;
 
 /**
  * @method string getStatus()
@@ -22,15 +23,21 @@ use DateTimeInterface;
  */
 class Facility extends AbstractResponseModel
 {
+    #[DefaultField]
     protected string $status;
 
+    #[DefaultField]
     protected DateTimeInterface $expiresAt;
 
+    #[DefaultField]
     protected string $currency;
 
+    #[DefaultField]
     protected int $totalAmount;
 
+    #[DefaultField]
     protected int $availableAmount;
 
+    #[DefaultField]
     protected int $usedAmount;
 }

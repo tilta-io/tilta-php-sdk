@@ -12,6 +12,7 @@ namespace Tilta\Sdk\Tests\Acceptance\Model;
 
 use Jasny\PhpdocParser\PhpdocParser;
 use Jasny\PhpdocParser\Set\PhpDocumentor;
+use LogicException;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use Tilta\Sdk\Model\AbstractModel;
@@ -26,7 +27,11 @@ class ModelCorrectAnnotationTest extends TestCase
     {
         $classReflection = (new ReflectionClass($class));
 
-        preg_match('/^(get|set)(.*)/', $methodName, $matches);
+        preg_match('/^(get|set)(.+)/', $methodName, $matches);
+
+        if (count($matches) !== 3) {
+            throw new LogicException(sprintf('method %s seems not to be a getter/setter', $methodName));
+        }
 
         $propertyName = lcfirst($matches[2]);
         static::assertTrue($classReflection->hasProperty($propertyName), sprintf('property %s::%s should exist', $class, $propertyName));
@@ -117,7 +122,7 @@ class ModelCorrectAnnotationTest extends TestCase
 
         return array_filter(
             $meta['methods'] ?? [],
-            static fn ($methodName) => preg_match('/^(get|set)(.*)/', $methodName),
+            static fn ($methodName): bool => (bool) preg_match('/^(get|set)(.*)/', $methodName),
             ARRAY_FILTER_USE_KEY
         );
     }

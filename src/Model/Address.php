@@ -10,8 +10,8 @@ declare(strict_types=1);
 
 namespace Tilta\Sdk\Model;
 
-use Tilta\Sdk\Exception\Validation\InvalidFieldValueException;
-use Tilta\Sdk\Util\Validation;
+use Tilta\Sdk\Attributes\ApiField\DefaultField;
+use Tilta\Sdk\Attributes\Validation\StringLength;
 
 /**
  * @method string|null getStreet()
@@ -29,33 +29,22 @@ use Tilta\Sdk\Util\Validation;
  */
 class Address extends AbstractModel
 {
+    #[DefaultField]
     protected ?string $street = null;
 
+    #[DefaultField(apiField: 'house')]
     protected ?string $houseNumber = null;
 
+    #[DefaultField]
     protected string $postcode;
 
+    #[DefaultField]
     protected string $city;
 
+    #[DefaultField]
+    #[StringLength(minLength: 2, maxLength: 2, validationMessage: 'country should be a two-letter uppercase string. (country in ISO-alpha-2)')]
     protected string $country;
 
+    #[DefaultField]
     protected ?string $additional = null;
-
-    protected static array $_additionalFieldMapping = [
-        'houseNumber' => 'house',
-    ];
-
-    protected function getFieldValidations(): array
-    {
-        $validations = parent::getFieldValidations();
-        $validations['country'] = static function ($value): string {
-            if (strlen((string) $value) !== 2) {
-                throw new InvalidFieldValueException('country should be a two-letter uppercase string. (country in ISO-alpha-2)');
-            }
-
-            return Validation::TYPE_STRING_REQUIRED;
-        };
-
-        return $validations;
-    }
 }

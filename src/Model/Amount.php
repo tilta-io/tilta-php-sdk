@@ -10,6 +10,8 @@ declare(strict_types=1);
 
 namespace Tilta\Sdk\Model;
 
+use Tilta\Sdk\Attributes\ApiField\DefaultField;
+
 /**
  * @method string getCurrency()
  * @method $this setCurrency(string $currency)
@@ -22,14 +24,15 @@ namespace Tilta\Sdk\Model;
  */
 class Amount extends AbstractModel
 {
+    #[DefaultField]
     protected string $currency;
 
+    #[DefaultField]
     protected int $gross;
 
+    #[DefaultField]
     protected int $net;
 
-    /**
-     * value is not required on API endpoints. we set it to 0, because NULL would me 0.
-     */
-    protected ?int $tax = 0;
+    #[DefaultField]
+    protected ?int $tax;
 }

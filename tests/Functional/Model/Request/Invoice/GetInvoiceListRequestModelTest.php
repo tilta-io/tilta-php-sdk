@@ -31,10 +31,9 @@ class GetInvoiceListRequestModelTest extends AbstractModelTestCase
     }
 
     /**
-     * @param mixed $value
      * @dataProvider optionalParametersDataProvider
      */
-    public function testOptionalData(string $property, string $expectedParameterName, $value): void
+    public function testOptionalData(string $property, string $expectedParameterName, mixed $value): void
     {
         $model = (new GetInvoiceListRequestModel());
         $model->__call('set' . ucfirst($property), [$value]);

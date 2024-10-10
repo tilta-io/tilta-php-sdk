@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace Tilta\Sdk\Model\Response\Facility;
 
+use Tilta\Sdk\Attributes\ApiField\DefaultField;
 use Tilta\Sdk\Model\Response\Facility;
 
 /**
@@ -18,7 +19,9 @@ use Tilta\Sdk\Model\Response\Facility;
  */
 class GetFacilityResponseModel extends Facility
 {
+    #[DefaultField]
     protected int $pendingOrdersAmount;
 
+    #[DefaultField]
     protected string $buyerExternalId;
 }

@@ -10,10 +10,11 @@ declare(strict_types=1);
 
 namespace Tilta\Sdk\Util;
 
-use ReflectionException;
-use ReflectionProperty;
 use ReflectionType;
-use RuntimeException;
+use Tilta\Sdk\Attributes\ApiField\ListField;
+use Tilta\Sdk\Attributes\Validation\Enum;
+use Tilta\Sdk\Attributes\Validation\Required;
+use Tilta\Sdk\Attributes\Validation\StringLength;
 use Tilta\Sdk\Exception\Validation\InvalidFieldException;
 use Tilta\Sdk\Exception\Validation\InvalidFieldValueException;
 use Tilta\Sdk\Model\AbstractModel;
@@ -21,89 +22,17 @@ use Tilta\Sdk\Model\AbstractModel;
 class Validation
 {
     /**
-     * @var string
-     */
-    public const TYPE_STRING_REQUIRED = 'string';
-
-    /**
-     * @var string
-     */
-    public const TYPE_STRING_OPTIONAL = '?' . self::TYPE_STRING_REQUIRED;
-
-    /**
-     * @var string
-     */
-    public const TYPE_INT_REQUIRED = 'integer';
-
-    /**
-     * @var string
-     */
-    public const TYPE_INT_OPTIONAL = '?' . self::TYPE_INT_REQUIRED;
-
-    /**
-     * @var string
-     */
-    public const TYPE_FLOAT_REQUIRED = 'float';
-
-    /**
-     * @var string
-     */
-    public const TYPE_FLOAT_OPTIONAL = '?' . self::TYPE_FLOAT_REQUIRED;
-
-    /**
-     * @var string
-     */
-    public const TYPE_BOOLEAN_REQUIRED = 'boolean';
-
-    /**
-     * @var string
-     */
-    public const TYPE_BOOLEAN_OPTIONAL = '?' . self::TYPE_BOOLEAN_REQUIRED;
-
-    /**
-     * @var string
-     */
-    public const TYPE_ARRAY_REQUIRED = 'array';
-
-    /**
-     * @var string
-     */
-    public const TYPE_ARRAY_OPTIONAL = '?' . self::TYPE_ARRAY_REQUIRED;
-
-    /**
-     * @var string
-     */
-    public const IS_REQUIRED = '_is_required';
-
-    /**
-     * @var string
-     */
-    public const IS_NOT_REQUIRED = '_is_not_required';
-
-    /**
-     * @param mixed $value
-     * @param string|callable|null $customDefinedType
      * @throws InvalidFieldException
      * @throws InvalidFieldValueException
      */
-    public static function validatePropertyValue(AbstractModel $model, string $propertyName, $value, $customDefinedType = null): void
+    public static function validatePropertyValue(AbstractModel $model, string $propertyName, mixed $value): void
     {
-        if (is_callable($customDefinedType)) {
-            $customDefinedType = $customDefinedType($value);
-        }
-
-        if ($customDefinedType !== null && !is_string($customDefinedType)) {
-            throw new RuntimeException(sprintf('Custom validation for %s::%s needs to be a callable (which returns a string) or a string. Given: %s', get_class($model), $propertyName, is_object($value) ? get_class($value) : gettype($value)));
-        }
-
         try {
-            self::validateByReflection($model, $propertyName, $value, $customDefinedType);
-            if ($customDefinedType !== null) {
-                self::validateByCustomDefinition($value, $customDefinedType);
-            }
+            self::validateByReflection($model, $propertyName, $value);
+            self::additionalFieldValidation($model, $propertyName, $value);
         } catch (InvalidFieldValueException $invalidFieldValueException) {
             $invalidFieldValueException->setMessage(
-                sprintf('The field %s::%s has an invalid value. ', get_class($model), $propertyName) .
+                sprintf('The field %s::%s has an invalid value. ', $model::class, $propertyName) .
                 $invalidFieldValueException->getMessage()
             );
             throw $invalidFieldValueException;
@@ -111,17 +40,17 @@ class Validation
     }
 
     /**
-     * @param mixed $value
      * @throws InvalidFieldException
      * @throws InvalidFieldValueException
      */
-    private static function validateByReflection(AbstractModel $model, string $property, $value, string $customDefinedType = null): void
+    private static function validateByReflection(AbstractModel $model, string $property, mixed $value): void
     {
-        try {
-            $reflectionProperty = new ReflectionProperty(get_class($model), $property);
-        } catch (ReflectionException $reflectionException) {
+        $modelReflection = ReflectionHelper::getModelApiFields($model, true);
+        if (!is_array($modelReflection[$property] ?? null)) {
             throw new InvalidFieldException($property, $model);
         }
+
+        [$reflectionProperty, $fieldDefinition, $validations] = $modelReflection[$property];
 
         $reflectionType = $reflectionProperty->getType();
         // method_exist: also see: https://github.com/phpstan/phpstan/issues/1133
@@ -132,9 +61,14 @@ class Validation
         $reflectionTypeName = $reflectionType->getName();
 
         if ($value === null) {
-            if ((!$reflectionType->allowsNull() && $customDefinedType !== self::IS_NOT_REQUIRED) || $customDefinedType === self::IS_REQUIRED) {
+            $requiredValidation = $validations->getValidation(Required::class);
+
+            if (
+                (!$reflectionType->allowsNull() && !$requiredValidation instanceof Required)
+                || ($reflectionType->allowsNull() && $requiredValidation && $requiredValidation->isRequired())
+            ) {
                 throw new InvalidFieldValueException(
-                    sprintf('The property %s::%s does not accept a null-value.', get_class($model), $property)
+                    sprintf('The property %s::%s does not accept a null-value.', $model::class, $property)
                 );
             }
 
@@ -144,10 +78,12 @@ class Validation
         if ($reflectionTypeName === 'array') {
             self::validateSimpleValue('array', $value);
 
-            if (is_array($value) && $customDefinedType !== null && preg_match('/\[]$/', $customDefinedType)) {
-                $customDefinedType = (string) preg_replace('/\[]$/', '', $customDefinedType);
-                foreach ($value as $_value) {
-                    self::validateSimpleValue($customDefinedType, $_value);
+            if ($fieldDefinition instanceof ListField) {
+                $expectedType = $fieldDefinition->getExpectedItemClass() ?: $fieldDefinition->getExpectedScalarType();
+                if ($expectedType !== null && $expectedType !== '' && is_array($value)) {
+                    foreach ($value as $_value) {
+                        self::validateSimpleValue($expectedType, $_value);
+                    }
                 }
             }
         } else {
@@ -155,52 +91,17 @@ class Validation
         }
     }
 
-    /**
-     * @param mixed $value
-     * @throws InvalidFieldValueException
-     */
-    private static function validateByCustomDefinition($value, string $customDefinedType): void
+    private static function getErrorMessage(string $expectedType, mixed $value): string
     {
-        if (in_array($customDefinedType, [self::IS_REQUIRED, self::IS_NOT_REQUIRED], true)) {
-            // these types are only relevant for fields, which got processed by reflection validation.
-            // the model can define custom validation for fields with one of these "types" to override the "is (not) null" validation
-            return;
-        }
-
-        if (preg_match('/(\??)(.*)\[]/', $customDefinedType, $matches)) {
-            self::validateSimpleValue($matches[1] . 'array', $value);
-            if (is_array($value)) {
-                foreach ($value as $_value) {
-                    self::validateSimpleValue($matches[2], $_value);
-                }
-            }
-        } else {
-            self::validateSimpleValue($customDefinedType, $value);
-        }
+        return sprintf('Expected type: %s. Given type: %s', $expectedType, get_debug_type($value));
     }
 
     /**
-     * @param mixed $value
-     */
-    private static function getErrorMessage(string $expectedType, $value): string
-    {
-        return sprintf('Expected type: %s. Given type: %s', $expectedType, is_object($value) ? get_class($value) : gettype($value));
-    }
-
-    /**
-     * @param mixed $value
      * @throws InvalidFieldValueException
      * @noinspection PhpDocMissingThrowsInspection
      */
-    private static function validateSimpleValue(string $expectedType, $value): void
+    private static function validateSimpleValue(string $expectedType, mixed $value): void
     {
-        if (strpos($expectedType, '?') === 0) {
-            $expectedType = substr($expectedType, 1);
-            if ($value === null) {
-                return;
-            }
-        }
-
         $typeErrorMessage = self::getErrorMessage($expectedType, $value);
 
         $expectedType = self::mapType($expectedType);
@@ -221,13 +122,60 @@ class Validation
 
     private static function mapType(string $type): string
     {
-        switch ($type) {
-            case 'int':
-                return 'integer';
-            case 'bool':
-                return 'boolean';
-            default:
-                return $type;
+        return match ($type) {
+            'int' => 'integer',
+            'bool' => 'boolean',
+            default => $type,
+        };
+    }
+
+    /**
+     * @throws InvalidFieldValueException
+     */
+    private static function additionalFieldValidation(AbstractModel $model, string $propertyName, mixed $value): void
+    {
+        $modelReflection = ReflectionHelper::getModelApiFields($model, true);
+        if (!is_array($modelReflection[$propertyName] ?? null)) {
+            return;
+        }
+
+        [, , $validations] = $modelReflection[$propertyName];
+
+        foreach ($validations->getValidations() as $validation) {
+            match (true) {
+                $validation instanceof StringLength => self::validateStringLength($validation, $value),
+                $validation instanceof Enum => self::validateEnum($validation, $value),
+                default => null,
+            };
+        }
+    }
+
+    private static function validateStringLength(StringLength $validation, mixed $value): void
+    {
+        if (!is_string($value)) {
+            throw new InvalidFieldValueException('value needs to be a string');
+        }
+
+        if ($validation->getMinLength() !== null && strlen($value) < $validation->getMinLength()) {
+            throw new InvalidFieldValueException($validation->getValidationMessage() ?: sprintf('value needs to be at least %s characters.', $validation->getMinLength()));
+        }
+
+        if ($validation->getMaxLength() !== null && strlen($value) > $validation->getMaxLength()) {
+            throw new InvalidFieldValueException($validation->getValidationMessage() ?: sprintf('value needs to be at most %s characters.', $validation->getMaxLength()));
+        }
+    }
+
+    private static function validateEnum(Enum $validation, mixed $value): void
+    {
+        if (!in_array($value, $validation->getValidValues(), true)) {
+            $message = $validation->getValidationMessage() ?:
+                sprintf(
+                    'Value must be on of: %s. Given: %s',
+                    implode(',', $validation->getValidValues()),
+                    print_r($value, true)
+                );
+
+            throw new InvalidFieldValueException($message);
         }
     }
 }

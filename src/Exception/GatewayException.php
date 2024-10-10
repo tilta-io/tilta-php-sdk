@@ -16,18 +16,11 @@ class GatewayException extends TiltaException
 
     protected static ?string $defaultErrorMessage = null;
 
-    private array $responseData;
-
-    private array $requestData;
-
-    private int $httpCode;
-
-    public function __construct(int $httpCode, array $responseData = [], array $requestData = [])
-    {
-        $this->responseData = $responseData;
-        $this->requestData = $requestData;
-        $this->httpCode = $httpCode;
-
+    public function __construct(
+        private readonly int $httpCode,
+        private readonly array $responseData = [],
+        private readonly array $requestData = []
+    ) {
         parent::__construct($this->getErrorMessage(), self::$defaultErrorCode);
     }
 

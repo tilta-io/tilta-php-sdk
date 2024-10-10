@@ -14,16 +14,10 @@ use Tilta\Sdk\Model\Request\AbstractRequestModel;
 
 class GetLegalFormsRequestModel extends AbstractRequestModel
 {
-    protected static array $_additionalFieldMapping = [
-        'countryCode' => false,
-    ];
-
-    private string $countryCode;
-
-    public function __construct(string $countryCode)
-    {
+    public function __construct(
+        private string $countryCode
+    ) {
         parent::__construct();
-        $this->countryCode = $countryCode;
     }
 
     public function getCountryCode(): string

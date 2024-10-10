@@ -10,9 +10,10 @@ declare(strict_types=1);
 
 namespace Tilta\Sdk\Model\Response\PaymentTerm;
 
+use Tilta\Sdk\Attributes\ApiField\DefaultField;
+use Tilta\Sdk\Attributes\ApiField\ListField;
 use Tilta\Sdk\Model\Response\AbstractResponseModel;
 use Tilta\Sdk\Model\Response\Facility;
-use Tilta\Sdk\Util\ResponseHelper;
 
 /**
  * @method Facility getFacility()
@@ -20,17 +21,12 @@ use Tilta\Sdk\Util\ResponseHelper;
  */
 class GetPaymentTermsResponseModel extends AbstractResponseModel
 {
+    #[DefaultField]
     protected Facility $facility;
 
     /**
      * @var PaymentTerm[]
      */
+    #[ListField(expectedItemClass: PaymentTerm::class)]
     protected array $paymentTerms = [];
-
-    protected function prepareModelData(array $data): array
-    {
-        return [
-            'paymentTerms' => static fn (string $key): ?array => ResponseHelper::getArray($data, $key, PaymentTerm::class),
-        ];
-    }
 }

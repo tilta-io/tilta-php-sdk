@@ -10,15 +10,13 @@ declare(strict_types=1);
 
 namespace Tilta\Sdk\Model\Response\Buyer;
 
+use Tilta\Sdk\Attributes\ApiField\DefaultField;
 use Tilta\Sdk\Model\Response\AbstractResponseModel;
 
 class GetBuyerAuthTokenResponseModel extends AbstractResponseModel
 {
+    #[DefaultField(apiField: 'token')]
     protected string $buyerAuthToken;
-
-    protected static array $_additionalFieldMapping = [
-        'buyerAuthToken' => 'token',
-    ];
 
     public function getBuyerAuthToken(): string
     {

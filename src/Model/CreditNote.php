@@ -11,8 +11,9 @@ declare(strict_types=1);
 namespace Tilta\Sdk\Model;
 
 use DateTimeInterface;
+use Tilta\Sdk\Attributes\ApiField\DefaultField;
+use Tilta\Sdk\Attributes\ApiField\ListField;
 use Tilta\Sdk\Model\Order\LineItem;
-use Tilta\Sdk\Util\ResponseHelper;
 
 /**
  * @method string getCreditNoteExternalId()
@@ -23,26 +24,18 @@ use Tilta\Sdk\Util\ResponseHelper;
  */
 class CreditNote extends AbstractModel
 {
+    #[DefaultField('external_id')]
     protected string $creditNoteExternalId;
 
+    #[DefaultField]
     protected DateTimeInterface $invoicedAt;
 
+    #[DefaultField]
     protected Amount $amount;
 
+    #[DefaultField]
     protected Address $billingAddress;
 
+    #[ListField(expectedItemClass: LineItem::class)]
     protected array $lineItems;
-
-    protected array $orderExternalIds;
-
-    protected static array $_additionalFieldMapping = [
-        'creditNoteExternalId' => 'external_id',
-    ];
-
-    protected function prepareModelData(array $data): array
-    {
-        return [
-            'lineItems' => static fn (string $key): ?array => ResponseHelper::getArray($data, $key, LineItem::class),
-        ];
-    }
 }

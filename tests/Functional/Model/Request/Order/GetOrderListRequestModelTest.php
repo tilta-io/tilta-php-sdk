@@ -37,10 +37,9 @@ class GetOrderListRequestModelTest extends AbstractModelTestCase
     }
 
     /**
-     * @param mixed $value
      * @dataProvider optionalParametersDataProvider
      */
-    public function testOptionalData(string $property, string $expectedParameterName, $value): void
+    public function testOptionalData(string $property, string $expectedParameterName, mixed $value): void
     {
         $model = (new GetOrderListRequestModel());
         $model->__call('set' . ucfirst($property), [$value]);

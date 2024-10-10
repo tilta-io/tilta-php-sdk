@@ -10,14 +10,10 @@ declare(strict_types=1);
 
 namespace Tilta\Sdk\Tests\Functional\Model;
 
-use Tilta\Sdk\Exception\Validation\InvalidFieldValueException;
 use Tilta\Sdk\Model\AbstractModel;
 use Tilta\Sdk\Tests\Functional\Mock\Model\ArrayTestModel;
 use Tilta\Sdk\Tests\Functional\Mock\Model\ArrayTestModelFieldMapping;
 use Tilta\Sdk\Tests\Functional\Mock\Model\SimpleTestModel;
-use Tilta\Sdk\Tests\Functional\Mock\Model\ValidationOverrideTypeNullTestModel;
-use Tilta\Sdk\Util\Validation;
-use TypeError;
 
 class AbstractModelTest extends AbstractModelTestCase
 {
@@ -246,47 +242,6 @@ class AbstractModelTest extends AbstractModelTestCase
         $this->assertEquals('value', $model->getFieldRenamedInSdk());
         $this->assertCount(1, $model->toArray());
         $this->assertArrayHasKey('field_which_is_not_in_sdk', $model->toArray());
-    }
-
-    public function testOverrideValidationNotNullableField(): void
-    {
-        $model = new ValidationOverrideTypeNullTestModel();
-        $model->setFieldValidation('notNullableField', Validation::IS_NOT_REQUIRED);
-
-        // should not throw an exception, cause Validation-util got the not-required-flag.
-        $model->setNotNullableField(null);
-        $this->assertNull($model->getNotNullableField()); // value should be null, also if the field is not nullable
-
-        // test if the value got correctly unset, instead of not setting value.
-        $model->setNotNullableField('value');
-        $this->assertEquals('value', $model->getNotNullableField());
-        $model->setNotNullableField(null);
-        $this->assertNull($model->getNotNullableField()); // value should be null, also if the field is not nullable
-    }
-
-    public function testOverrideValidationNullableField(): void
-    {
-        $model = new ValidationOverrideTypeNullTestModel();
-        $model->setFieldValidation('nullableField', Validation::IS_REQUIRED);
-
-        // should not throw an exception, cause the value is valid
-        $model->setNotNullableField('value');
-        $this->assertEquals('value', $model->getNotNullableField());
-
-        // should throw type-error exception, because the value would be set without validation
-        $model->disableValidateOnSet();
-        $this->expectException(TypeError::class);
-        $model->setNotNullableField(null);
-    }
-
-    public function testOverrideValidationNullableFieldOnSet(): void
-    {
-        $model = new ValidationOverrideTypeNullTestModel();
-        $model->setFieldValidation('nullableField', Validation::IS_REQUIRED);
-
-        // should throw exception, cause value is required by custom definition
-        $this->expectException(InvalidFieldValueException::class);
-        $model->setNotNullableField(null);
     }
 
     private function doInputOutputDataComparison(AbstractModel $model, array $inputData): void

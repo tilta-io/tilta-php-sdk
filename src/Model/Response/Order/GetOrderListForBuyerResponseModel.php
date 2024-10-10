@@ -10,9 +10,9 @@ declare(strict_types=1);
 
 namespace Tilta\Sdk\Model\Response\Order;
 
+use Tilta\Sdk\Attributes\ApiField\ListField;
 use Tilta\Sdk\Model\Order;
 use Tilta\Sdk\Model\Response\AbstractResponseModel;
-use Tilta\Sdk\Util\ResponseHelper;
 
 /**
  * @method Order[] getItems()
@@ -22,12 +22,13 @@ class GetOrderListForBuyerResponseModel extends AbstractResponseModel
     /**
      * @var Order[]
      */
+    #[ListField(expectedItemClass: Order::class)]
     protected array $items = [];
 
-    protected function prepareModelData(array $data): array
+    public function fromArray(array $data): self
     {
-        return [
-            'items' => static fn ($key): ?array => ResponseHelper::getArray($data, null, Order::class),
-        ];
+        return parent::fromArray([
+            'items' => $data,
+        ]);
     }
 }

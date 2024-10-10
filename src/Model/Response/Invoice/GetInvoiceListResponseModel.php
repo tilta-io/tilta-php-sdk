@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace Tilta\Sdk\Model\Response\Invoice;
 
+use Tilta\Sdk\Attributes\ApiField\ListField;
 use Tilta\Sdk\Model\Invoice;
 use Tilta\Sdk\Model\Response\ListResponseModel;
 
@@ -18,8 +19,6 @@ use Tilta\Sdk\Model\Response\ListResponseModel;
  */
 class GetInvoiceListResponseModel extends ListResponseModel
 {
-    public function __construct(array $data = [])
-    {
-        parent::__construct(Invoice::class, $data);
-    }
+    #[ListField(expectedItemClass: Invoice::class)]
+    protected array $items = [];
 }

@@ -14,214 +14,174 @@ namespace Tilta\Sdk\Tests\Functional\Util;
 
 use PHPUnit\Framework\TestCase;
 use stdClass;
+use Tilta\Sdk\Attributes\ApiField\DefaultField;
+use Tilta\Sdk\Attributes\ApiField\ListField;
+use Tilta\Sdk\Attributes\Validation\Required;
 use Tilta\Sdk\Exception\Validation\InvalidFieldException;
 use Tilta\Sdk\Exception\Validation\InvalidFieldValueException;
-use Tilta\Sdk\Tests\Functional\Mock\Model\ValidationOverrideTypeNullTestModel;
-use Tilta\Sdk\Tests\Functional\Mock\Model\ValidationTestModel;
+use Tilta\Sdk\Model\AbstractModel;
+use Tilta\Sdk\Tests\Functional\Mock\Model\SimpleTestModel;
+use Tilta\Sdk\Tests\Functional\Mock\Model\ValidationOverrideTestModel;
 use Tilta\Sdk\Util\Validation;
 
 class ValidationTest extends TestCase
 {
-    public function testRequiredFields(): void
+    /**
+     * @dataProvider requiredFieldsDataProvider
+     */
+    public function testRequiredFields(string $field, string $valueToSet): void
     {
-        Validation::validatePropertyValue(
-            new ValidationTestModel(),
-            'requiredStringField',
-            'value-should-be-set'
-        );
+        $model = new class() extends AbstractModel {
+            #[DefaultField]
+            protected string $field;
+
+            #[DefaultField]
+            #[Required]
+            protected ?string $fieldWithValidation = null;
+        };
+
+        Validation::validatePropertyValue($model, $field, $valueToSet);
 
         $this->expectException(InvalidFieldValueException::class);
+        Validation::validatePropertyValue($model, $field, null);
+    }
 
-        Validation::validatePropertyValue(
-            new ValidationTestModel(),
-            'requiredStringField',
-            null
-        );
+    public function requiredFieldsDataProvider(): array
+    {
+        return [
+            ['field', 'value-should-be-set'],
+            ['fieldWithValidation', 'value-should-be-set'],
+        ];
     }
 
     public function testNullable(): void
     {
-        Validation::validatePropertyValue(
-            new ValidationTestModel(),
-            'notRequiredStringField',
-            'value-should-be-set'
-        );
-
-        Validation::validatePropertyValue(
-            new ValidationTestModel(),
-            'notRequiredStringField',
-            null
-        );
-
-        static::assertTrue(true); // just an empty test
-    }
-
-    public function testCallbackRequired(): void
-    {
-        $callback = static function (...$arguments): string {
-            static::assertCount(1, $arguments);
-            // should be the value to validate
-            static::assertNull($arguments[0]);
-
-            return 'string';
+        $model = new class() extends AbstractModel {
+            #[DefaultField]
+            protected ?string $field = null;
         };
 
-        static::expectException(InvalidFieldValueException::class);
-        Validation::validatePropertyValue(
-            new ValidationTestModel(),
-            'callbackValidationField',
-            null,
-            $callback
-        );
-    }
+        Validation::validatePropertyValue($model, 'field', 'value-should-be-set');
+        Validation::validatePropertyValue($model, 'field', null);
 
-    public function testCallbackNotRequired(): void
-    {
-        $callback = static function (...$arguments): string {
-            static::assertCount(1, $arguments);
-            // should be the value to validate
-            static::assertNull($arguments[0]);
-
-            return Validation::TYPE_STRING_OPTIONAL;
-        };
-
-        Validation::validatePropertyValue(
-            new ValidationTestModel(),
-            'callbackValidationField',
-            null,
-            $callback
-        );
-
-        static::assertTrue(true);
+        static::assertTrue(true); // no exception should get triggered
     }
 
     public function testInvalidTypes(): void
     {
-        Validation::validatePropertyValue(
-            new ValidationTestModel(),
-            'expectedClassField',
-            new stdClass()
-        );
+        $model = new class() extends AbstractModel {
+            #[DefaultField]
+            protected SimpleTestModel $field;
+        };
+        Validation::validatePropertyValue($model, 'field', new SimpleTestModel());
 
         $this->expectException(InvalidFieldValueException::class);
-        Validation::validatePropertyValue(
-            new ValidationTestModel(),
-            'expectedClassField',
-            new ValidationTestModel()
-        );
+        Validation::validatePropertyValue($model, 'field', new stdClass());
     }
 
     public function testInvalidTypesNullable(): void
     {
-        Validation::validatePropertyValue(
-            new ValidationTestModel(),
-            'expectedNullableClassField',
-            new stdClass()
-        );
+        $model = new class() extends AbstractModel {
+            #[DefaultField]
+            protected ?SimpleTestModel $field = null;
+        };
+        Validation::validatePropertyValue($model, 'field', new SimpleTestModel());
+        Validation::validatePropertyValue($model, 'field', null);
 
         $this->expectException(InvalidFieldValueException::class);
-        Validation::validatePropertyValue(
-            new ValidationTestModel(),
-            'expectedNullableClassField',
-            new ValidationTestModel()
-        );
+        Validation::validatePropertyValue($model, 'field', new stdClass());
     }
 
     public function testArrayOfTypesValid(): void
     {
-        Validation::validatePropertyValue(
-            new ValidationTestModel(),
-            'validateArray',
-            [
-                'value1',
-                'value2',
-            ],
-            'string[]'
-        );
+        $model = new class() extends AbstractModel {
+            #[ListField(expectedItemClass: SimpleTestModel::class)]
+            protected array $fieldWithType;
 
-        Validation::validatePropertyValue(
-            new ValidationTestModel(),
-            'validateArray',
-            [
-                new stdClass(),
-                new stdClass(),
-            ],
-            stdClass::class . '[]'
-        );
+            #[ListField(expectedScalarType: 'string')]
+            protected array $fieldWithScalarType;
+
+            #[ListField]
+            protected array $fieldWithoutType;
+        };
+
+        Validation::validatePropertyValue($model, 'fieldWithoutType', [
+            'value1',
+            new stdClass(),
+            new SimpleTestModel(),
+        ]);
+
+        Validation::validatePropertyValue($model, 'fieldWithScalarType', [
+            'value1',
+            'value2',
+        ]);
+
+        Validation::validatePropertyValue($model, 'fieldWithType', [
+            new SimpleTestModel(),
+            new SimpleTestModel(),
+        ]);
 
         static::assertTrue(true);
     }
 
-    public function testArrayOfTypesInvalid(): void
+    public function testArrayOfTypesInvalidModel(): void
     {
+        $model = new class() extends AbstractModel {
+            #[ListField(expectedItemClass: SimpleTestModel::class)]
+            protected array $field;
+        };
+
         $this->expectException(InvalidFieldValueException::class);
-        Validation::validatePropertyValue(
-            new ValidationTestModel(),
-            'validateArray',
-            [
-                new stdClass(),
-                'value2',
-            ],
-            'string[]'
-        );
+        Validation::validatePropertyValue($model, 'field', [
+            new SimpleTestModel(),
+            'invalid-value',
+        ]);
+    }
+
+    public function testArrayOfTypesInvalidScalar(): void
+    {
+        $model = new class() extends AbstractModel {
+            #[ListField(expectedScalarType: 'string')]
+            protected array $field;
+        };
+
+        $this->expectException(InvalidFieldValueException::class);
+        Validation::validatePropertyValue($model, 'field', [
+            'valid-value',
+            new SimpleTestModel(),
+        ]);
     }
 
     public function testArrayNullableWithTypes(): void
     {
-        Validation::validatePropertyValue(
-            new ValidationTestModel(),
-            'validateNullableArray',
-            [],
-            '?' . stdClass::class . '[]'
-        );
+        $model = new class() extends AbstractModel {
+            #[ListField(expectedScalarType: 'string')]
+            protected ?array $field = null;
+        };
 
-        Validation::validatePropertyValue(
-            new ValidationTestModel(),
-            'validateNullableArray',
-            null,
-            '?' . stdClass::class . '[]'
-        );
-
-        Validation::validatePropertyValue(
-            new ValidationTestModel(),
-            'validateNullableArray',
-            [
-                new stdClass(),
-                new stdClass(),
-            ],
-            '?' . stdClass::class . '[]'
-        );
+        Validation::validatePropertyValue($model, 'field', []);
+        Validation::validatePropertyValue($model, 'field', null);
+        Validation::validatePropertyValue($model, 'field', [
+            'value-1',
+            'value-2',
+        ]);
 
         static::assertTrue(true);
     }
 
     public function testArrayNullableWithInvalidTypes(): void
     {
+        $model = new class() extends AbstractModel {
+            #[ListField(expectedScalarType: 'string')]
+            protected ?array $field = null;
+        };
+
         $this->expectException(InvalidFieldValueException::class);
 
-        Validation::validatePropertyValue(
-            new ValidationTestModel(),
-            'validateNullableArray',
-            [
-                new stdClass(),
-                'test',
-            ],
-            '?' . stdClass::class . '[]'
-        );
-    }
-
-    public function testArrayOfTypesInvalidInstance(): void
-    {
-        $this->expectException(InvalidFieldValueException::class);
-        Validation::validatePropertyValue(
-            new ValidationTestModel(),
-            'validateArray',
-            [
-                'value1',
-                'value2',
-            ],
-            stdClass::class . '[]'
-        );
+        Validation::validatePropertyValue($model, 'field', [
+            new stdClass(),
+            'test',
+        ]);
     }
 
     public function testInvalidProperty(): void
@@ -229,13 +189,14 @@ class ValidationTest extends TestCase
         $this->expectException(InvalidFieldException::class);
 
         Validation::validatePropertyValue(
-            new ValidationTestModel(),
+            new class() extends AbstractModel {
+            },
             'not-existing-field',
             null
         );
     }
 
-    public function testOverrideRequiredFieldNotNullable(): void
+    public function testOverrideRequiredField(): void
     {
         // Use case: e.g. Buyer/UpdateBuyerRequestModel:
         // to keep the code clean, we are using the same properties for both models. so we can extend UpdateBuyerRequestModel from Buyer-Model.
@@ -245,76 +206,22 @@ class ValidationTest extends TestCase
         // so a validation of the model will not fail.
         // maybe this is not best-practise and maybe only a workaround. TODO maybe we could improve this in the future.
 
-        // field does have a defined property type of `string`. so it is not possible to set a `null` value on it.
-        // the validation process validates the property with reflection first, and after that, against the custom-definition.
-        // cause the custom-validation contains an "is not required"-flag the validation should not fail.
+        $model = new class() extends ValidationOverrideTestModel {
+            #[DefaultField]
+            #[Required(false)]
+            protected string $requiredField;
 
-        // validate for not-required field
-        Validation::validatePropertyValue(
-            new ValidationOverrideTypeNullTestModel(),
-            'notNullableField',
-            null,
-            Validation::IS_NOT_REQUIRED
-        );
+            #[DefaultField]
+            #[Required(true)]
+            protected ?string $notRequiredField = null;
+        };
 
-        // validation should also not fail if the value is valid
-        Validation::validatePropertyValue(
-            new ValidationOverrideTypeNullTestModel(),
-            'notNullableField',
-            'value',
-            Validation::IS_NOT_REQUIRED
-        );
+        Validation::validatePropertyValue($model, 'requiredField', null);
+        Validation::validatePropertyValue($model, 'requiredField', 'valid-value');
+        Validation::validatePropertyValue($model, 'notRequiredField', 'valid-value');
 
         // validation should fail, cause the field is not nullable, and no not-required-flag ist set.
         $this->expectException(InvalidFieldValueException::class);
-        Validation::validatePropertyValue(
-            new ValidationOverrideTypeNullTestModel(),
-            'notNullableField',
-            null
-        );
-    }
-
-    public function testOverrideRequiredFieldNullable(): void
-    {
-        // please also see comment in testOverrideRequiredFieldNotNullable()
-
-        // should not fail - default behavior
-        Validation::validatePropertyValue(
-            new ValidationOverrideTypeNullTestModel(),
-            'nullableField',
-            null
-        );
-
-        // should also not fail - default behavior
-        Validation::validatePropertyValue(
-            new ValidationOverrideTypeNullTestModel(),
-            'nullableField',
-            'value'
-        );
-
-        // should also not fail - default behavior & explicit flag
-        Validation::validatePropertyValue(
-            new ValidationOverrideTypeNullTestModel(),
-            'nullableField',
-            null,
-            Validation::IS_NOT_REQUIRED
-        );
-
-        // should also not fail - default behavior & explicit flag
-        Validation::validatePropertyValue(
-            new ValidationOverrideTypeNullTestModel(),
-            'nullableField',
-            'value',
-            Validation::IS_REQUIRED
-        );
-
-        // validation should fail, cause the field is not nullable, and no not-required-flag ist set.
-        $this->expectException(InvalidFieldValueException::class);
-        Validation::validatePropertyValue(
-            new ValidationOverrideTypeNullTestModel(),
-            'nullableField',
-            null,
-            Validation::IS_REQUIRED
-        );
+        Validation::validatePropertyValue($model, 'notRequiredField', null);
     }
 }

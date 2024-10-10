@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace Tilta\Sdk\Model\Response\Order;
 
+use Tilta\Sdk\Attributes\ApiField\ListField;
 use Tilta\Sdk\Model\Order;
 use Tilta\Sdk\Model\Response\ListResponseModel;
 
@@ -18,8 +19,6 @@ use Tilta\Sdk\Model\Response\ListResponseModel;
  */
 class GetOrderListResponseModel extends ListResponseModel
 {
-    public function __construct(array $data = [])
-    {
-        parent::__construct(Order::class, $data);
-    }
+    #[ListField(expectedItemClass: Order::class)]
+    protected array $items = [];
 }

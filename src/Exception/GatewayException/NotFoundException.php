@@ -14,13 +14,14 @@ use Tilta\Sdk\Exception\GatewayException;
 
 class NotFoundException extends GatewayException
 {
-    protected ?string $externalId;
-
     protected static ?string $entityName = null;
 
-    public function __construct(string $externalId = null, int $httpCode = 404, array $responseData = [], array $requestData = [])
-    {
-        $this->externalId = $externalId;
+    public function __construct(
+        protected ?string $externalId = null,
+        int $httpCode = 404,
+        array $responseData = [],
+        array $requestData = []
+    ) {
         parent::__construct($httpCode, $responseData, $requestData);
     }
 

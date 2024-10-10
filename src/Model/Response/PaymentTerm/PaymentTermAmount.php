@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace Tilta\Sdk\Model\Response\PaymentTerm;
 
+use Tilta\Sdk\Attributes\ApiField\DefaultField;
 use Tilta\Sdk\Model\Response\AbstractResponseModel;
 
 /**
@@ -20,11 +21,15 @@ use Tilta\Sdk\Model\Response\AbstractResponseModel;
  */
 class PaymentTermAmount extends AbstractResponseModel
 {
+    #[DefaultField]
     protected int $fee;
 
+    #[DefaultField]
     protected int $feePercentage;
 
+    #[DefaultField]
     protected int $gross;
 
+    #[DefaultField]
     protected string $currency;
 }

@@ -10,33 +10,35 @@ declare(strict_types=1);
 
 namespace Tilta\Sdk\Model\Request\SepaMandate;
 
+use Tilta\Sdk\Attributes\ApiField\DefaultField;
 use Tilta\Sdk\Model\HasBuyerFieldInterface;
 use Tilta\Sdk\Model\Request\AbstractRequestModel;
 
 /**
- * @method $this setBuyerExternalId(string $buyerExternalId)
  * @method string getIban()
  * @method $this setIban(string $iban)
  */
 class CreateSepaMandateRequestModel extends AbstractRequestModel implements HasBuyerFieldInterface
 {
-    protected string $buyerExternalId;
-
+    #[DefaultField]
     protected string $iban;
 
-    protected static array $_additionalFieldMapping = [
-        'buyerExternalId' => false,
-    ];
-
-    public function __construct(string $buyerExternalId)
-    {
+    public function __construct(
+        private readonly string $buyerExternalId
+    ) {
         parent::__construct();
-        $this->buyerExternalId = $buyerExternalId;
     }
 
     public function getBuyerExternalId(): string
     {
-        /** @phpstan-ignore-next-line */
-        return $this->__call(__FUNCTION__);
+        return $this->buyerExternalId;
+    }
+
+    /**
+     * @deprecated
+     */
+    public function setBuyerExternalId(mixed $buyerExternalId): self
+    {
+        return $this;
     }
 }

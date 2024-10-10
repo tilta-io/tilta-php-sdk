@@ -15,21 +15,14 @@ use Tilta\Sdk\Model\Request\AbstractRequestModel;
 
 class GetInvoiceRequestModel extends AbstractRequestModel implements HasInvoiceIdFieldInterface
 {
-    protected string $invoiceExternalId;
-
-    protected static array $_additionalFieldMapping = [
-        'invoiceExternalId' => false, // path parameter
-    ];
-
-    public function __construct(string $invoiceExternalId)
-    {
+    public function __construct(
+        private readonly string $invoiceExternalId
+    ) {
         parent::__construct();
-        $this->invoiceExternalId = $invoiceExternalId;
     }
 
     public function getInvoiceExternalId(): string
     {
-        // we will not call `$this->__call()` because it is impossible to add invalid data to the request model cause the constructor.
         return $this->invoiceExternalId;
     }
 }

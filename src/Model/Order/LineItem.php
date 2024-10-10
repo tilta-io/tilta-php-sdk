@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace Tilta\Sdk\Model\Order;
 
+use Tilta\Sdk\Attributes\ApiField\DefaultField;
 use Tilta\Sdk\Model\AbstractModel;
 
 /**
@@ -28,15 +29,21 @@ use Tilta\Sdk\Model\AbstractModel;
  */
 class LineItem extends AbstractModel
 {
+    #[DefaultField]
     protected string $name;
 
+    #[DefaultField]
     protected string $category;
 
+    #[DefaultField]
     protected ?string $description = null;
 
+    #[DefaultField]
     protected int $price;
 
+    #[DefaultField]
     protected string $currency;
 
+    #[DefaultField]
     protected int $quantity;
 }

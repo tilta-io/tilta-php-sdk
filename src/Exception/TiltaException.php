@@ -15,12 +15,12 @@ use Throwable;
 
 class TiltaException extends Exception
 {
-    protected string $tiltaCode;
-
-    public function __construct(string $message = '', string $code = 'ERROR', Throwable $previous = null)
-    {
+    public function __construct(
+        string $message = '',
+        protected string $tiltaCode = 'ERROR',
+        Throwable $previous = null
+    ) {
         parent::__construct($message, 0, $previous);
-        $this->tiltaCode = $code;
     }
 
     public function getTiltaCode(): string

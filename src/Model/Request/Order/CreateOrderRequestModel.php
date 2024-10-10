@@ -32,10 +32,8 @@ use Tilta\Sdk\Model\Request\RequestModelInterface;
  */
 class CreateOrderRequestModel extends Order implements RequestModelInterface
 {
-    protected static array $_additionalFieldMapping = [
-        'orderExternalId' => 'external_id', // from parent
-        'status' => false,
-    ];
+    // removed field definition
+    protected string $status;
 
     /**
      * @internal

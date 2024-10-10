@@ -10,8 +10,8 @@ declare(strict_types=1);
 
 namespace Tilta\Sdk\Tests\Functional\Mock\Model;
 
+use Tilta\Sdk\Attributes\ApiField\DefaultField;
 use Tilta\Sdk\Model\AbstractModel;
-use Tilta\Sdk\Util\ResponseHelper;
 
 /**
  * @method string|null getObjectKey1()
@@ -20,18 +20,12 @@ use Tilta\Sdk\Util\ResponseHelper;
  */
 class ResponseHelperModelMock extends AbstractModel
 {
+    #[DefaultField('key1')]
     protected ?string $objectKey1 = null;
 
+    #[DefaultField('key2')]
     protected ?string $objectKey2 = null;
 
+    #[DefaultField('sub')]
     protected ?ResponseHelperModelMock $subObject = null;
-
-    public function fromArray(array $data): AbstractModel
-    {
-        $this->objectKey1 = ResponseHelper::getString($data, 'key1');
-        $this->objectKey2 = ResponseHelper::getString($data, 'key2');
-        $this->subObject = ResponseHelper::getObject($data, 'sub', self::class);
-
-        return $this;
-    }
 }

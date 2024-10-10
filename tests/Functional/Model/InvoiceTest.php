@@ -28,7 +28,7 @@ class InvoiceTest extends AbstractModelTestCase
                 'order-external-id-3',
             ],
             'invoice_number' => 'invoice-number',
-            'invoiced_at' => (new DateTime())->setDate(2023, 9, 17)->format('U'),
+            'invoiced_at' => (int) (new DateTime())->setDate(2023, 9, 17)->format('U'),
             'amount' => [
                 'currency' => 'EUR',
                 'gross' => 119,
