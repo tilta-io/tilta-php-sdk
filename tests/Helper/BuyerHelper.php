@@ -50,7 +50,6 @@ class BuyerHelper extends AbstractHelper
             ->setTradingName('Ultramarathon GmbH')
             ->setLegalName('Ultramarathon GmbH')
             ->setLegalForm('DE_GMBH')
-            ->setTaxId('DE123456')
             ->setRegisteredAt((new DateTime())->setTimestamp(time() - 3600))
             ->setIncorporatedAt((new DateTime())->setTimestamp(time() - 3600))
             ->setContactPersons([
