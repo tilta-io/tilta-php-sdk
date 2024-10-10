@@ -32,8 +32,6 @@ use Tilta\Sdk\Attributes\Validation\Required;
  * @method $this setContactPersons(ContactPerson[] $contactPersons)
  * @method Address getBusinessAddress()
  * @method $this setBusinessAddress(Address $businessAddress)
- * @method string|null getTaxId()
- * @method $this setTaxId(?string $taxId)
  * @method array getCustomData()
  * @method $this setCustomData(array $customData)
  */
@@ -69,9 +67,6 @@ class Buyer extends AbstractModel implements HasBuyerFieldInterface
     #[ListField]
     #[Required]
     protected ?array $customData = [];
-
-    #[DefaultField]
-    protected ?string $taxId;
 
     /**
      * @internal

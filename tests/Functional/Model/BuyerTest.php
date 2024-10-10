@@ -29,7 +29,6 @@ class BuyerTest extends AbstractModelTestCase
             'incorporated_at' => 1686763038,
             'contact_persons' => [],
             'business_address' => ResponseHelper::PHPUNIT_OBJECT,
-            'tax_id' => 'DE123456',
             'custom_data' => [
                 'key1' => 'value1',
                 'key2' => 'value2',
@@ -41,7 +40,6 @@ class BuyerTest extends AbstractModelTestCase
         self::assertEquals('trading name', $model->getTradingName());
         self::assertEquals('legal name', $model->getLegalName());
         self::assertEquals('legal form', $model->getLegalForm());
-        self::assertEquals('DE123456', $model->getTaxId());
         self::assertInstanceOf(DateTime::class, $model->getRegisteredAt());
         self::assertInstanceOf(DateTime::class, $model->getIncorporatedAt());
         self::assertIsArray($model->getContactPersons());
