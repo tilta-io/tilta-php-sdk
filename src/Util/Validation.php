@@ -152,6 +152,11 @@ class Validation
 
     private static function validateStringLength(StringLength $validation, mixed $value): void
     {
+        if ($value === null) {
+            // this should be already validated
+            return;
+        }
+
         if (!is_string($value)) {
             throw new InvalidFieldValueException('value needs to be a string');
         }
@@ -167,6 +172,11 @@ class Validation
 
     private static function validateEnum(Enum $validation, mixed $value): void
     {
+        if ($value === null) {
+            // this should be already validated
+            return;
+        }
+
         if (!in_array($value, $validation->getValidValues(), true)) {
             $message = $validation->getValidationMessage() ?:
                 sprintf(
