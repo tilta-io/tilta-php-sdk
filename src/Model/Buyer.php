@@ -65,8 +65,7 @@ class Buyer extends AbstractModel implements HasBuyerFieldInterface
     protected ?Address $businessAddress;
 
     #[ListField]
-    #[Required]
-    protected ?array $customData = [];
+    protected ?array $customData;
 
     /**
      * @internal
