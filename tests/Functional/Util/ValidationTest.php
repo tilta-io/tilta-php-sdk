@@ -16,7 +16,9 @@ use PHPUnit\Framework\TestCase;
 use stdClass;
 use Tilta\Sdk\Attributes\ApiField\DefaultField;
 use Tilta\Sdk\Attributes\ApiField\ListField;
+use Tilta\Sdk\Attributes\Validation\Enum;
 use Tilta\Sdk\Attributes\Validation\Required;
+use Tilta\Sdk\Attributes\Validation\StringLength;
 use Tilta\Sdk\Exception\Validation\InvalidFieldException;
 use Tilta\Sdk\Exception\Validation\InvalidFieldValueException;
 use Tilta\Sdk\Model\AbstractModel;
@@ -223,5 +225,127 @@ class ValidationTest extends TestCase
         // validation should fail, cause the field is not nullable, and no not-required-flag ist set.
         $this->expectException(InvalidFieldValueException::class);
         Validation::validatePropertyValue($model, 'notRequiredField', null);
+    }
+
+    public function testSuccessfulEnumValidation(): void
+    {
+        $model = new class() extends SimpleTestModel {
+            #[DefaultField]
+            #[Enum(validValues: ['value-1', 'value-2'])]
+            protected string $fieldValue;
+
+            #[DefaultField]
+            #[Enum(validValues: ['value-1', 'value-2'])]
+            protected ?string $fieldValueNullable;
+        };
+
+        Validation::validatePropertyValue($model, 'fieldValue', 'value-1');
+        Validation::validatePropertyValue($model, 'fieldValue', 'value-2');
+        Validation::validatePropertyValue($model, 'fieldValueNullable', 'value-1');
+        Validation::validatePropertyValue($model, 'fieldValueNullable', 'value-1');
+        // null-value should be accepted
+        Validation::validatePropertyValue($model, 'fieldValueNullable', null);
+
+        self::assertTrue(true);
+    }
+
+    /**
+     * @dataProvider failingEnumValidationDataProvider
+     */
+    public function testFailingEnumValidation(string $field, mixed $value): void
+    {
+        $model = new class() extends SimpleTestModel {
+            #[DefaultField]
+            #[Enum(validValues: ['value-1', 'value-2'])]
+            protected string $fieldValue;
+
+            #[DefaultField]
+            #[Enum(validValues: ['value-1', 'value-2'])]
+            protected ?string $fieldValueNullable;
+        };
+
+        $this->expectException(InvalidFieldValueException::class);
+        Validation::validatePropertyValue($model, $field, $value);
+    }
+
+    public static function failingEnumValidationDataProvider(): array
+    {
+        return [
+            ['fieldValue', 'invalid-value'],
+            ['fieldValue', null],
+            ['fieldValue', new stdClass()],
+            ['fieldValueNullable', 'invalid-value'],
+            ['fieldValueNullable', new stdClass()],
+        ];
+    }
+
+    public function testStringLengthMinValidation(): void
+    {
+        $model = new class() extends SimpleTestModel {
+            #[DefaultField]
+            #[StringLength(minLength: 2)]
+            protected string $fieldValue;
+        };
+
+        $model->setFieldValue('ab');
+        self::assertEquals('ab', $model->getFieldValue());
+
+        $model->setFieldValue('abc');
+        self::assertEquals('abc', $model->getFieldValue());
+
+        $model->setFieldValue('Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren');
+        self::assertEquals('Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren', $model->getFieldValue());
+
+        $this->expectException(InvalidFieldValueException::class);
+        $model->setFieldValue('a');
+    }
+
+    public function testStringLengthMaxValidation(): void
+    {
+        $model = new class() extends SimpleTestModel {
+            #[DefaultField]
+            #[StringLength(maxLength: 5)]
+            protected string $fieldValue;
+        };
+
+        $model->setFieldValue('a');
+        self::assertEquals('a', $model->getFieldValue());
+
+        $model->setFieldValue('ab');
+        self::assertEquals('ab', $model->getFieldValue());
+
+        $model->setFieldValue('abc');
+        self::assertEquals('abc', $model->getFieldValue());
+
+        $this->expectException(InvalidFieldValueException::class);
+        $model->setFieldValue('Lorem ipsum dolor');
+    }
+
+    public function testStringLengthMinMaxValidation(): void
+    {
+        $model = new class() extends SimpleTestModel {
+            #[DefaultField]
+            #[StringLength(minLength: 2, maxLength: 5)]
+            protected string $fieldValue;
+        };
+
+        $exception = null;
+        try {
+            $model->setFieldValue('a');
+            self::assertEquals('a', $model->getFieldValue());
+        } catch (InvalidFieldValueException $invalidFieldValueException) {
+            $exception = $invalidFieldValueException;
+        }
+
+        self::assertInstanceOf(InvalidFieldValueException::class, $exception);
+
+        $model->setFieldValue('ab');
+        self::assertEquals('ab', $model->getFieldValue());
+
+        $model->setFieldValue('abc');
+        self::assertEquals('abc', $model->getFieldValue());
+
+        $this->expectException(InvalidFieldValueException::class);
+        $model->setFieldValue('Lorem ipsum dolor');
     }
 }
