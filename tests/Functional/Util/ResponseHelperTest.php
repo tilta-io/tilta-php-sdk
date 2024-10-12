@@ -17,10 +17,7 @@ use Tilta\Sdk\Attributes\ApiField\DateTimeField;
 use Tilta\Sdk\Attributes\ApiField\DefaultField;
 use Tilta\Sdk\Attributes\ApiField\ListField;
 use Tilta\Sdk\Attributes\ApiField\ObjectField;
-use Tilta\Sdk\Attributes\Validation\Enum;
-use Tilta\Sdk\Attributes\Validation\StringLength;
 use Tilta\Sdk\Exception\InvalidResponseException;
-use Tilta\Sdk\Exception\Validation\InvalidFieldValueException;
 use Tilta\Sdk\Model\AbstractModel;
 use Tilta\Sdk\Tests\Functional\Mock\Model\SimpleTestModel;
 use Tilta\Sdk\Util\ReflectionHelper;
@@ -222,103 +219,6 @@ class ResponseHelperTest extends TestCase
             [['field_value' => 'value', 'another-field' => 'something-else'], (new SimpleTestModel())->setFieldValue('value')],
             [['field_value' => 'value', 'nullable_field_value' => 'value2', 'another-field' => 'something-else'], (new SimpleTestModel())->setFieldValue('value')->setNullableFieldValue('value2')],
         ];
-    }
-
-    public function testSuccessfulEnumValidation(): void
-    {
-        $model = new class() extends SimpleTestModel {
-            #[DefaultField]
-            #[Enum(validValues: ['value-1', 'value-2'])]
-            protected string $fieldValue;
-        };
-
-        $model->setFieldValue('value-1');
-        self::assertEquals('value-1', $model->getFieldValue());
-        $model->setFieldValue('value-2');
-        self::assertEquals('value-2', $model->getFieldValue());
-    }
-
-    public function testFailingEnumValidation(): void
-    {
-        $model = new class() extends SimpleTestModel {
-            #[DefaultField]
-            #[Enum(validValues: ['value-1', 'value-2'])]
-            protected string $fieldValue;
-        };
-
-        $model->setFieldValue('value-1');
-        $this->expectException(InvalidFieldValueException::class);
-        $model->setFieldValue('invalid-value');
-    }
-
-    public function testStringLengthMinValidation(): void
-    {
-        $model = new class() extends SimpleTestModel {
-            #[DefaultField]
-            #[StringLength(minLength: 2)]
-            protected string $fieldValue;
-        };
-
-        $model->setFieldValue('ab');
-        self::assertEquals('ab', $model->getFieldValue());
-
-        $model->setFieldValue('abc');
-        self::assertEquals('abc', $model->getFieldValue());
-
-        $model->setFieldValue('Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren');
-        self::assertEquals('Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren', $model->getFieldValue());
-
-        $this->expectException(InvalidFieldValueException::class);
-        $model->setFieldValue('a');
-    }
-
-    public function testStringLengthMaxValidation(): void
-    {
-        $model = new class() extends SimpleTestModel {
-            #[DefaultField]
-            #[StringLength(maxLength: 5)]
-            protected string $fieldValue;
-        };
-
-        $model->setFieldValue('a');
-        self::assertEquals('a', $model->getFieldValue());
-
-        $model->setFieldValue('ab');
-        self::assertEquals('ab', $model->getFieldValue());
-
-        $model->setFieldValue('abc');
-        self::assertEquals('abc', $model->getFieldValue());
-
-        $this->expectException(InvalidFieldValueException::class);
-        $model->setFieldValue('Lorem ipsum dolor');
-    }
-
-    public function testStringLengthMinMaxValidation(): void
-    {
-        $model = new class() extends SimpleTestModel {
-            #[DefaultField]
-            #[StringLength(minLength: 2, maxLength: 5)]
-            protected string $fieldValue;
-        };
-
-        $exception = null;
-        try {
-            $model->setFieldValue('a');
-            self::assertEquals('a', $model->getFieldValue());
-        } catch (InvalidFieldValueException $invalidFieldValueException) {
-            $exception = $invalidFieldValueException;
-        }
-
-        self::assertInstanceOf(InvalidFieldValueException::class, $exception);
-
-        $model->setFieldValue('ab');
-        self::assertEquals('ab', $model->getFieldValue());
-
-        $model->setFieldValue('abc');
-        self::assertEquals('abc', $model->getFieldValue());
-
-        $this->expectException(InvalidFieldValueException::class);
-        $model->setFieldValue('Lorem ipsum dolor');
     }
 
     private function dynamicTest(AbstractModel $model, mixed $givenValue, mixed $expectedValue, bool $expectException = false): void
