@@ -49,7 +49,7 @@ class BuyerHelper extends AbstractHelper
         return $buyer
             ->setTradingName('Ultramarathon GmbH')
             ->setLegalName('Ultramarathon GmbH')
-            ->setLegalForm('DE_GMBH')
+            ->setLegalForm('PUBLIC_COMPANY')
             ->setRegisteredAt((new DateTime())->setTimestamp(time() - 3600))
             ->setIncorporatedAt((new DateTime())->setTimestamp(time() - 3600))
             ->setContactPersons([

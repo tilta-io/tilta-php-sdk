@@ -29,7 +29,7 @@ class GetLegalFormsRequest extends AbstractRequest
 
     protected function getPath($requestModel): string
     {
-        return 'legal_forms/' . $requestModel->getCountryCode();
+        return 'legal_forms/';
     }
 
     protected function processSuccess($requestModel, array $responseData): GetLegalFormsResponseModel

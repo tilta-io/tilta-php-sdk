@@ -8,9 +8,8 @@
 
 declare(strict_types=1);
 
-namespace Tilta\Sdk\Tests\Functional\Service\Request\SepaMandate;
+namespace Tilta\Sdk\Tests\Functional\Service\Request\Util;
 
-use Tilta\Sdk\Exception\GatewayException\InvalidRequestException;
 use Tilta\Sdk\HttpClient\TiltaClient;
 use Tilta\Sdk\Model\Request\Util\GetLegalFormsRequestModel;
 use Tilta\Sdk\Model\Response\Util\GetLegalFormsResponseModel;
@@ -30,23 +29,9 @@ class GetLegalFormsRequestTest extends AbstractRequestTestCase
         ]);
         $service = new GetLegalFormsRequest($client);
 
-        $response = $service->execute(new GetLegalFormsRequestModel('DE'));
+        $response = $service->execute(new GetLegalFormsRequestModel());
         self::assertInstanceOf(GetLegalFormsResponseModel::class, $response);
         self::assertCount(3, $response->getItems());
-    }
-
-    public function testIfInvalidCountryCodeGotHandled(): void
-    {
-        $client = $this->createMock(TiltaClient::class);
-        $client->method('request')->willThrowException(new InvalidRequestException(400, [
-            'error' => "country_code: invalid enum value. Expected 'DE' | 'AT' | '...', received '...'",
-            'code' => 'BAD_REQUEST',
-        ], []));
-        $service = new GetLegalFormsRequest($client);
-
-        $response = $service->execute(new GetLegalFormsRequestModel('---'));
-        self::assertInstanceOf(GetLegalFormsResponseModel::class, $response);
-        self::assertCount(0, $response->getItems());
     }
 
     /**
@@ -56,22 +41,10 @@ class GetLegalFormsRequestTest extends AbstractRequestTestCase
     {
         $service = new GetLegalFormsRequest(TiltaClientHelper::getClient());
 
-        $response = $service->execute(new GetLegalFormsRequestModel('DE')); // DE should be always available on test-gateway
+        $response = $service->execute(new GetLegalFormsRequestModel()); // DE should be always available on test-gateway
         self::assertInstanceOf(GetLegalFormsResponseModel::class, $response);
         self::assertTrue($response->getItems() !== []);
-        self::assertNotNull($response->getDisplayName('DE_GMBH')); // DE_GMBH should be always available on test-gateway
-    }
-
-    /**
-     * @depends testIfInvalidCountryCodeGotHandled
-     */
-    public function testIfInvalidCountryCodeGotHandledOnline(): void
-    {
-        $service = new GetLegalFormsRequest(TiltaClientHelper::getClient());
-
-        $response = $service->execute(new GetLegalFormsRequestModel('----'));
-        self::assertInstanceOf(GetLegalFormsResponseModel::class, $response);
-        self::assertCount(0, $response->getItems());
+        self::assertNotNull($response->getDisplayName('PUBLIC_COMPANY'));
     }
 
     public function dataProviderExpectedRequestModel(): array

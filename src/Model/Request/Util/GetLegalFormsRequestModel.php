@@ -14,14 +14,4 @@ use Tilta\Sdk\Model\Request\AbstractRequestModel;
 
 class GetLegalFormsRequestModel extends AbstractRequestModel
 {
-    public function __construct(
-        private string $countryCode
-    ) {
-        parent::__construct();
-    }
-
-    public function getCountryCode(): string
-    {
-        return $this->countryCode;
-    }
 }
