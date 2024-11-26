@@ -601,12 +601,12 @@ __Expected exceptions thrown by service__
 
 #### GetInvoiceRequest
 
-| 	                 | 	                                                                                                                  |
-|-------------------|--------------------------------------------------------------------------------------------------------------------|
-| Api documentation | [Link](https://docs.tilta.io/reference/get_v1-invoices-external-id)                                                |
-| Request service   | [\Tilta\Sdk\Service\Request\Invoice\CreateInvoiceRequest](src/Service/Request/Invoice/GetInvoiceRequest.php)       |
-| Request model     | [\Tilta\Sdk\Model\Request\Invoice\CreateInvoiceRequestModel](src/Model/Request/Invoice/GetInvoiceRequestModel.php) |
-| Response model    | [\Tilta\Sdk\Model\Invoice](src/Model/Invoice.php)                                                                  |
+| 	                 | 	                                                                                                               |
+|-------------------|-----------------------------------------------------------------------------------------------------------------|
+| Api documentation | [Link](https://docs.tilta.io/reference/get_v1-invoices-external-id)                                             |
+| Request service   | [\Tilta\Sdk\Service\Request\Invoice\GetInvoiceRequest](src/Service/Request/Invoice/GetInvoiceRequest.php)       |
+| Request model     | [\Tilta\Sdk\Model\Request\Invoice\GetInvoiceRequestModel](src/Model/Request/Invoice/GetInvoiceRequestModel.php) |
+| Response model    | [\Tilta\Sdk\Model\Invoice](src/Model/Invoice.php)                                                               |
 
 Use this service to fetch a single invoice.
 
@@ -628,16 +628,16 @@ __Expected exceptions thrown by service__
 |------------------------------------------------------------------------------------|--------------------------------|
 | `\Tilta\Sdk\Exception\GatewayException\NotFoundException\InvoiceNotFoundException` | if the invoice does not exist. |
 
-#### GetInvoiceRequest
+#### GetInvoiceRequestModel
 
-| 	                 | 	                                                                                                                           |
-|-------------------|-----------------------------------------------------------------------------------------------------------------------------|
-| Api documentation | [Link](https://docs.tilta.io/reference/get_v1-invoices)                                                                     |
-| Request service   | [\Tilta\Sdk\Service\Request\Invoice\CreateInvoiceRequest](src/Service/Request/Invoice/GetInvoiceListRequest.php)            |
-| Request model     | [\Tilta\Sdk\Model\Request\Invoice\CreateInvoiceRequestModel](src/Model/Request/Invoice/GetInvoiceListRequestModel.php)      |
-| Response model    | [\Tilta\Sdk\Model\Response\Invoice\GetInvoiceListResponseModel](src/Model/Response/Invoice/GetInvoiceListResponseModel.php) |
+| 	                 | 	                                                                                                                                              |
+|-------------------|------------------------------------------------------------------------------------------------------------------------------------------------|
+| Api documentation | [Link](https://docs.tilta.io/reference/get_v1-invoices)    [Link (Buyers)](https://docs.tilta.io/reference/get_v1-buyers-external-id-invoices) |
+| Request service   | [\Tilta\Sdk\Service\Request\Invoice\GetInvoiceListRequest](src/Service/Request/Invoice/GetInvoiceListRequest.php)                              |
+| Request model     | [\Tilta\Sdk\Model\Request\Invoice\GetInvoiceRequestModel](src/Model/Request/Invoice/GetInvoiceRequestModel.php)                                |
+| Response model    | [\Tilta\Sdk\Model\Response\Invoice\GetInvoiceListResponseModel](src/Model/Response/Invoice/GetInvoiceListResponseModel.php)                    |
 
-Use this service to fetch all invoices.
+Use this service to fetch all invoices. Optional: You can filter by the buyer-id
 
 __Usage__
 
@@ -646,10 +646,11 @@ __Usage__
 $requestService = new \Tilta\Sdk\Service\Request\Invoice\GetInvoiceListRequest($client);
 
 $requestModel = (new \Tilta\Sdk\Model\Request\Invoice\GetInvoiceListRequestModel())
+    ->setMerchantExternalId('merchant-external-id')
+    ->setBuyerExternalId('buyer-external-id') // optional
     // optional for pagination:
     ->setOffset(150)
-    ->setLimit(50)
-    ->setMerchantExternalId('merchant-external-id');
+    ->setLimit(50);
 
 /** @var \Tilta\Sdk\Model\Response\Invoice\GetInvoiceListResponseModel $response */
 $response = $requestService->execute($requestModel);

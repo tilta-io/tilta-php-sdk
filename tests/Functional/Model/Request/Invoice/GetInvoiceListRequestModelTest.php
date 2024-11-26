@@ -42,6 +42,14 @@ class GetInvoiceListRequestModelTest extends AbstractModelTestCase
         static::assertEquals($value, $model->__call('get' . ucfirst($property)));
     }
 
+    public function testIfBuyerExternalIsNotInData(): void
+    {
+        $model = (new GetInvoiceListRequestModel())
+            ->setBuyerExternalId('buyer-id');
+
+        static::assertCount(0, $model->toArray());
+    }
+
     public function optionalParametersDataProvider(): array
     {
         return [
