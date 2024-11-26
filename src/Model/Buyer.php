@@ -14,6 +14,7 @@ use DateTimeInterface;
 use Tilta\Sdk\Attributes\ApiField\DefaultField;
 use Tilta\Sdk\Attributes\ApiField\ListField;
 use Tilta\Sdk\Attributes\Validation\Required;
+use Tilta\Sdk\Model\Buyer\BusinessIdentifier;
 
 /**
  * @method string getExternalId()
@@ -30,6 +31,8 @@ use Tilta\Sdk\Attributes\Validation\Required;
  * @method $this setIncorporatedAt(?DateTimeInterface $incorporatedAt)
  * @method ContactPerson[] getContactPersons()
  * @method $this setContactPersons(ContactPerson[] $contactPersons)
+ * @method BusinessIdentifier[] getBusinessIdentifiers()
+ * @method $this setBusinessIdentifiers(BusinessIdentifier[] $businessIdentifiers)
  * @method Address getBusinessAddress()
  * @method $this setBusinessAddress(Address $businessAddress)
  * @method array getCustomData()
@@ -59,6 +62,9 @@ class Buyer extends AbstractModel implements HasBuyerFieldInterface
 
     #[ListField(expectedItemClass: ContactPerson::class)]
     protected ?array $contactPersons = [];
+
+    #[ListField(expectedItemClass: BusinessIdentifier::class)]
+    protected ?array $businessIdentifiers;
 
     #[DefaultField]
     #[Required]

@@ -28,6 +28,7 @@ class BuyerTest extends AbstractModelTestCase
             'registered_at' => 1686763038,
             'incorporated_at' => 1686763038,
             'contact_persons' => [],
+            'business_identifiers' => [],
             'business_address' => ResponseHelper::PHPUNIT_OBJECT,
             'custom_data' => [
                 'key1' => 'value1',
