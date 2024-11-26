@@ -40,7 +40,7 @@ class UpdateBuyerRequestTest extends AbstractRequestTestCase
 
     public function testUpdateBuyer(): void
     {
-        $externalId = 'unit-testing_' . __FUNCTION__ . '_' . round(microtime(true));
+        $externalId = BuyerHelper::createUniqueExternalId(__FUNCTION__);
 
         $inputBuyer = BuyerHelper::createValidBuyer($externalId, CreateBuyerRequestModel::class);
         $response = $this->createRequestService->execute($inputBuyer);
