@@ -22,9 +22,23 @@ class GetInvoiceListRequestModel extends ListRequestModel implements HasMerchant
     #[DefaultField]
     protected ?string $merchantExternalId = null;
 
+    protected ?string $buyersExternalId = null;
+
     public function getMerchantExternalId(): string
     {
         /** @phpstan-ignore-next-line */
         return $this->__call(__FUNCTION__);
+    }
+
+    public function getBuyerExternalId(): ?string
+    {
+        return $this->buyersExternalId;
+    }
+
+    public function setBuyerExternalId(?string $buyerExternalId = null): self
+    {
+        $this->buyersExternalId = $buyerExternalId;
+
+        return $this;
     }
 }

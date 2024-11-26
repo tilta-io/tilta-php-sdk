@@ -66,4 +66,29 @@ class GetInvoiceListRequestTest extends AbstractRequestTestCase
             [GetInvoiceListRequest::class, GetInvoiceListRequestModel::class],
         ];
     }
+
+    public function testCorrectPath(): void
+    {
+        $responseData = [
+            'limit' => 5,
+            'offset' => 0,
+            'total' => 0,
+            'items' => [],
+        ];
+
+        $client = $this->createMockedTiltaClientResponse($responseData);
+        $client->expects(static::once())->method('request')->with('buyers/test-buyer-id/invoices');
+        (new GetInvoiceListRequest($client))->execute(
+            (new GetInvoiceListRequestModel())
+                ->setMerchantExternalId('test-merchant-id')
+                ->setBuyerExternalId('test-buyer-id')
+        );
+
+        $client = $this->createMockedTiltaClientResponse($responseData);
+        $client->expects(static::once())->method('request')->with('invoices');
+        (new GetInvoiceListRequest($client))->execute(
+            (new GetInvoiceListRequestModel())
+                ->setMerchantExternalId('test-merchant-id')
+        );
+    }
 }
