@@ -194,6 +194,9 @@ $requestModel = (new \Tilta\Sdk\Model\Buyer())
     ->setRegisteredAt((new DateTime())->setDate(2000, 2, 12))
     ->setIncorporatedAt((new DateTime())->setDate(2002, 5, 30))
     ->setContactPersons(new \Tilta\Sdk\Model\ContactPerson())
+    ->setBusinessIdentifiers([
+        new \Tilta\Sdk\Model\Buyer\BusinessIdentifier()
+    ])
     ->setBusinessAddress(new \Tilta\Sdk\Model\Address())
     ->setCustomData([
         'custom-key' => 'custom-value1',

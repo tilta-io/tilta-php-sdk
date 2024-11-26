@@ -13,6 +13,7 @@ namespace Tilta\Sdk\Tests\Helper;
 use DateTime;
 use Tilta\Sdk\Model\Address;
 use Tilta\Sdk\Model\Buyer;
+use Tilta\Sdk\Model\Buyer\BusinessIdentifier;
 use Tilta\Sdk\Model\ContactPerson;
 use Tilta\Sdk\Model\Request\Buyer\CreateBuyerRequestModel;
 use Tilta\Sdk\Model\Request\Facility\CreateFacilityRequestModel;
@@ -52,6 +53,12 @@ class BuyerHelper extends AbstractHelper
             ->setLegalForm('PUBLIC_COMPANY')
             ->setRegisteredAt((new DateTime())->setTimestamp(time() - 3600))
             ->setIncorporatedAt((new DateTime())->setTimestamp(time() - 3600))
+            ->setBusinessIdentifiers([
+                (new BusinessIdentifier())
+                    ->setType(BusinessIdentifier::TYPE_VAT_ID)
+                    ->setValue('DE352553342')
+                    ->setCountry('DE'),
+            ])
             ->setContactPersons([
                 (new ContactPerson())
                     ->setSalutation('MR')
