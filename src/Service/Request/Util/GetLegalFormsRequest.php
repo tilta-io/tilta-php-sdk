@@ -41,7 +41,7 @@ class GetLegalFormsRequest extends AbstractRequest
     {
         if ($exception instanceof GatewayException) {
             $responseData = $exception->getResponseData();
-            if ($exception instanceof InvalidRequestException && preg_match('/^country_code: invalid enum value/', $responseData['error'])) {
+            if ($exception instanceof InvalidRequestException && preg_match('/^country_code: invalid enum value/', (string) $responseData['error'])) {
                 return new GetLegalFormsResponseModel();
             }
         }

@@ -38,7 +38,7 @@ class CreateOrderRequestModel extends Order implements RequestModelInterface
     /**
      * @internal
      */
-    final public function getStatus(): void
+    final public function getStatus(): never
     {
         throw new BadMethodCallException('getting this property is not allowed.');
     }

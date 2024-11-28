@@ -33,7 +33,7 @@ class ResponseHelper
      * @internal
      * @var string[]
      */
-    public const PHPUNIT_OBJECT = ['___PHPUNIT___'];
+    final public const PHPUNIT_OBJECT = ['___PHPUNIT___'];
 
     public static function getValue(array $data, ReflectionProperty $property, DefaultField $definition): mixed
     {
