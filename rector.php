@@ -35,7 +35,7 @@ return static function (RectorConfig $rectorConfig): void {
         SetList::TYPE_DECLARATION,
         SetList::CODING_STYLE,
         SetList::DEAD_CODE,
-        LevelSetList::UP_TO_PHP_80,
+        LevelSetList::UP_TO_PHP_81,
         //SetList::PHP_74,
     ]);
 

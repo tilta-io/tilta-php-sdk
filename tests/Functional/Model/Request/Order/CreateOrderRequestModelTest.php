@@ -61,7 +61,7 @@ class CreateOrderRequestModelTest extends AbstractModelTestCase
         (new CreateOrderRequestModel())->setStatus('');
     }
 
-    public function testDisallowedMethodGetStatus(): void
+    public function testDisallowedMethodGetStatus(): never
     {
         $this->expectException(BadMethodCallException::class);
         (new CreateOrderRequestModel())->getStatus();

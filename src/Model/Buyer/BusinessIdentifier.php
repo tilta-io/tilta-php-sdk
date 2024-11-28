@@ -23,11 +23,11 @@ use Tilta\Sdk\Model\AbstractModel;
  */
 class BusinessIdentifier extends AbstractModel
 {
-    public const TYPE_VAT_ID = 'VAT_ID';
+    final public const TYPE_VAT_ID = 'VAT_ID';
 
-    public const TYPE_TAX_ID = 'TAX_ID';
+    final public const TYPE_TAX_ID = 'TAX_ID';
 
-    public const TYPE_COURT_ID = 'COURT_ID';
+    final public const TYPE_COURT_ID = 'COURT_ID';
 
     #[DefaultField]
     protected string $type;

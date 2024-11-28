@@ -25,7 +25,7 @@ class ExistingOrder extends Order
     /**
      * @internal do not use!
      */
-    public function setBuyerExternalId(string $buyerExternalId): void
+    public function setBuyerExternalId(string $buyerExternalId): never
     {
         throw new BadMethodCallException('you can not set the buyerExternalId for this model. Please set to ' . AddOrdersToBuyerRequestModel::class);
     }

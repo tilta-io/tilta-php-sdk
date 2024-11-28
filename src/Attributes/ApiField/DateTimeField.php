@@ -15,7 +15,7 @@ use Attribute;
 #[Attribute(Attribute::TARGET_PROPERTY)]
 class DateTimeField extends DefaultField
 {
-    public const DEFAULT_FORMAT = 'U';
+    final public const DEFAULT_FORMAT = 'U';
 
     public function __construct(
         ?string $apiField = null,

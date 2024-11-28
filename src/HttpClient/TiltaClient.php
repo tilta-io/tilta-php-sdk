@@ -23,48 +23,48 @@ class TiltaClient
     /**
      * @var string
      */
-    public const METHOD_POST = 'POST';
+    final public const METHOD_POST = 'POST';
 
     /**
      * @var string
      */
-    public const METHOD_GET = 'GET';
+    final public const METHOD_GET = 'GET';
 
     /**
      * @var string
      */
-    public const METHOD_PUT = 'PUT';
+    final public const METHOD_PUT = 'PUT';
 
     /**
      * @var string
      */
-    public const METHOD_PATCH = 'PATCH';
+    final public const METHOD_PATCH = 'PATCH';
 
     /**
      * @var string
      */
-    public const METHOD_DELETE = 'DELETE';
+    final public const METHOD_DELETE = 'DELETE';
 
     /**
      * @var string
      */
-    public const API_VERSION = '1';
+    final public const API_VERSION = '1';
 
     /**
      * @var string
      */
-    public const SANDBOX_API_DOMAIN = 'api.tilta-sandbox.io';
+    final public const SANDBOX_API_DOMAIN = 'api.tilta-sandbox.io';
 
     /**
      * @var string
      */
-    public const PRODUCTION_API_DOMAIN = 'api.tilta.io';
+    final public const PRODUCTION_API_DOMAIN = 'api.tilta.io';
 
-    private ?string $apiBaseUrl;
+    private readonly ?string $apiBaseUrl;
 
     public function __construct(
         private ?string $authToken = null,
-        private bool $sandbox = false
+        private readonly bool $sandbox = false
     ) {
         if (!empty($_ENV['TILTA_SDK_API_DOMAIN'])) {
             $apiDomain = $_ENV['TILTA_SDK_API_DOMAIN'];
