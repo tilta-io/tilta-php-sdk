@@ -33,7 +33,7 @@ use Tilta\Sdk\Attributes\Validation\Enum;
 class ContactPerson extends AbstractModel
 {
     #[DefaultField]
-    #[Enum(['MR', 'MS'])]
+    #[Enum(['MR', 'MS', 'OTHER'])]
     protected ?string $salutation = null;
 
     #[DefaultField]
