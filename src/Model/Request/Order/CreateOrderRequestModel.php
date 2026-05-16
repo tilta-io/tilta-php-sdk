@@ -12,6 +12,8 @@ namespace Tilta\Sdk\Model\Request\Order;
 
 use BadMethodCallException;
 use DateTimeInterface;
+use Tilta\Sdk\Attributes\ApiField\DefaultField;
+use Tilta\Sdk\Attributes\Validation\Required;
 use Tilta\Sdk\Model\Address;
 use Tilta\Sdk\Model\Amount;
 use Tilta\Sdk\Model\Order;
@@ -33,7 +35,19 @@ use Tilta\Sdk\Model\Request\RequestModelInterface;
 class CreateOrderRequestModel extends Order implements RequestModelInterface
 {
     // removed field definition
-    protected string $status;
+    protected ?string $status;
+
+    #[DefaultField]
+    #[Required]
+    protected ?DateTimeInterface $orderedAt;
+
+    #[DefaultField]
+    #[Required]
+    protected ?string $paymentMethod;
+
+    #[DefaultField]
+    #[Required]
+    protected ?string $paymentTerm;
 
     /**
      * @internal

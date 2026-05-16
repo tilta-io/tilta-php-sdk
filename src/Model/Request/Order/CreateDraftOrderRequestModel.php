@@ -8,76 +8,67 @@
 
 declare(strict_types=1);
 
-namespace Tilta\Sdk\Model;
+namespace Tilta\Sdk\Model\Request\Order;
 
-use DateTimeInterface;
 use Tilta\Sdk\Attributes\ApiField\DefaultField;
 use Tilta\Sdk\Attributes\ApiField\ListField;
+use Tilta\Sdk\Attributes\Validation\Required;
+use Tilta\Sdk\Model\Amount;
+use Tilta\Sdk\Model\HasBuyerFieldInterface;
+use Tilta\Sdk\Model\HasMerchantFieldInterface;
+use Tilta\Sdk\Model\HasOrderIdFieldInterface;
 use Tilta\Sdk\Model\Order\LineItem;
+use Tilta\Sdk\Model\Request\AbstractRequestModel;
 
 /**
  * @method string getOrderExternalId()
- * @method string|null getStatus()
+ * @method $this setOrderExternalId(string $orderExternalId)
  * @method string getBuyerExternalId()
- * @method string getMerchantExternalId()
- * @method DateTimeInterface|null getOrderedAt()
- * @method string|null getPaymentMethod()
- * @method string|null getPaymentTerm()
+ * @method $this setBuyerExternalId(string $buyerExternalId)
+ * @method string|null getMerchantExternalId()
+ * @method $this setMerchantExternalId(?string $merchantExternalId)
  * @method Amount getAmount()
+ * @method $this setAmount(Amount $amount)
  * @method string|null getComment()
- * @method Address|null getDeliveryAddress()
- * @method LineItem[] getLineItems()
- * @method string|null getContactEmail()
+ * @method $this setComment(?string $comment)
  * @method array|null getCustomData()
- * @method DateTimeInterface|null getCreatedAt()
- * @method DateTimeInterface|null getUpdatedAt()
+ * @method $this setCustomData(?array $customData)
+ * @method LineItem[] getLineItems()
+ * @method $this setLineItems(LineItem[] $lineItems)
+ * @method string|null getContactEmail()
+ * @method $this setContactEmail(?string $contactEmail)
  */
-class Order extends AbstractModel implements HasOrderIdFieldInterface, HasMerchantFieldInterface, HasBuyerFieldInterface
+class CreateDraftOrderRequestModel extends AbstractRequestModel implements HasOrderIdFieldInterface, HasBuyerFieldInterface, HasMerchantFieldInterface
 {
     #[DefaultField(apiField: 'external_id')]
+    #[Required]
     protected string $orderExternalId;
 
     #[DefaultField]
-    protected ?string $status;
-
-    #[DefaultField]
+    #[Required]
     protected string $buyerExternalId;
 
     #[DefaultField]
-    protected string $merchantExternalId;
+    protected ?string $merchantExternalId = null;
 
     #[DefaultField]
-    protected ?DateTimeInterface $orderedAt;
-
-    #[DefaultField]
-    protected ?string $paymentMethod;
-
-    #[DefaultField]
-    protected ?string $paymentTerm;
-
-    #[DefaultField]
+    #[Required]
     protected Amount $amount;
 
     #[DefaultField]
     protected ?string $comment = null;
 
     #[DefaultField]
-    protected ?Address $deliveryAddress = null;
+    protected ?array $customData = null;
 
+    /**
+     * @var LineItem[]
+     */
     #[ListField(expectedItemClass: LineItem::class)]
     protected array $lineItems = [];
 
     #[DefaultField]
     protected ?string $contactEmail = null;
-
-    #[DefaultField]
-    protected ?array $customData = null;
-
-    #[DefaultField]
-    protected ?DateTimeInterface $createdAt = null;
-
-    #[DefaultField]
-    protected ?DateTimeInterface $updatedAt = null;
 
     public function getOrderExternalId(): string
     {
@@ -85,13 +76,13 @@ class Order extends AbstractModel implements HasOrderIdFieldInterface, HasMercha
         return $this->__call(__FUNCTION__);
     }
 
-    public function getMerchantExternalId(): string
+    public function getBuyerExternalId(): string
     {
         /** @phpstan-ignore-next-line */
         return $this->__call(__FUNCTION__);
     }
 
-    public function getBuyerExternalId(): string
+    public function getMerchantExternalId(): string
     {
         /** @phpstan-ignore-next-line */
         return $this->__call(__FUNCTION__);
