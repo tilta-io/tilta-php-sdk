@@ -27,9 +27,11 @@ class GetOrderListForBuyerRequestTest extends AbstractRequestTestCase
     public function testRequestOffline(): void
     {
         $expectedResponse = [
-            OrderHelper::createValidOrderWithStatus('order-1')->toArray(),
-            OrderHelper::createValidOrderWithStatus('order-2')->toArray(),
-            OrderHelper::createValidOrderWithStatus('order-3')->toArray(),
+            'items' => [
+                OrderHelper::createValidOrderWithStatus('order-1')->toArray(),
+                OrderHelper::createValidOrderWithStatus('order-2')->toArray(),
+                OrderHelper::createValidOrderWithStatus('order-3')->toArray(),
+            ],
         ];
         $request = new GetOrderListForBuyerRequest($this->createMockedTiltaClientResponse($expectedResponse));
 
@@ -43,7 +45,7 @@ class GetOrderListForBuyerRequestTest extends AbstractRequestTestCase
 
     public function testResponseCanBeEmpty(): void
     {
-        $expectedResponse = [];
+        $expectedResponse = ['items' => []];
         $request = new GetOrderListForBuyerRequest($this->createMockedTiltaClientResponse($expectedResponse));
 
         $response = $request->execute($this->createMock(GetOrderListForBuyerRequestModel::class));

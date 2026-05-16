@@ -38,8 +38,8 @@ class CreateCreditNoteRequestModelTest extends AbstractModelTestCase
 
         $outputData = $model->toArray();
         static::assertIsArray($outputData);
-        static::assertCount(6, $outputData);
-        static::assertArrayNotHasKey('buyer_external_id', $outputData);
+        static::assertCount(7, $outputData);
+        static::assertValueShouldBeInData('buyer-external-id', $outputData, 'buyer_external_id');
         static::assertValueShouldBeInData('credit-note-external-id', $outputData, 'external_id');
         static::assertValueShouldBeInData(1688402371, $outputData, 'invoiced_at');
         static::assertValueShouldBeInData([], $outputData, 'billing_address');

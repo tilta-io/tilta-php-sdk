@@ -22,6 +22,7 @@ class SepaMandateTest extends AbstractModelTestCase
             'mandate_id' => 'mandate-id',
             'iban' => 'DE1234567678234',
             'created_at' => (new DateTime())->setDate(2023, 05, 16)->getTimestamp(),
+            'updated_at' => (new DateTime())->setDate(2023, 06, 01)->getTimestamp(),
         ];
         $model = (new SepaMandate())->fromArray($inputData);
 

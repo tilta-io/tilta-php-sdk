@@ -25,7 +25,7 @@ class CreateCreditNoteRequest extends AbstractRequest
 {
     protected function getPath($requestModel): string
     {
-        return 'buyers/' . $requestModel->getBuyerExternalId() . '/creditnotes';
+        return 'credit_notes';
     }
 
     protected function processSuccess($requestModel, array $responseData): CreditNote

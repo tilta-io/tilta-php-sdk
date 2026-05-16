@@ -34,8 +34,8 @@ class GetPaymentTermsRequestTest extends AbstractRequestTestCase
     {
         $expectedResponse = [
             'facility' => [
-                'status' => 10000,
-                'expires_at' => (new DateTime())->getTimestamp(),
+                'status' => 'ACTIVE',
+                'reviewed_at' => (new DateTime())->getTimestamp(),
                 'currency' => 'EUR',
                 'total_amount' => 10000,
                 'available_amount' => 5200,
@@ -45,26 +45,30 @@ class GetPaymentTermsRequestTest extends AbstractRequestTestCase
                 [
                     'payment_method' => PaymentMethodEnum::CASH,
                     'payment_term' => PaymentTermEnum::BNPL30,
-                    'name' => 'Readable name',
-                    'due_date' => (new DateTime())->getTimestamp(),
-                    'amount' => [
-                        'fee' => 12,
-                        'fee_percentage' => 10,
-                        'currency' => 'EUR',
-                        'gross' => 1190,
+                    'fee' => [
+                        'gross' => 119.0,
+                        'net' => 100.0,
+                        'tax' => 19.0,
+                    ],
+                    'installments' => [
+                        [
+                            'due_at' => (new DateTime())->getTimestamp(),
+                            'amount' => [
+                                'value' => 1190.0,
+                                'currency' => 'EUR',
+                            ],
+                        ],
                     ],
                 ],
                 [
                     'payment_method' => PaymentMethodEnum::TRANSFER,
                     'payment_term' => PaymentTermEnum::BNPL7,
-                    'name' => 'Readable name',
-                    'due_date' => (new DateTime())->getTimestamp(),
-                    'amount' => [
-                        'fee' => 12,
-                        'fee_percentage' => 10,
-                        'currency' => 'EUR',
-                        'gross' => 1190,
+                    'fee' => [
+                        'gross' => 50.0,
+                        'net' => 42.0,
+                        'tax' => 8.0,
                     ],
+                    'installments' => [],
                 ],
             ],
         ];

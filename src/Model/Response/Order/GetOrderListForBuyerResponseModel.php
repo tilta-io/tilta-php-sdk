@@ -24,11 +24,4 @@ class GetOrderListForBuyerResponseModel extends AbstractResponseModel
      */
     #[ListField(expectedItemClass: Order::class)]
     protected array $items = [];
-
-    public function fromArray(array $data): self
-    {
-        return parent::fromArray([
-            'items' => $data,
-        ]);
-    }
 }

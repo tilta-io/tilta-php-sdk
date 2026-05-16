@@ -22,7 +22,7 @@ class GetFacilityResponseModelTest extends AbstractModelTestCase
             'buyer_external_id' => 'buyer-external-id',
             'pending_orders_amount' => 123456,
             'status' => 'PENDING',
-            'expires_at' => 1686925869,
+            'reviewed_at' => 1686925869,
             'currency' => 'EUR',
             'total_amount' => 54684,
             'available_amount' => 88476,
@@ -34,8 +34,8 @@ class GetFacilityResponseModelTest extends AbstractModelTestCase
         self::assertEquals('buyer-external-id', $model->getBuyerExternalId());
         self::assertEquals(123456, $model->getPendingOrdersAmount());
         self::assertEquals('PENDING', $model->getStatus());
-        self::assertInstanceOf(DateTime::class, $model->getExpiresAt());
-        self::assertEquals(1686925869, $model->getExpiresAt()->getTimestamp());
+        self::assertInstanceOf(DateTime::class, $model->getReviewedAt());
+        self::assertEquals(1686925869, $model->getReviewedAt()->getTimestamp());
         self::assertEquals('EUR', $model->getCurrency());
         self::assertEquals(54684, $model->getTotalAmount());
         self::assertEquals(88476, $model->getAvailableAmount());

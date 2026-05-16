@@ -12,14 +12,20 @@ namespace Tilta\Sdk\Model\Response;
 
 use DateTimeInterface;
 use Tilta\Sdk\Attributes\ApiField\DefaultField;
+use Tilta\Sdk\Attributes\ApiField\ListField;
+use Tilta\Sdk\Model\Response\Facility\FacilityPendingAction;
 
 /**
  * @method string getStatus()
- * @method DateTimeInterface getExpiresAt()
+ * @method DateTimeInterface|null getReviewedAt()
  * @method string getCurrency()
  * @method int getTotalAmount()
  * @method int getAvailableAmount()
  * @method int getUsedAmount()
+ * @method string|null getRiskBand()
+ * @method DateTimeInterface|null getCreatedAt()
+ * @method DateTimeInterface|null getUpdatedAt()
+ * @method FacilityPendingAction[]|null getPendingActions()
  */
 class Facility extends AbstractResponseModel
 {
@@ -27,7 +33,7 @@ class Facility extends AbstractResponseModel
     protected string $status;
 
     #[DefaultField]
-    protected DateTimeInterface $expiresAt;
+    protected ?DateTimeInterface $reviewedAt;
 
     #[DefaultField]
     protected string $currency;
@@ -40,4 +46,16 @@ class Facility extends AbstractResponseModel
 
     #[DefaultField]
     protected int $usedAmount;
+
+    #[DefaultField]
+    protected ?string $riskBand;
+
+    #[DefaultField]
+    protected ?DateTimeInterface $createdAt;
+
+    #[DefaultField]
+    protected ?DateTimeInterface $updatedAt;
+
+    #[ListField(expectedItemClass: FacilityPendingAction::class)]
+    protected ?array $pendingActions;
 }

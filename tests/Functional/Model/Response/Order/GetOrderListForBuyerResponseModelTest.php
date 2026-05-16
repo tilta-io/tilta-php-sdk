@@ -20,10 +20,12 @@ class GetOrderListForBuyerResponseModelTest extends AbstractModelTestCase
     public function testFromArray(): void
     {
         $model = (new GetOrderListForBuyerResponseModel())->fromArray([
-            OrderHelper::createValidOrderWithStatus('order-1')->toArray(),
-            OrderHelper::createValidOrderWithStatus('order-2')->toArray(),
-            OrderHelper::createValidOrderWithStatus('order-3')->toArray(),
-            OrderHelper::createValidOrderWithStatus('order-4')->toArray(),
+            'items' => [
+                OrderHelper::createValidOrderWithStatus('order-1')->toArray(),
+                OrderHelper::createValidOrderWithStatus('order-2')->toArray(),
+                OrderHelper::createValidOrderWithStatus('order-3')->toArray(),
+                OrderHelper::createValidOrderWithStatus('order-4')->toArray(),
+            ],
         ]);
 
         static::assertIsArray($model->getItems());

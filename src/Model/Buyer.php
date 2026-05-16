@@ -25,8 +25,8 @@ use Tilta\Sdk\Model\Buyer\BusinessIdentifier;
  * @method $this setLegalName(string $legalName)
  * @method string|null getLegalForm()
  * @method $this setLegalForm(?string $legalForm)
- * @method DateTimeInterface getRegisteredAt()
- * @method $this setRegisteredAt(DateTimeInterface $registeredAt)
+ * @method DateTimeInterface|null getRegisteredAt()
+ * @method $this setRegisteredAt(?DateTimeInterface $registeredAt)
  * @method DateTimeInterface|null getIncorporatedAt()
  * @method $this setIncorporatedAt(?DateTimeInterface $incorporatedAt)
  * @method ContactPerson[] getContactPersons()
@@ -35,8 +35,11 @@ use Tilta\Sdk\Model\Buyer\BusinessIdentifier;
  * @method $this setBusinessIdentifiers(BusinessIdentifier[] $businessIdentifiers)
  * @method Address getBusinessAddress()
  * @method $this setBusinessAddress(Address $businessAddress)
- * @method array getCustomData()
+ * @method array|null getCustomData()
  * @method $this setCustomData(array $customData)
+ * @method DateTimeInterface|null getCreatedAt()
+ * @method DateTimeInterface|null getUpdatedAt()
+ * @method int|null getMaxDaysPastDue()
  */
 class Buyer extends AbstractModel implements HasBuyerFieldInterface
 {
@@ -54,7 +57,6 @@ class Buyer extends AbstractModel implements HasBuyerFieldInterface
     protected ?string $legalForm;
 
     #[DefaultField]
-    #[Required]
     protected ?DateTimeInterface $registeredAt;
 
     #[DefaultField]
@@ -70,8 +72,17 @@ class Buyer extends AbstractModel implements HasBuyerFieldInterface
     #[Required]
     protected ?Address $businessAddress;
 
-    #[ListField]
+    #[DefaultField]
     protected ?array $customData;
+
+    #[DefaultField]
+    protected ?DateTimeInterface $createdAt;
+
+    #[DefaultField]
+    protected ?DateTimeInterface $updatedAt;
+
+    #[DefaultField]
+    protected ?int $maxDaysPastDue;
 
     /**
      * @internal

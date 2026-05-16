@@ -8,28 +8,21 @@
 
 declare(strict_types=1);
 
-namespace Tilta\Sdk\Model\Response;
+namespace Tilta\Sdk\Model\Response\Facility;
 
 use DateTimeInterface;
 use Tilta\Sdk\Attributes\ApiField\DefaultField;
+use Tilta\Sdk\Model\Response\AbstractResponseModel;
 
 /**
- * @method string getMandateId()
- * @method string getIban()
+ * @method string getType()
  * @method DateTimeInterface getCreatedAt()
- * @method DateTimeInterface|null getUpdatedAt()
  */
-class SepaMandate extends AbstractResponseModel
+class FacilityPendingAction extends AbstractResponseModel
 {
     #[DefaultField]
-    protected string $mandateId;
-
-    #[DefaultField]
-    protected string $iban;
+    protected string $type;
 
     #[DefaultField]
     protected DateTimeInterface $createdAt;
-
-    #[DefaultField]
-    protected ?DateTimeInterface $updatedAt;
 }

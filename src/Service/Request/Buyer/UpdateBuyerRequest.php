@@ -33,7 +33,7 @@ class UpdateBuyerRequest extends AbstractRequest
 
     protected function getMethod($requestModel): string
     {
-        return TiltaClient::METHOD_POST;
+        return TiltaClient::METHOD_PUT;
     }
 
     protected static function getExpectedRequestModelClass(): string

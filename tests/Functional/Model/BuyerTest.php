@@ -34,6 +34,9 @@ class BuyerTest extends AbstractModelTestCase
                 'key1' => 'value1',
                 'key2' => 'value2',
             ],
+            'created_at' => null,
+            'updated_at' => null,
+            'max_days_past_due' => null,
         ];
         $model = new Buyer($inputData);
 
@@ -51,20 +54,8 @@ class BuyerTest extends AbstractModelTestCase
         self::assertInputOutputModel($inputData, $model);
     }
 
-    public function testRequiredFieldRegisteredAt(): void
-    {
-        // special case: UpdateBuyerRequestModel: we defined this field as required for the model `Buyer` with custom-validation-definition
-        $inputData = $this->getRequiredFieldValues();
-        unset($inputData['registered_at']);
-
-        $model = new Buyer();
-        $this->expectException(InvalidResponseException::class);
-        $model->fromArray($inputData);
-    }
-
     public function testRequiredFieldContactPersons(): void
     {
-        // special case: UpdateBuyerRequestModel: we defined this field as required for the model `Buyer` with custom-validation-definition
         $inputData = $this->getRequiredFieldValues();
         unset($inputData['contact_persons']);
 
@@ -75,7 +66,6 @@ class BuyerTest extends AbstractModelTestCase
 
     public function testRequiredFieldBusinessAddress(): void
     {
-        // special case: UpdateBuyerRequestModel: we defined this field as required for the model `Buyer` with custom-validation-definition
         $inputData = $this->getRequiredFieldValues();
         unset($inputData['business_address']);
 

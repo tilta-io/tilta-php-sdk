@@ -14,22 +14,18 @@ use Tilta\Sdk\Attributes\ApiField\DefaultField;
 use Tilta\Sdk\Model\Response\AbstractResponseModel;
 
 /**
- * @method int getFee()
- * @method int getFeePercentage()
- * @method int getGross()
- * @method string getCurrency()
+ * @method float getGross()
+ * @method float getNet()
+ * @method float getTax()
  */
-class PaymentTermAmount extends AbstractResponseModel
+class PaymentTermFee extends AbstractResponseModel
 {
     #[DefaultField]
-    protected int $fee;
+    protected float $gross;
 
     #[DefaultField]
-    protected int $feePercentage;
+    protected float $net;
 
     #[DefaultField]
-    protected int $gross;
-
-    #[DefaultField]
-    protected string $currency;
+    protected float $tax;
 }

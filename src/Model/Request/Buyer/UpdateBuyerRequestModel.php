@@ -12,7 +12,6 @@ namespace Tilta\Sdk\Model\Request\Buyer;
 
 use DateTimeInterface;
 use Tilta\Sdk\Attributes\ApiField\DefaultField;
-use Tilta\Sdk\Attributes\ApiField\ListField;
 use Tilta\Sdk\Model\Address;
 use Tilta\Sdk\Model\Buyer;
 use Tilta\Sdk\Model\ContactPerson;
@@ -33,7 +32,7 @@ class UpdateBuyerRequestModel extends Buyer implements RequestModelInterface
     // do not add DefaultField attribute. This will be passed as path-parameter
     protected string $externalId;
 
-    #[ListField] // removed Required-Attribute
+    #[DefaultField] // removed Required-Attribute
     protected ?array $customData;
 
     #[DefaultField] // removed Required-Attribute
